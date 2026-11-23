@@ -3,8 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Study Assistant - Notion Studio Edition</title>
+  <title>AI Study Assistant - Student Knowledge Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    };
+  </script>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -12,104 +17,48 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --canvas-soft: #f6f5f4;
-      --canvas: #ffffff;
-      --hairline: #e6e6e6;
-      --ink: #111111;
-      --ink-secondary: #31302e;
-      --ink-muted: #615d59;
-      --ink-faint: #a39e98;
-      --primary: #0075de;
-      --primary-active: #005bab;
-      --secondary: #213183;
-      --sticker-sky-bg: #eef6fc;
-      --sticker-sky-text: #0c5ea8;
-      --sticker-sky-border: #b8dbf9;
-      --sticker-purple-bg: #f7f1fe;
-      --sticker-purple-text: #5c2596;
-      --sticker-purple-border: #e3cffc;
-      --sticker-pink-bg: #fff0f9;
-      --sticker-pink-text: #a8177a;
-      --sticker-pink-border: #ffc2ea;
-      --sticker-orange-bg: #fff4ec;
-      --sticker-orange-text: #963800;
-      --sticker-orange-border: #fed6b8;
-      --sticker-teal-bg: #edf8f7;
-      --sticker-teal-text: #156360;
-      --sticker-teal-border: #a8e2e0;
-      --sticker-green-bg: #eef9f0;
-      --sticker-green-text: #0f6d23;
-      --sticker-green-border: #b7ecc2;
-    }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--canvas-soft);
-      color: var(--ink);
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
     code, pre, .font-mono {
       font-family: 'JetBrains Mono', monospace;
     }
-    .notion-headline {
-      letter-spacing: -0.035em;
+    .tracking-display {
+      letter-spacing: -1.8px;
     }
-    .notion-subheading {
-      letter-spacing: -0.02em;
+    .tracking-heading {
+      letter-spacing: -0.8px;
     }
-    .notion-card {
-      background-color: #ffffff;
-      border: 1px solid #e6e6e6;
-      border-radius: 12px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), 0 4px 12px rgba(0, 0, 0, 0.015);
+    .notion-shadow-sm {
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02), 0 2px 4px rgba(0,0,0,0.02);
     }
-    .notion-card-elevated {
-      background-color: #ffffff;
-      border: 1px solid #e6e6e6;
-      border-radius: 12px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.04);
+    .notion-shadow {
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02), 0 2px 6px rgba(0,0,0,0.03), 0 4px 16px rgba(0,0,0,0.03);
     }
-    .notion-hero-night {
-      background-color: #213183;
-      color: #ffffff;
-      border-radius: 16px;
+    .perspective-1000 {
+      perspective: 1000px;
     }
-    .btn-notion-primary {
-      background-color: #0075de;
-      color: #ffffff;
-      border-radius: 9999px;
-      transition: all 0.15s ease;
+    .transform-style-3d {
+      transform-style: preserve-3d;
     }
-    .btn-notion-primary:hover {
-      background-color: #005bab;
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
-    .btn-notion-primary:active {
-      transform: scale(0.97);
-    }
-    .btn-notion-utility {
-      background-color: #ffffff;
-      color: #111111;
-      border: 1px solid #e6e6e6;
-      border-radius: 8px;
-      transition: all 0.15s ease;
-    }
-    .btn-notion-utility:hover {
-      background-color: #f6f5f4;
-      border-color: #d8d8d8;
-    }
-    .btn-notion-utility:active {
-      transform: scale(0.98);
+    .rotate-y-180 {
+      transform: rotateY(180deg);
     }
   </style>
 </head>
-<body class="bg-[#f6f5f4] text-[#111111] min-h-screen selection:bg-[#0075de] selection:text-white">
+<body className="bg-[#f6f5f4] dark:bg-[#191919] text-[#000000] dark:text-[#ffffff] min-h-screen selection:bg-[#0075de]/15 selection:text-[#0075de] transition-colors duration-200">
   <div id="root"></div>
 
   <script type="text/babel">
     const { useState, useEffect } = React;
     const API_BASE = "";
 
+    // Error Formatter
     function formatErrorDetail(err, fallback = "Request failed") {
       if (!err) return fallback;
       const detail = err.detail !== undefined ? err.detail : err;
@@ -123,57 +72,65 @@
       return String(detail) || fallback;
     }
 
-    // Clean SVG Icons (Zero Emojis)
+    // Clean Minimalist SVG Icons (Strictly Zero Emojis)
     const Icons = {
       Dashboard: () => (
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
       ),
       Chat: () => (
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
       ),
       Classifier: () => (
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
       ),
       Documents: () => (
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
       ),
       Summarizer: () => (
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h10M4 18h7" /></svg>
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h10M4 18h7" /></svg>
       ),
       Quiz: () => (
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
       ),
       Agent: () => (
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
       ),
       Settings: () => (
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
       ),
-      Check: () => (
-        <svg class="w-3.5 h-3.5 text-[#1aae39]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
+      Sun: () => (
+        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
       ),
-      ArrowRight: () => (
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+      Moon: () => (
+        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
       ),
-      BookOpen: () => (
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+      Flashcards: () => (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+      ),
+      Mic: () => (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+      ),
+      Download: () => (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
       )
     };
 
+    // Inline Markdown Formatter
     function renderInlineMarkdown(str) {
       if (!str) return "";
       const tokens = str.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
       return tokens.map((tok, i) => {
         if (tok.startsWith("**") && tok.endsWith("**") && tok.length > 4) {
-          return <strong key={i} class="font-semibold text-[#111111]">{tok.slice(2, -2)}</strong>;
+          return <strong key={i} className="font-semibold text-[#000000] dark:text-[#ffffff]">{tok.slice(2, -2)}</strong>;
         }
         if (tok.startsWith("`") && tok.endsWith("`") && tok.length > 2) {
-          return <code key={i} class="px-1.5 py-0.5 rounded bg-[#f6f5f4] border border-[#e6e6e6] font-mono text-[#0075de] text-[11px]">{tok.slice(1, -1)}</code>;
+          return <code key={i} className="px-1.5 py-0.5 rounded bg-[#f6f5f4] dark:bg-[#191919] border border-[#e6e6e6] dark:border-[#2f2f2f] font-mono text-[#0075de] text-[11px] font-medium">{tok.slice(1, -1)}</code>;
         }
         return <span key={i}>{tok}</span>;
       });
     }
 
+    // Structured Academic Response Formatter (Notion Document Style)
     function FormattedTutorResponse({ text }) {
       if (!text) return null;
       const lines = text.split("\n");
@@ -183,11 +140,11 @@
       const flushBullets = (keyPrefix) => {
         if (currentBullets.length > 0) {
           elements.push(
-            <div key={`${keyPrefix}-bullets`} class="my-2 space-y-1.5">
+            <div key={`${keyPrefix}-bullets`} className="my-2 space-y-1.5 pl-1">
               {currentBullets.map((b, bIdx) => (
-                <div key={bIdx} class="flex items-start space-x-2 text-xs text-[#31302e]">
-                  <span class="text-[#0075de] font-mono mt-0.5 shrink-0">•</span>
-                  <div class="flex-1 leading-relaxed">
+                <div key={bIdx} className="flex items-start space-x-2 text-xs text-[#31302e] dark:text-[#d4d4d4] leading-relaxed">
+                  <span className="text-[#a39e98] dark:text-[#666666] font-mono mt-0.5 shrink-0">•</span>
+                  <div className="flex-1">
                     {renderInlineMarkdown(b)}
                   </div>
                 </div>
@@ -208,42 +165,42 @@
         if (trimmed.startsWith("### Concept Overview") || trimmed.startsWith("### Overview")) {
           flushBullets(`h-${idx}`);
           elements.push(
-            <div key={idx} class="mt-3.5 mb-1.5 flex items-center space-x-2">
-              <span class="px-2 py-0.5 text-[10px] font-mono font-semibold uppercase rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">
+            <div key={idx} className="mt-4 mb-2 flex items-center space-x-2">
+              <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30">
                 Overview
               </span>
-              <span class="font-bold text-[#111111] text-xs tracking-tight">Concept Definition</span>
+              <span className="font-bold text-[#000000] dark:text-[#ffffff] text-xs tracking-tight">Concept Definition</span>
             </div>
           );
         } else if (trimmed.startsWith("### Key Technical Breakdown") || trimmed.startsWith("### Key Mechanics")) {
           flushBullets(`h-${idx}`);
           elements.push(
-            <div key={idx} class="mt-3.5 mb-1.5 flex items-center space-x-2">
-              <span class="px-2 py-0.5 text-[10px] font-mono font-semibold uppercase rounded-full bg-[#edf8f7] text-[#156360] border border-[#a8e2e0]">
+            <div key={idx} className="mt-4 mb-2 flex items-center space-x-2">
+              <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-full bg-[#ecf8f7] dark:bg-[#2a9d99]/15 text-[#2a9d99] border border-[#bdedeb] dark:border-[#2a9d99]/30">
                 Mechanics
               </span>
-              <span class="font-bold text-[#111111] text-xs tracking-tight">Technical Breakdown</span>
+              <span className="font-bold text-[#000000] dark:text-[#ffffff] text-xs tracking-tight">Technical Breakdown</span>
             </div>
           );
         } else if (trimmed.startsWith("### Practical Takeaways") || trimmed.startsWith("### Practical Usage")) {
           flushBullets(`h-${idx}`);
           elements.push(
-            <div key={idx} class="mt-3.5 mb-1.5 flex items-center space-x-2">
-              <span class="px-2 py-0.5 text-[10px] font-mono font-semibold uppercase rounded-full bg-[#fff4ec] text-[#963800] border border-[#fed6b8]">
+            <div key={idx} className="mt-4 mb-2 flex items-center space-x-2">
+              <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-full bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00] border border-[#fcdcc4] dark:border-[#dd5b00]/30">
                 Takeaways
               </span>
-              <span class="font-bold text-[#111111] text-xs tracking-tight">Practical Guidance</span>
+              <span className="font-bold text-[#000000] dark:text-[#ffffff] text-xs tracking-tight">Practical Application</span>
             </div>
           );
         } else if (trimmed.startsWith("•") || trimmed.startsWith("-")) {
           currentBullets.push(trimmed.replace(/^[•\-]\s*/, ""));
         } else if (trimmed.startsWith("---")) {
           flushBullets(`hr-${idx}`);
-          elements.push(<hr key={idx} class="my-3 border-[#e6e6e6]" />);
+          elements.push(<hr key={idx} className="my-3 border-[#e6e6e6] dark:border-[#2f2f2f]" />);
         } else {
           flushBullets(`p-${idx}`);
           elements.push(
-            <p key={idx} class="text-xs text-[#31302e] leading-relaxed my-1">
+            <p key={idx} className="text-xs text-[#31302e] dark:text-[#d4d4d4] leading-relaxed my-1">
               {renderInlineMarkdown(trimmed)}
             </p>
           );
@@ -251,14 +208,40 @@
       });
 
       flushBullets("final");
-      return <div class="space-y-1">{elements}</div>;
+      return <div className="space-y-1">{elements}</div>;
     }
 
+    // Main Application Shell
     function App() {
       const [activeTab, setActiveTab] = useState("dashboard");
       const [dashboardData, setDashboardData] = useState(null);
       const [systemStatus, setSystemStatus] = useState("Checking...");
       const [loading, setLoading] = useState(true);
+
+      // Dark Mode State & Persistence
+      const [darkMode, setDarkMode] = useState(() => {
+        try {
+          const saved = localStorage.getItem("study_assistant_theme");
+          if (saved) return saved === "dark";
+          return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        } catch (e) {
+          return false;
+        }
+      });
+
+      useEffect(() => {
+        try {
+          if (darkMode) {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("study_assistant_theme", "dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("study_assistant_theme", "light");
+          }
+        } catch (e) {}
+      }, [darkMode]);
+
+      const toggleTheme = () => setDarkMode(prev => !prev);
 
       const fetchDashboardSummary = async () => {
         try {
@@ -271,7 +254,7 @@
             setSystemStatus("Degraded");
           }
         } catch (e) {
-          console.error("Dashboard summary fetch failed", e);
+          console.error("Dashboard fetch error", e);
           setSystemStatus("Disconnected");
         } finally {
           setLoading(false);
@@ -285,34 +268,46 @@
       }, []);
 
       const navItems = [
-        { id: "dashboard", label: "Dashboard", icon: Icons.Dashboard, badge: "Overview", sticker: "bg-[#edf8f7] text-[#156360] border-[#a8e2e0]" },
-        { id: "chat", label: "AI Chat & RAG", icon: Icons.Chat, badge: "NLP", sticker: "bg-[#eef6fc] text-[#0c5ea8] border-[#b8dbf9]" },
-        { id: "classify", label: "Subject Classifier", icon: Icons.Classifier, badge: "PyTorch", sticker: "bg-[#f7f1fe] text-[#5c2596] border-[#e3cffc]" },
-        { id: "documents", label: "My Documents", icon: Icons.Documents, badge: "FAISS", sticker: "bg-[#fff0f9] text-[#a8177a] border-[#ffc2ea]" },
-        { id: "summarizer", label: "Summarizer Tool", icon: Icons.Summarizer, badge: "Notes", sticker: "bg-[#fff4ec] text-[#963800] border-[#fed6b8]" },
-        { id: "quiz", label: "Quiz Generator", icon: Icons.Quiz, badge: "MCQs", sticker: "bg-[#eef9f0] text-[#0f6d23] border-[#b7ecc2]" },
-        { id: "agent", label: "Autonomous Agent", icon: Icons.Agent, badge: "Router", sticker: "bg-[#f7f1fe] text-[#5c2596] border-[#e3cffc]" },
-        { id: "settings", label: "System Health", icon: Icons.Settings, badge: "Status", sticker: "bg-[#eef6fc] text-[#0c5ea8] border-[#b8dbf9]" }
+        { id: "dashboard", label: "Dashboard", icon: Icons.Dashboard, badge: "Overview", badgeColor: "bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de]" },
+        { id: "chat", label: "AI Chat & RAG", icon: Icons.Chat, badge: "NLP", badgeColor: "bg-[#ecf8f7] dark:bg-[#2a9d99]/15 text-[#2a9d99]" },
+        { id: "classify", label: "Subject Classifier", icon: Icons.Classifier, badge: "PyTorch", badgeColor: "bg-[#f8f2fd] dark:bg-[#d6b6f6]/15 text-[#391c57] dark:text-[#d6b6f6]" },
+        { id: "documents", label: "My Documents", icon: Icons.Documents, badge: "FAISS", badgeColor: "bg-[#fff0f9] dark:bg-[#ff64c8]/15 text-[#ff64c8]" },
+        { id: "summarizer", label: "Summarizer Tool", icon: Icons.Summarizer, badge: "Notes", badgeColor: "bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00]" },
+        { id: "quiz", label: "Quiz Generator", icon: Icons.Quiz, badge: "MCQs", badgeColor: "bg-[#eef9f1] dark:bg-[#1aae39]/15 text-[#1aae39]" },
+        { id: "flashcards", label: "3D Flashcards", icon: Icons.Flashcards, badge: "Recall", badgeColor: "bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00]" },
+        { id: "agent", label: "Autonomous Agent", icon: Icons.Agent, badge: "Router", badgeColor: "bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de]" },
+        { id: "settings", label: "System Health", icon: Icons.Settings, badge: "Status", badgeColor: "bg-[#f6f5f4] dark:bg-[#2a2a2a] text-[#615d59] dark:text-[#a39e98]" }
       ];
 
       return (
-        <div class="flex h-screen overflow-hidden bg-[#f6f5f4]">
-          {/* Notion-style Left Sidebar */}
-          <aside class="w-64 bg-[#ffffff] border-r border-[#e6e6e6] flex flex-col justify-between select-none">
+        <div className="flex h-screen overflow-hidden bg-[#f6f5f4] dark:bg-[#191919] transition-colors duration-200">
+          {/* Left Sidebar (Notion Clean Desk Style) */}
+          <aside className="w-64 bg-[#ffffff] dark:bg-[#202020] border-r border-[#e6e6e6] dark:border-[#2f2f2f] flex flex-col justify-between select-none shrink-0 shadow-sm z-20 transition-colors duration-200">
             <div>
-              {/* App Brand Header */}
-              <div class="p-4 border-b border-[#e6e6e6] flex items-center space-x-3">
-                <div class="h-8 w-8 rounded-lg bg-[#111111] text-white flex items-center justify-center font-bold text-xs shadow-sm">
-                  N
+              {/* App Brand & Dark Mode Button */}
+              <div className="p-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f] flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="h-8 w-8 rounded-lg bg-[#0075de] flex items-center justify-center font-bold text-white text-xs tracking-wider shadow-sm">
+                    AI
+                  </div>
+                  <div>
+                    <h1 className="text-xs font-bold text-[#000000] dark:text-[#ffffff] tracking-tight uppercase font-mono">Study Assistant</h1>
+                    <span className="text-[10px] text-[#615d59] dark:text-[#a39e98] block">Student Portal</span>
+                  </div>
                 </div>
-                <div>
-                  <h1 class="text-xs font-bold text-[#111111] tracking-tight uppercase">AI Study Assistant</h1>
-                  <span class="text-[10px] text-[#615d59]">Student Workspace</span>
-                </div>
+
+                {/* Dark Mode Toggle Button */}
+                <button
+                  onClick={toggleTheme}
+                  title={darkMode ? "Switch to Daylight Mode" : "Switch to Dark Mode"}
+                  className="p-1.5 rounded-lg border border-[#e6e6e6] dark:border-[#383838] bg-[#f6f5f4] dark:bg-[#2a2a2a] text-[#615d59] dark:text-[#e0e0e0] hover:text-[#0075de] dark:hover:text-[#62aef0] transition shadow-sm"
+                >
+                  {darkMode ? <Icons.Sun /> : <Icons.Moon />}
+                </button>
               </div>
 
               {/* Navigation Menu */}
-              <nav class="p-2.5 space-y-0.5">
+              <nav className="p-2.5 space-y-1">
                 {navItems.map(item => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.id;
@@ -320,19 +315,21 @@
                     <button
                       key={item.id}
                       onClick={() => setActiveTab(item.id)}
-                      class={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition ${
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition ${
                         isActive
-                          ? "bg-[#f6f5f4] text-[#111111] font-semibold"
-                          : "text-[#615d59] hover:bg-[#f6f5f4] hover:text-[#111111]"
+                          ? "bg-[#f6f5f4] dark:bg-[#2a2a2a] text-[#0075de] dark:text-[#62aef0] font-semibold shadow-sm border border-[#e6e6e6] dark:border-[#383838]"
+                          : "text-[#31302e] dark:text-[#d4d4d4] hover:bg-[#f6f5f4] dark:hover:bg-[#262626] hover:text-[#000000] dark:hover:text-[#ffffff]"
                       }`}
                     >
-                      <div class="flex items-center space-x-2.5">
-                        <span class={isActive ? "text-[#0075de]" : "text-[#615d59]"}>
+                      <div className="flex items-center space-x-2.5">
+                        <span className={isActive ? "text-[#0075de] dark:text-[#62aef0]" : "text-[#615d59] dark:text-[#888888]"}>
                           <Icon />
                         </span>
                         <span>{item.label}</span>
                       </div>
-                      <span class={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${item.sticker}`}>
+                      <span className={`text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded-full border border-black/5 dark:border-white/5 ${
+                        isActive ? "bg-[#0075de] text-white" : item.badgeColor
+                      }`}>
                         {item.badge}
                       </span>
                     </button>
@@ -341,25 +338,26 @@
               </nav>
             </div>
 
-            {/* Sidebar Footer */}
-            <div class="p-3.5 border-t border-[#e6e6e6] bg-[#fbfbfa]">
-              <div class="flex items-center justify-between text-xs font-mono">
-                <span class="text-[#615d59]">FastAPI Engine:</span>
-                <span class="font-semibold flex items-center space-x-1.5 text-[#0f6d23]">
-                  <span class={`h-2 w-2 rounded-full ${
+            {/* Sidebar Footer with Live API Pill */}
+            <div className="p-3.5 border-t border-[#e6e6e6] dark:border-[#2f2f2f] bg-[#fdfdfd] dark:bg-[#1d1d1d] text-xs">
+              <div className="flex items-center justify-between font-mono text-[11px]">
+                <span className="text-[#615d59] dark:text-[#888888]">Backend API:</span>
+                <span className="inline-flex items-center space-x-1.5 font-semibold text-[#1aae39]">
+                  <span className={`h-2 w-2 rounded-full ${
                     systemStatus === "Online" ? "bg-[#1aae39] animate-pulse" : "bg-[#dd5b00]"
                   }`}></span>
                   <span>{systemStatus}</span>
                 </span>
               </div>
-              <div class="mt-1 text-[10px] font-mono text-[#a39e98]">
-                127.0.0.1:8000 • Starlette
+              <div className="mt-1 text-[10px] font-mono text-[#a39e98] dark:text-[#666666] flex justify-between">
+                <span>FastAPI 0.115 ASGI</span>
+                <span>127.0.0.1:8000</span>
               </div>
             </div>
           </aside>
 
-          {/* Main Workspace Area (Warm Canvas) */}
-          <main class="flex-1 overflow-y-auto bg-[#f6f5f4] p-6 md:p-8">
+          {/* Main Content Area */}
+          <main className="flex-1 overflow-y-auto bg-[#f6f5f4] dark:bg-[#191919] p-6 md:p-8 transition-colors duration-200">
             {activeTab === "dashboard" && (
               <DashboardView
                 data={dashboardData}
@@ -373,15 +371,16 @@
             {activeTab === "documents" && <DocumentsView onUploaded={fetchDashboardSummary} />}
             {activeTab === "summarizer" && <SummarizerView />}
             {activeTab === "quiz" && <QuizView onRefreshMetrics={fetchDashboardSummary} />}
+            {activeTab === "flashcards" && <FlashcardsView />}
             {activeTab === "agent" && <AgentView onRefreshMetrics={fetchDashboardSummary} />}
-            {activeTab === "settings" && <SettingsView status={systemStatus} />}
+            {activeTab === "settings" && <SettingsView status={systemStatus} darkMode={darkMode} onToggleTheme={toggleTheme} />}
           </main>
         </div>
       );
     }
 
     // ==========================================
-    // 1. NOTION DASHBOARD VIEW (With Deep Indigo Hero)
+    // 1. NOTION DASHBOARD VIEW
     // ==========================================
     function DashboardView({ data, loading, onNavigate, onRefresh }) {
       const [quickQuery, setQuickQuery] = useState("");
@@ -424,267 +423,300 @@
       };
 
       return (
-        <div class="max-w-5xl mx-auto space-y-6">
-          {/* Signature Notion "Night" Hero Band */}
-          <div class="notion-hero-night p-6 md:p-8 relative overflow-hidden shadow-sm">
-            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="max-w-5xl mx-auto space-y-6">
+          {/* Signature Inverted Hero Night Band (Deep Indigo) */}
+          <div className="bg-[#213183] text-white rounded-2xl p-6 md:p-8 relative overflow-hidden shadow-lg">
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white text-[#0075de] text-xs font-semibold mb-3 shadow-sm">
-                  <span class="h-1.5 w-1.5 rounded-full bg-[#0075de]"></span>
-                  <span>Notion Edition Study Assistant</span>
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-mono text-white/90 mb-3">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#62aef0] animate-pulse"></span>
+                  <span>AI Study Assistant Active</span>
+                  <span className="text-white/40">•</span>
+                  <span className="text-[#62aef0]">v0.2.0</span>
                 </div>
-                <h2 class="text-2xl md:text-3xl font-extrabold text-white notion-headline">
-                  Organized notes. Confident answers.
+                <h2 className="text-2xl md:text-3xl font-extrabold text-white tracking-display">
+                  Welcome to Your Study Assistant
                 </h2>
-                <p class="text-sm text-white/80 mt-1 max-w-2xl leading-relaxed">
-                  Your academic workspace with PyTorch question classification, grounded FAISS document retrieval, and autonomous multi-intent study tools.
+                <p className="text-sm text-white/80 mt-1 max-w-2xl leading-relaxed">
+                  Personal AI Tutor with PyTorch Neural Question Classification, Grounded RAG with Document Citations, and Autonomous Tool Routing for Python, AI, and Machine Learning.
                 </p>
               </div>
 
-              {/* Status Badges */}
-              <div class="flex flex-wrap gap-2 text-xs font-mono">
-                <div class="bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-2 rounded-xl text-white">
-                  <span class="text-white/60 block text-[10px]">PyTorch MLP</span>
-                  <span class="font-bold text-[#b7ecc2]">96.15% Test Acc</span>
+              {/* Decorative Sticker Specs Badges */}
+              <div className="flex flex-wrap gap-2 text-xs font-mono">
+                <div className="bg-white/10 border border-white/15 px-3 py-2 rounded-xl text-white">
+                  <span className="text-white/60 block text-[10px]">PyTorch Model</span>
+                  <span className="text-[#62aef0] font-bold">96.15% Test Acc</span>
                 </div>
-                <div class="bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-2 rounded-xl text-white">
-                  <span class="text-white/60 block text-[10px]">Vector Search</span>
-                  <span class="font-bold text-[#b8dbf9]">FAISS FlatIP 384-d</span>
+                <div className="bg-white/10 border border-white/15 px-3 py-2 rounded-xl text-white">
+                  <span className="text-white/60 block text-[10px]">Embeddings</span>
+                  <span className="text-white font-bold">all-MiniLM-L6-v2</span>
                 </div>
               </div>
             </div>
 
-            {/* Quick Query Input on Hero */}
-            <form onSubmit={handleQuickSubmit} class="relative z-10 mt-6 flex gap-2">
+            {/* Quick Query Bar */}
+            <form onSubmit={handleQuickSubmit} className="relative z-10 mt-6 flex gap-2">
               <input
                 type="text"
                 value={quickQuery}
                 onChange={(e) => setQuickQuery(e.target.value)}
-                placeholder="Ask any question from your lecture notes (e.g. 'What is the Global Interpreter Lock in Python?')..."
-                class="flex-1 bg-white text-[#111111] rounded-lg px-4 py-2.5 text-sm placeholder:text-[#a39e98] focus:outline-none focus:ring-2 focus:ring-[#0075de] font-sans shadow-sm"
+                placeholder="Ask any question from your uploaded notes (e.g. 'What is the Global Interpreter Lock in Python?')..."
+                className="flex-1 bg-white text-[#000000] border border-white/20 rounded-md px-4 py-2.5 text-xs placeholder:text-[#615d59] focus:outline-none focus:ring-2 focus:ring-[#62aef0] font-sans shadow-sm"
               />
               <button
                 type="submit"
                 disabled={submitting || !quickQuery.trim()}
-                class="btn-notion-primary px-6 py-2.5 text-xs font-semibold uppercase tracking-wider disabled:opacity-50 font-mono shadow-sm"
+                className="bg-[#0075de] hover:bg-[#005bab] disabled:bg-white/20 disabled:text-white/50 text-white font-semibold px-6 py-2.5 rounded-full text-xs transition shadow-sm font-sans"
               >
                 {submitting ? "Searching..." : "Ask Notes"}
               </button>
             </form>
 
-            {/* Quick Answer Output Card */}
+            {/* Quick Answer Preview Box */}
             {quickAnswer && (
-              <div class="relative z-10 mt-4 p-5 rounded-xl bg-white text-[#111111] text-sm space-y-2 shadow-lg">
-                <div class="flex items-center justify-between text-xs font-mono pb-2 border-b border-[#e6e6e6]">
-                  <span class="text-[#0075de] font-semibold">[Grounded Answer Preview]</span>
-                  <button onClick={() => onNavigate("chat")} class="text-[#615d59] hover:text-[#0075de] underline text-[11px]">
-                    Open in Full AI Chat
+              <div className="relative z-10 mt-4 p-4 rounded-xl bg-white dark:bg-[#202020] text-[#000000] dark:text-[#ffffff] notion-shadow text-xs space-y-2 border border-[#e6e6e6] dark:border-[#2f2f2f]">
+                <div className="flex items-center justify-between text-xs font-mono pb-2 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
+                  <span className="text-[#0075de] font-semibold">[Grounded Answer Preview]</span>
+                  <button onClick={() => onNavigate("chat")} className="text-[#0075de] hover:underline text-[11px] font-sans">
+                    Open in Full AI Chat →
                   </button>
                 </div>
-                <div class="mt-2 text-[#31302e] leading-relaxed">
+                <div className="mt-2 text-[#31302e] dark:text-[#d4d4d4] leading-relaxed">
                   <FormattedTutorResponse text={quickAnswer.answer} />
                 </div>
                 {quickAnswer.citations && quickAnswer.citations.length > 0 && (
-                  <div class="text-[11px] font-mono text-[#615d59] pt-2 border-t border-[#e6e6e6]">
-                    Source Citation: <strong class="text-[#111111]">{quickAnswer.citations[0].document_name}</strong> (Page {quickAnswer.citations[0].page_number}, Score: {quickAnswer.citations[0].relevance_score})
+                  <div className="text-[11px] font-mono text-[#615d59] dark:text-[#888888] pt-2 border-t border-[#e6e6e6] dark:border-[#2f2f2f]">
+                    Source: <strong className="text-[#000000] dark:text-[#ffffff]">{quickAnswer.citations[0].document_name}</strong> (Page {quickAnswer.citations[0].page_number}, Score: {quickAnswer.citations[0].relevance_score})
                   </div>
                 )}
               </div>
             )}
           </div>
 
-          {/* 4 KPI Metric Cards (White Cards, Hairline Borders) */}
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Card 1 */}
-            <div class="notion-card p-4 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] uppercase font-mono tracking-wider text-[#615d59]">Indexed Notes</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">FAISS</span>
+          {/* Adaptive Learning & Weak Topic Recommendation Banner */}
+          {data?.recommendations && (
+            <div className={`p-5 rounded-xl border notion-shadow-sm transition-colors ${
+              data.recommendations.has_data
+                ? "bg-[#ffffff] dark:bg-[#202020] border-[#c5e1fb] dark:border-[#0075de]/30"
+                : "bg-[#ffffff] dark:bg-[#202020] border-[#e6e6e6] dark:border-[#2f2f2f]"
+            }`}>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-[10px] uppercase font-mono font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30">
+                      Adaptive Learning Engine
+                    </span>
+                    {data.recommendations.has_data && (
+                      <span className="text-[10px] font-mono text-[#dd5b00] font-semibold">
+                        [Weak Topic Identified: {data.recommendations.weak_topic} ({data.recommendations.weak_score || data.recommendations.weak_accuracy}%)]
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-sm font-bold text-[#000000] dark:text-[#ffffff] tracking-tight">
+                    {data.recommendations.has_data ? "Personalized Study Recommendation" : "Adaptive Learning Initializing"}
+                  </h3>
+                  <p className="text-xs text-[#615d59] dark:text-[#888888] leading-relaxed max-w-2xl">
+                    {data.recommendations.recommendation_message || data.recommendations.recommended_action}
+                  </p>
+                </div>
+                <div className="flex items-center space-x-2 shrink-0">
+                  <button
+                    onClick={() => onNavigate("quiz")}
+                    className="px-4 py-2 rounded-full bg-[#0075de] hover:bg-[#005bab] text-white text-xs font-semibold transition shadow-sm font-sans"
+                  >
+                    Practice Quiz
+                  </button>
+                  <button
+                    onClick={() => onNavigate("flashcards")}
+                    className="px-4 py-2 rounded-full bg-[#f6f5f4] dark:bg-[#2a2a2a] hover:bg-[#e6e6e6] dark:hover:bg-[#333333] text-[#0075de] dark:text-[#62aef0] border border-[#c5e1fb] dark:border-[#0075de]/30 text-xs font-semibold transition shadow-sm font-sans"
+                  >
+                    Review Flashcards
+                  </button>
+                </div>
               </div>
-              <div class="text-3xl font-extrabold text-[#111111] font-mono notion-headline">{metrics.total_documents}</div>
-              <div class="text-xs text-[#615d59] flex items-center justify-between pt-1 border-t border-[#e6e6e6]">
+            </div>
+          )}
+
+          {/* 4 KPI Metric Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Card 1 */}
+            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-5 rounded-xl notion-shadow-sm space-y-1 transition-colors">
+              <div className="flex items-center justify-between">
+                <span className="text-xs uppercase font-mono tracking-wider text-[#615d59] dark:text-[#888888]">Indexed Notes</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30 font-semibold">FAISS</span>
+              </div>
+              <div className="text-3xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-1">{metrics.total_documents}</div>
+              <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-1">
                 <span>Total Chunks:</span>
-                <span class="text-[#0075de] font-semibold">{metrics.total_chunks_indexed || 13}</span>
+                <span className="font-semibold text-[#0075de] font-mono">{metrics.total_chunks_indexed || 13}</span>
+              </div>
+              <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden mt-2">
+                <div className="bg-[#0075de] h-full rounded-full" style={{ width: '100%' }}></div>
               </div>
             </div>
 
             {/* Card 2 */}
-            <div class="notion-card p-4 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] uppercase font-mono tracking-wider text-[#615d59]">Questions Asked</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#edf8f7] text-[#156360] border border-[#a8e2e0]">RAG Q&A</span>
+            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-5 rounded-xl notion-shadow-sm space-y-1 transition-colors">
+              <div className="flex items-center justify-between">
+                <span className="text-xs uppercase font-mono tracking-wider text-[#615d59] dark:text-[#888888]">Questions Asked</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#ecf8f7] dark:bg-[#2a9d99]/15 text-[#2a9d99] border border-[#bdedeb] dark:border-[#2a9d99]/30 font-semibold">RAG Q&A</span>
               </div>
-              <div class="text-3xl font-extrabold text-[#111111] font-mono notion-headline">{metrics.total_questions_asked}</div>
-              <div class="text-xs text-[#615d59] flex items-center justify-between pt-1 border-t border-[#e6e6e6]">
-                <span>Guardrail Min:</span>
-                <span class="text-[#0f6d23] font-semibold">0.35 Cosine</span>
+              <div className="text-3xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-1">{metrics.total_questions_asked}</div>
+              <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-1">
+                <span>Guardrail Threshold:</span>
+                <span className="font-semibold text-[#2a9d99] font-mono">0.35 Cosine</span>
+              </div>
+              <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden mt-2">
+                <div className="bg-[#2a9d99] h-full rounded-full" style={{ width: `${Math.min(100, (metrics.total_questions_asked + 1) * 20)}%` }}></div>
               </div>
             </div>
 
             {/* Card 3 */}
-            <div class="notion-card p-4 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] uppercase font-mono tracking-wider text-[#615d59]">Quizzes Taken</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#fff4ec] text-[#963800] border border-[#fed6b8]">MCQs</span>
+            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-5 rounded-xl notion-shadow-sm space-y-1 transition-colors">
+              <div className="flex items-center justify-between">
+                <span className="text-xs uppercase font-mono tracking-wider text-[#615d59] dark:text-[#888888]">Quizzes Taken</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00] border border-[#fcdcc4] dark:border-[#dd5b00]/30 font-semibold">Practice</span>
               </div>
-              <div class="text-3xl font-extrabold text-[#111111] font-mono notion-headline">{metrics.total_quizzes_generated}</div>
-              <div class="text-xs text-[#615d59] flex items-center justify-between pt-1 border-t border-[#e6e6e6]">
-                <span>Generation:</span>
-                <span class="text-[#963800] font-semibold">Automated</span>
+              <div className="text-3xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-1">{metrics.total_quizzes_generated}</div>
+              <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-1">
+                <span>MCQ Generation:</span>
+                <span className="font-semibold text-[#dd5b00]">Automated</span>
+              </div>
+              <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden mt-2">
+                <div className="bg-[#dd5b00] h-full rounded-full" style={{ width: `${Math.min(100, metrics.total_quizzes_generated * 25)}%` }}></div>
               </div>
             </div>
 
             {/* Card 4 */}
-            <div class="notion-card p-4 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] uppercase font-mono tracking-wider text-[#615d59]">Average Score</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef9f0] text-[#0f6d23] border border-[#b7ecc2]">Retention</span>
+            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-5 rounded-xl notion-shadow-sm space-y-1 transition-colors">
+              <div className="flex items-center justify-between">
+                <span className="text-xs uppercase font-mono tracking-wider text-[#615d59] dark:text-[#888888]">Average Score</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef9f1] dark:bg-[#1aae39]/15 text-[#1aae39] border border-[#c6eed0] dark:border-[#1aae39]/30 font-semibold">Retention</span>
               </div>
-              <div class="text-3xl font-extrabold text-[#111111] font-mono notion-headline">
+              <div className="text-3xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-1">
                 {metrics.average_quiz_score > 0 ? `${metrics.average_quiz_score}%` : "100%"}
               </div>
-              <div class="text-xs text-[#615d59] flex items-center justify-between pt-1 border-t border-[#e6e6e6]">
-                <span>Learner Status:</span>
-                <span class="text-[#0075de] font-semibold">Active</span>
+              <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-1">
+                <span>Status:</span>
+                <span className="font-semibold text-[#1aae39]">Active Learner</span>
+              </div>
+              <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden mt-2">
+                <div className="bg-[#1aae39] h-full rounded-full" style={{ width: `${metrics.average_quiz_score > 0 ? metrics.average_quiz_score : 100}%` }}></div>
               </div>
             </div>
           </div>
 
-          {/* 5 Curriculum Milestones Grid */}
-          <div class="notion-card p-6 space-y-4">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#e6e6e6]">
+          {/* Five Curriculum Milestones */}
+          <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-5 md:p-6 notion-shadow-sm transition-colors">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
               <div>
-                <div class="flex items-center space-x-2">
-                  <span class="text-xs uppercase font-mono font-bold tracking-wider text-[#111111]">Curriculum Milestones</span>
-                  <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef9f0] text-[#0f6d23] border border-[#b7ecc2]">5/5 Verified</span>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs uppercase font-mono font-bold tracking-wider text-[#0075de]">Curriculum Milestones</span>
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#eef9f1] dark:bg-[#1aae39]/15 text-[#1aae39] border border-[#c6eed0] dark:border-[#1aae39]/30">5/5 Verified</span>
                 </div>
-                <p class="text-xs text-[#615d59] mt-0.5">All 5 academic curriculum modules are live and validated.</p>
+                <p className="text-xs text-[#615d59] dark:text-[#888888] mt-0.5">All 5 academic course requirements are verified and active.</p>
               </div>
-              <span class="text-[11px] font-mono text-[#a39e98]">FastAPI • PyTorch • FAISS • SQLite</span>
+              <span className="text-[11px] font-mono text-[#a39e98] dark:text-[#666666]">FastAPI • PyTorch • FAISS • SQLite</span>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mt-4">
               {/* Module 1 */}
-              <div
-                onClick={() => onNavigate("classify")}
-                class="p-3.5 rounded-xl border border-[#e6e6e6] hover:border-[#0075de] bg-[#ffffff] hover:bg-[#fbfbfa] cursor-pointer transition space-y-1.5"
-              >
-                <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="text-[#5c2596] font-bold">MODULE 1</span>
-                  <span class="text-[#0f6d23] font-bold">[PASS]</span>
+              <div onClick={() => onNavigate("classify")} className="bg-[#f6f5f4] dark:bg-[#191919] hover:bg-[#ffffff] dark:hover:bg-[#252525] border border-[#e6e6e6] dark:border-[#2f2f2f] hover:border-[#0075de] p-3.5 rounded-xl cursor-pointer transition notion-shadow-sm space-y-1">
+                <div className="flex items-center justify-between text-[10px] font-mono">
+                  <span className="text-[#391c57] dark:text-[#d6b6f6] font-bold">MODULE 1</span>
+                  <span className="text-[#1aae39] font-bold">[PASS]</span>
                 </div>
-                <h4 class="text-xs font-bold text-[#111111]">Neural Classifier</h4>
-                <p class="text-[11px] text-[#615d59] leading-tight">
-                  PyTorch MLP model (96.15% acc) for Python, AI, ML queries.
-                </p>
+                <h4 className="text-xs font-bold text-[#000000] dark:text-[#ffffff]">Neural Classifier</h4>
+                <p className="text-[11px] text-[#615d59] dark:text-[#888888] leading-tight">PyTorch MLP (96.15% acc) classifies questions into Python, AI, ML.</p>
               </div>
 
               {/* Module 2 */}
-              <div
-                onClick={() => onNavigate("chat")}
-                class="p-3.5 rounded-xl border border-[#e6e6e6] hover:border-[#0075de] bg-[#ffffff] hover:bg-[#fbfbfa] cursor-pointer transition space-y-1.5"
-              >
-                <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="text-[#0c5ea8] font-bold">MODULE 2</span>
-                  <span class="text-[#0f6d23] font-bold">[PASS]</span>
+              <div onClick={() => onNavigate("chat")} className="bg-[#f6f5f4] dark:bg-[#191919] hover:bg-[#ffffff] dark:hover:bg-[#252525] border border-[#e6e6e6] dark:border-[#2f2f2f] hover:border-[#0075de] p-3.5 rounded-xl cursor-pointer transition notion-shadow-sm space-y-1">
+                <div className="flex items-center justify-between text-[10px] font-mono">
+                  <span className="text-[#0075de] font-bold">MODULE 2</span>
+                  <span className="text-[#1aae39] font-bold">[PASS]</span>
                 </div>
-                <h4 class="text-xs font-bold text-[#111111]">NLP & Transformers</h4>
-                <p class="text-[11px] text-[#615d59] leading-tight">
-                  Tokenization, 384-d embeddings, and scaled dot-product attention.
-                </p>
+                <h4 className="text-xs font-bold text-[#000000] dark:text-[#ffffff]">NLP & Transformers</h4>
+                <p className="text-[11px] text-[#615d59] dark:text-[#888888] leading-tight">Tokenization, 384-d dense embeddings, and scaled dot-product attention.</p>
               </div>
 
               {/* Module 3 */}
-              <div
-                onClick={() => onNavigate("chat")}
-                class="p-3.5 rounded-xl border border-[#e6e6e6] hover:border-[#0075de] bg-[#ffffff] hover:bg-[#fbfbfa] cursor-pointer transition space-y-1.5"
-              >
-                <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="text-[#156360] font-bold">MODULE 3</span>
-                  <span class="text-[#0f6d23] font-bold">[PASS]</span>
+              <div onClick={() => onNavigate("chat")} className="bg-[#f6f5f4] dark:bg-[#191919] hover:bg-[#ffffff] dark:hover:bg-[#252525] border border-[#e6e6e6] dark:border-[#2f2f2f] hover:border-[#0075de] p-3.5 rounded-xl cursor-pointer transition notion-shadow-sm space-y-1">
+                <div className="flex items-center justify-between text-[10px] font-mono">
+                  <span className="text-[#2a9d99] font-bold">MODULE 3</span>
+                  <span className="text-[#1aae39] font-bold">[PASS]</span>
                 </div>
-                <h4 class="text-xs font-bold text-[#111111]">Generative AI & RAG</h4>
-                <p class="text-[11px] text-[#615d59] leading-tight">
-                  Grounded Q&A from study notes with FAISS and exact citations.
-                </p>
+                <h4 className="text-xs font-bold text-[#000000] dark:text-[#ffffff]">Generative AI & RAG</h4>
+                <p className="text-[11px] text-[#615d59] dark:text-[#888888] leading-tight">Grounded Q&A from notes (PDF/TXT) with FAISS vector citations.</p>
               </div>
 
               {/* Module 4 */}
-              <div
-                onClick={() => onNavigate("agent")}
-                class="p-3.5 rounded-xl border border-[#e6e6e6] hover:border-[#0075de] bg-[#ffffff] hover:bg-[#fbfbfa] cursor-pointer transition space-y-1.5"
-              >
-                <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="text-[#963800] font-bold">MODULE 4</span>
-                  <span class="text-[#0f6d23] font-bold">[PASS]</span>
+              <div onClick={() => onNavigate("agent")} className="bg-[#f6f5f4] dark:bg-[#191919] hover:bg-[#ffffff] dark:hover:bg-[#252525] border border-[#e6e6e6] dark:border-[#2f2f2f] hover:border-[#0075de] p-3.5 rounded-xl cursor-pointer transition notion-shadow-sm space-y-1">
+                <div className="flex items-center justify-between text-[10px] font-mono">
+                  <span className="text-[#dd5b00] font-bold">MODULE 4</span>
+                  <span className="text-[#1aae39] font-bold">[PASS]</span>
                 </div>
-                <h4 class="text-xs font-bold text-[#111111]">Autonomous Agent</h4>
-                <p class="text-[11px] text-[#615d59] leading-tight">
-                  Multi-intent routing between Q&A, Summary, and Quiz tools.
-                </p>
+                <h4 className="text-xs font-bold text-[#000000] dark:text-[#ffffff]">Autonomous Agent</h4>
+                <p className="text-[11px] text-[#615d59] dark:text-[#888888] leading-tight">Dynamic intent router between Q&A, Summarizer, and Quiz tools.</p>
               </div>
 
               {/* Module 5 */}
-              <div
-                onClick={() => onNavigate("settings")}
-                class="p-3.5 rounded-xl border border-[#e6e6e6] hover:border-[#0075de] bg-[#ffffff] hover:bg-[#fbfbfa] cursor-pointer transition space-y-1.5"
-              >
-                <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="text-[#a8177a] font-bold">MODULE 5</span>
-                  <span class="text-[#0f6d23] font-bold">[PASS]</span>
+              <div onClick={() => onNavigate("settings")} className="bg-[#f6f5f4] dark:bg-[#191919] hover:bg-[#ffffff] dark:hover:bg-[#252525] border border-[#e6e6e6] dark:border-[#2f2f2f] hover:border-[#0075de] p-3.5 rounded-xl cursor-pointer transition notion-shadow-sm space-y-1">
+                <div className="flex items-center justify-between text-[10px] font-mono">
+                  <span className="text-[#1aae39] font-bold">MODULE 5</span>
+                  <span className="text-[#1aae39] font-bold">[PASS]</span>
                 </div>
-                <h4 class="text-xs font-bold text-[#111111]">Guardrails</h4>
-                <p class="text-[11px] text-[#615d59] leading-tight">
-                  FastAPI endpoints, PII filter, prompt injection defense, rate limiter.
-                </p>
+                <h4 className="text-xs font-bold text-[#000000] dark:text-[#ffffff]">Security Guardrails</h4>
+                <p className="text-[11px] text-[#615d59] dark:text-[#888888] leading-tight">PII masking, prompt injection defense, rate limiter, and SQLite logs.</p>
               </div>
             </div>
           </div>
 
           {/* Two-Column Analytics & Activity Section */}
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left 2 Cols: Recent Activity */}
-            <div class="lg:col-span-2 space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left 2 Cols: Recent Activity & Subject Mastery */}
+            <div className="lg:col-span-2 space-y-6">
               {/* Recent Q&A Log */}
-              <div class="notion-card p-5">
-                <div class="flex items-center justify-between pb-3 border-b border-[#e6e6e6]">
-                  <div class="flex items-center space-x-2">
-                    <span class="text-xs uppercase font-mono tracking-wider text-[#615d59]">Recent Question Activity</span>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#f6f5f4] text-[#615d59] border border-[#e6e6e6]">SQLite Log</span>
+              <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-5 notion-shadow-sm transition-colors">
+                <div className="flex items-center justify-between pb-3 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs uppercase font-mono font-bold tracking-wider text-[#615d59] dark:text-[#888888]">Recent Question Activity</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#f6f5f4] dark:bg-[#191919] text-[#615d59] dark:text-[#888888] border border-[#e6e6e6] dark:border-[#2f2f2f]">SQLite</span>
                   </div>
-                  <button onClick={() => onNavigate("chat")} class="text-xs text-[#0075de] hover:underline font-mono">
+                  <button onClick={() => onNavigate("chat")} className="text-xs text-[#0075de] hover:underline font-medium">
                     View Full Chat →
                   </button>
                 </div>
 
-                <div class="mt-4 space-y-3">
+                <div className="mt-4 space-y-3">
                   {data?.recent_conversations && data.recent_conversations.length > 0 ? (
                     data.recent_conversations.map((item, idx) => (
-                      <div key={idx} class="p-3.5 bg-[#fbfbfa] rounded-lg border border-[#e6e6e6] space-y-1.5">
-                        <div class="flex items-center justify-between text-xs">
-                          <span class="font-semibold text-[#111111]">Q: {item.query}</span>
-                          <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">
+                      <div key={idx} className="p-3 bg-[#f6f5f4] dark:bg-[#191919] rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] space-y-1">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="font-semibold text-[#000000] dark:text-[#ffffff]">Q: {item.query}</span>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30 font-semibold">
                             {item.category || item.tool_used || "RAG"}
                           </span>
                         </div>
-                        <p class="text-xs text-[#615d59] line-clamp-2 leading-relaxed">
+                        <p className="text-xs text-[#31302e] dark:text-[#d4d4d4] line-clamp-2 leading-relaxed">
                           A: {item.answer}
                         </p>
-                        <div class="flex items-center justify-between text-[10px] font-mono text-[#a39e98] pt-1">
+                        <div className="flex items-center justify-between text-[10px] font-mono text-[#a39e98] dark:text-[#666666] pt-1">
                           <span>Confidence: {item.confidence || 0.95}</span>
                           <span>{item.timestamp ? new Date(item.timestamp).toLocaleTimeString() : "Recent"}</span>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <div class="p-6 text-center text-xs font-mono text-[#a39e98] bg-[#fbfbfa] rounded-lg border border-[#e6e6e6] space-y-2">
+                    <div className="p-6 text-center text-xs font-mono text-[#a39e98] dark:text-[#666666] bg-[#f6f5f4] dark:bg-[#191919] rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] space-y-2">
                       <p>No questions logged in this session yet.</p>
                       <button
                         onClick={() => {
                           setQuickQuery("What is the Global Interpreter Lock in Python?");
                           handleQuickSubmit({ preventDefault: () => {} });
                         }}
-                        class="text-[#0075de] hover:underline font-semibold text-xs"
+                        className="text-[#0075de] hover:underline font-semibold text-xs"
                       >
                         Try Sample: "What is the Global Interpreter Lock in Python?"
                       </button>
@@ -694,72 +726,72 @@
               </div>
 
               {/* Technical Coverage Curriculum */}
-              <div class="notion-card p-5">
-                <div class="text-xs uppercase font-mono tracking-wider text-[#615d59] mb-3">
-                  Curriculum Technical Balance
+              <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-5 notion-shadow-sm transition-colors">
+                <div className="text-xs uppercase font-mono font-bold tracking-wider text-[#615d59] dark:text-[#888888] mb-3">
+                  Curriculum Coverage
                 </div>
-                <div class="space-y-3">
+                <div className="space-y-3">
                   <div>
-                    <div class="flex justify-between text-xs font-mono mb-1">
-                      <span class="text-[#31302e]">Python Programming & Memory Internals</span>
-                      <span class="text-[#0075de] font-semibold">GIL / Garbage Collection / Yield</span>
+                    <div className="flex justify-between text-xs font-mono mb-1">
+                      <span className="text-[#31302e] dark:text-[#d4d4d4]">Python Programming & Internals</span>
+                      <span className="text-[#0075de] font-semibold">CPython / GIL / Generators</span>
                     </div>
-                    <div class="w-full bg-[#f6f5f4] h-2 rounded-full overflow-hidden border border-[#e6e6e6]">
-                      <div class="bg-[#0075de] h-full rounded-full" style={{ width: '90%' }}></div>
+                    <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-2 rounded-full overflow-hidden">
+                      <div className="bg-[#0075de] h-full rounded-full" style={{ width: '90%' }}></div>
                     </div>
                   </div>
 
                   <div>
-                    <div class="flex justify-between text-xs font-mono mb-1">
-                      <span class="text-[#31302e]">Machine Learning Regularization & Loss</span>
-                      <span class="text-[#156360] font-semibold">L1 Lasso / L2 Ridge / Gradient Descent</span>
+                    <div className="flex justify-between text-xs font-mono mb-1">
+                      <span className="text-[#31302e] dark:text-[#d4d4d4]">Machine Learning Core Concepts</span>
+                      <span className="text-[#2a9d99] font-semibold">L1/L2 Regularization / Overfitting</span>
                     </div>
-                    <div class="w-full bg-[#f6f5f4] h-2 rounded-full overflow-hidden border border-[#e6e6e6]">
-                      <div class="bg-[#2a9d99] h-full rounded-full" style={{ width: '85%' }}></div>
+                    <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-2 rounded-full overflow-hidden">
+                      <div className="bg-[#2a9d99] h-full rounded-full" style={{ width: '85%' }}></div>
                     </div>
                   </div>
 
                   <div>
-                    <div class="flex justify-between text-xs font-mono mb-1">
-                      <span class="text-[#31302e]">Artificial Intelligence & Search</span>
-                      <span class="text-[#963800] font-semibold">A* Heuristic Search / Minimax</span>
+                    <div className="flex justify-between text-xs font-mono mb-1">
+                      <span className="text-[#31302e] dark:text-[#d4d4d4]">Artificial Intelligence & Search</span>
+                      <span className="text-[#dd5b00] font-semibold">A* Heuristic / Minimax / CSP</span>
                     </div>
-                    <div class="w-full bg-[#f6f5f4] h-2 rounded-full overflow-hidden border border-[#e6e6e6]">
-                      <div class="bg-[#dd5b00] h-full rounded-full" style={{ width: '80%' }}></div>
+                    <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-2 rounded-full overflow-hidden">
+                      <div className="bg-[#dd5b00] h-full rounded-full" style={{ width: '80%' }}></div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Right 1 Col: Documents & Recent Quizzes */}
-            <div class="space-y-6">
+            {/* Right 1 Col: Documents & Quizzes */}
+            <div className="space-y-6">
               {/* Registered Documents */}
-              <div class="notion-card p-5">
-                <div class="flex items-center justify-between pb-3 border-b border-[#e6e6e6]">
-                  <span class="text-xs uppercase font-mono tracking-wider text-[#615d59]">Indexed Notes</span>
-                  <button onClick={() => onNavigate("documents")} class="text-xs text-[#0075de] hover:underline font-mono">
+              <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-5 notion-shadow-sm transition-colors">
+                <div className="flex items-center justify-between pb-3 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
+                  <span className="text-xs uppercase font-mono font-bold tracking-wider text-[#615d59] dark:text-[#888888]">Indexed Notes</span>
+                  <button onClick={() => onNavigate("documents")} className="text-xs text-[#0075de] hover:underline font-medium">
                     Upload +
                   </button>
                 </div>
 
-                <div class="mt-3 divide-y divide-[#e6e6e6]">
+                <div className="mt-3 divide-y divide-[#e6e6e6] dark:divide-[#2f2f2f]">
                   {data?.documents && data.documents.length > 0 ? (
                     data.documents.map((doc, idx) => (
-                      <div key={idx} class="py-2.5 flex items-center justify-between text-xs">
+                      <div key={idx} className="py-2.5 flex items-center justify-between text-xs">
                         <div>
-                          <div class="font-semibold text-[#111111] truncate max-w-[170px]">{doc.filename}</div>
-                          <div class="text-[10px] font-mono text-[#615d59]">
+                          <div className="font-semibold text-[#000000] dark:text-[#ffffff] truncate max-w-[160px]">{doc.filename}</div>
+                          <div className="text-[10px] font-mono text-[#615d59] dark:text-[#888888]">
                             {doc.file_type} • {doc.chunks_count} Chunks
                           </div>
                         </div>
-                        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef9f0] text-[#0f6d23] border border-[#b7ecc2]">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef9f1] dark:bg-[#1aae39]/15 text-[#1aae39] border border-[#c6eed0] dark:border-[#1aae39]/30 font-semibold">
                           Active
                         </span>
                       </div>
                     ))
                   ) : (
-                    <div class="text-xs text-[#a39e98] font-mono py-4 text-center">
+                    <div className="text-xs text-[#a39e98] dark:text-[#666666] font-mono py-4 text-center">
                       No documents found.
                     </div>
                   )}
@@ -767,37 +799,39 @@
               </div>
 
               {/* Recent Quiz Scores */}
-              <div class="notion-card p-5">
-                <div class="flex items-center justify-between pb-3 border-b border-[#e6e6e6]">
-                  <span class="text-xs uppercase font-mono tracking-wider text-[#615d59]">Recent Quizzes</span>
-                  <button onClick={() => onNavigate("quiz")} class="text-xs text-[#0075de] hover:underline font-mono">
+              <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-5 notion-shadow-sm transition-colors">
+                <div className="flex items-center justify-between pb-3 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
+                  <span className="text-xs uppercase font-mono font-bold tracking-wider text-[#615d59] dark:text-[#888888]">Recent Quiz Scores</span>
+                  <button onClick={() => onNavigate("quiz")} className="text-xs text-[#dd5b00] hover:underline font-medium">
                     New Quiz →
                   </button>
                 </div>
 
-                <div class="mt-3 space-y-2">
+                <div className="mt-3 space-y-2">
                   {data?.recent_quizzes && data.recent_quizzes.length > 0 ? (
                     data.recent_quizzes.map((q, idx) => (
-                      <div key={idx} class="p-2.5 bg-[#fbfbfa] rounded-lg border border-[#e6e6e6] flex items-center justify-between text-xs">
+                      <div key={idx} className="p-2.5 bg-[#f6f5f4] dark:bg-[#191919] rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] flex items-center justify-between text-xs">
                         <div>
-                          <div class="font-semibold text-[#111111]">{q.topic}</div>
-                          <div class="text-[10px] font-mono text-[#615d59]">
-                            {q.score} / {q.total_questions} Correct
+                          <div className="font-semibold text-[#000000] dark:text-[#ffffff]">{q.topic}</div>
+                          <div className="text-[10px] font-mono text-[#615d59] dark:text-[#888888]">
+                            {q.score} / {q.total_questions} Questions
                           </div>
                         </div>
-                        <span class="font-mono font-bold text-xs px-2 py-1 rounded-full bg-[#eef9f0] text-[#0f6d23] border border-[#b7ecc2]">
+                        <span className={`font-mono font-bold text-xs px-2 py-0.5 rounded-full border ${
+                          q.percentage >= 80 ? "bg-[#eef9f1] dark:bg-[#1aae39]/15 text-[#1aae39] border-[#c6eed0] dark:border-[#1aae39]/30" : "bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00] border-[#fcdcc4] dark:border-[#dd5b00]/30"
+                        }`}>
                           {q.percentage}%
                         </span>
                       </div>
                     ))
                   ) : (
-                    <div class="p-4 bg-[#fbfbfa] rounded-lg border border-[#e6e6e6] text-center text-xs font-mono text-[#a39e98]">
+                    <div className="p-4 bg-[#f6f5f4] dark:bg-[#191919] rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] text-center text-xs font-mono text-[#a39e98] dark:text-[#666666]">
                       <p>No practice quizzes submitted yet.</p>
                       <button
                         onClick={() => onNavigate("quiz")}
-                        class="text-[#0075de] hover:underline mt-1.5 block text-xs"
+                        className="text-[#0075de] hover:underline mt-1.5 block text-xs font-sans font-medium"
                       >
-                        Start 3-question quiz
+                        Start your first quiz
                       </button>
                     </div>
                   )}
@@ -805,23 +839,23 @@
               </div>
 
               {/* Technical System Specs Card */}
-              <div class="bg-[#ffffff] border border-[#e6e6e6] rounded-xl p-4 text-xs font-mono space-y-2 text-[#615d59]">
-                <div class="text-[#111111] font-semibold uppercase text-[11px] mb-1">Architecture Specs</div>
-                <div class="flex justify-between">
+              <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-4 text-xs font-mono space-y-2 text-[#615d59] dark:text-[#888888] notion-shadow-sm transition-colors">
+                <div className="text-[#000000] dark:text-[#ffffff] font-bold uppercase text-[11px] mb-1">Architecture Specs</div>
+                <div className="flex justify-between">
                   <span>Backend:</span>
-                  <span class="text-[#111111]">FastAPI 0.115</span>
+                  <span className="text-[#000000] dark:text-[#ffffff]">FastAPI 0.115</span>
                 </div>
-                <div class="flex justify-between">
+                <div className="flex justify-between">
                   <span>Inference:</span>
-                  <span class="text-[#111111]">PyTorch 2.x</span>
+                  <span className="text-[#000000] dark:text-[#ffffff]">PyTorch + Transformers</span>
                 </div>
-                <div class="flex justify-between">
+                <div className="flex justify-between">
                   <span>Vector Index:</span>
-                  <span class="text-[#111111]">FAISS IndexFlatIP</span>
+                  <span className="text-[#000000] dark:text-[#ffffff]">FAISS FlatIP</span>
                 </div>
-                <div class="flex justify-between">
+                <div className="flex justify-between">
                   <span>Security:</span>
-                  <span class="text-[#0f6d23]">Injection Guard + PII</span>
+                  <span className="text-[#1aae39] font-semibold">Active Guardrails</span>
                 </div>
               </div>
             </div>
@@ -831,7 +865,7 @@
     }
 
     // ==========================================
-    // 2. NOTION AI CHAT VIEW (RAG Grounded Q&A)
+    // 2. NOTION AI CHAT & RAG VIEW
     // ==========================================
     function AIChatView({ onRefreshMetrics }) {
       const [messages, setMessages] = useState([]);
@@ -839,6 +873,75 @@
       const [loading, setLoading] = useState(false);
       const [copiedIdx, setCopiedIdx] = useState(null);
       const [loadingHistory, setLoadingHistory] = useState(true);
+      const [isListening, setIsListening] = useState(false);
+
+      const toggleVoiceInput = () => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+          alert("Voice recognition is not supported in this browser. Please use Chrome or Edge.");
+          return;
+        }
+        if (isListening) {
+          setIsListening(false);
+          return;
+        }
+        try {
+          const recognition = new SpeechRecognition();
+          recognition.lang = "en-US";
+          recognition.interimResults = false;
+          recognition.maxAlternatives = 1;
+          recognition.onstart = () => setIsListening(true);
+          recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            setInput(prev => (prev ? prev + " " + transcript : transcript));
+            setIsListening(false);
+          };
+          recognition.onerror = (event) => {
+            console.error("Speech error", event);
+            setIsListening(false);
+          };
+          recognition.onend = () => setIsListening(false);
+          recognition.start();
+        } catch (e) {
+          console.error("Speech recognition start failed", e);
+          setIsListening(false);
+        }
+      };
+
+      const handleExportNotes = () => {
+        if (!messages || messages.length === 0) {
+          alert("No study session notes to export.");
+          return;
+        }
+        let md = `# AI Study Assistant - Session Study Notes\nGenerated on: ${new Date().toLocaleString()}\n\n---\n\n`;
+        messages.forEach((m, i) => {
+          if (m.role === "user") {
+            md += `### Question: ${m.text}\n\n`;
+          } else {
+            md += `**Answer:**\n${m.text}\n\n`;
+            if (m.confidence !== undefined) {
+              md += `*Confidence Score: ${(m.confidence * 100).toFixed(1)}% | Grounded in Notes: ${m.found_in_notes ? "Yes" : "No"}*\n\n`;
+            }
+            if (m.citations && m.citations.length > 0) {
+              md += `*Citations:*\n`;
+              m.citations.forEach(c => {
+                md += `- ${c.document_name} (Page ${c.page_number}, Score: ${c.relevance_score})\n`;
+              });
+              md += `\n`;
+            }
+            md += `---\n\n`;
+          }
+        });
+        const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `AI_Study_Notes_${new Date().toISOString().slice(0, 10)}.md`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      };
 
       const starterQuestions = [
         "What is MongoDB and what are mongod and mongosh?",
@@ -967,20 +1070,28 @@
       };
 
       return (
-        <div class="max-w-4xl mx-auto flex flex-col h-[calc(100vh-6rem)] space-y-4">
-          {/* Header Bar */}
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e6e6e6]">
+        <div className="max-w-4xl mx-auto flex flex-col h-[calc(100vh-5.5rem)] space-y-4">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
             <div>
-              <h2 class="text-2xl font-bold text-[#111111] notion-headline">Study Notes Chat</h2>
-              <p class="text-xs text-[#615d59] mt-0.5">Retrieval-Augmented Generation (RAG) with anti-hallucination guardrail (0.35 min threshold).</p>
+              <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Chat With Your Study Notes</h2>
+              <p className="text-xs text-[#615d59] dark:text-[#888888] mt-0.5">Retrieval-Augmented Generation (RAG) with anti-hallucination guardrail (0.35 threshold).</p>
             </div>
-            <div class="flex items-center space-x-2 text-xs font-mono">
-              <span class="px-2.5 py-1 rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">
+            <div className="flex items-center space-x-2 text-xs font-mono">
+              <span className="px-3 py-1 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 border border-[#c5e1fb] dark:border-[#0075de]/30 text-[#0075de] font-semibold">
                 FAISS FlatIP • 384-d
               </span>
               <button
+                onClick={handleExportNotes}
+                className="px-3 py-1 rounded-md bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] border border-[#c5e1fb] dark:border-[#0075de]/30 text-[#0075de] dark:text-[#62aef0] transition text-xs font-sans flex items-center space-x-1 shadow-sm"
+                title="Download formatted Markdown study guide of conversation"
+              >
+                <Icons.Download />
+                <span>Export Notes (.md)</span>
+              </button>
+              <button
                 onClick={handleClearHistory}
-                class="btn-notion-utility px-2.5 py-1 text-xs font-mono text-[#a8177a] hover:bg-[#fff0f9]"
+                className="px-3 py-1 rounded-md bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] border border-[#e6e6e6] dark:border-[#2f2f2f] text-[#615d59] dark:text-[#888888] hover:text-[#000000] dark:hover:text-[#ffffff] transition text-xs font-sans"
               >
                 Clear History
               </button>
@@ -988,14 +1099,14 @@
           </div>
 
           {/* Starter Chips Bar */}
-          <div class="flex items-center space-x-2 overflow-x-auto pb-1 text-xs font-mono text-[#615d59] select-none">
-            <span class="text-[#a39e98] shrink-0">Sample Questions:</span>
+          <div className="flex items-center space-x-2 overflow-x-auto pb-1 text-xs font-mono text-[#615d59] dark:text-[#888888] select-none">
+            <span className="text-[#a39e98] dark:text-[#666666] shrink-0 text-xs">Sample Questions:</span>
             {starterQuestions.map((q, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSend(q)}
                 disabled={loading}
-                class="shrink-0 px-3 py-1 rounded-full bg-white hover:bg-[#f6f5f4] border border-[#e6e6e6] text-[#31302e] hover:text-[#111111] transition text-[11px] shadow-sm"
+                className="shrink-0 px-3 py-1 rounded-full bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] border border-[#e6e6e6] dark:border-[#2f2f2f] hover:border-[#0075de] text-[#31302e] dark:text-[#d4d4d4] hover:text-[#0075de] dark:hover:text-[#62aef0] transition text-[11px] font-sans shadow-sm"
               >
                 {q}
               </button>
@@ -1003,52 +1114,56 @@
           </div>
 
           {/* Message Stream */}
-          <div class="flex-1 bg-[#ffffff] border border-[#e6e6e6] rounded-xl p-5 overflow-y-auto space-y-5 shadow-sm">
+          <div className="flex-1 bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-5 overflow-y-auto space-y-5 notion-shadow-sm transition-colors">
             {loadingHistory ? (
-              <div class="p-8 text-center text-xs font-mono text-[#0075de]">
+              <div className="p-8 text-center text-xs font-mono text-[#0075de]">
                 Loading persistent study conversations from SQLite...
               </div>
             ) : (
               messages.map((m, idx) => (
-                <div key={idx} class={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}>
-                  <div class={`max-w-2xl p-4 rounded-xl text-sm ${
+                <div key={idx} className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}>
+                  <div className={`max-w-2xl p-4 rounded-xl text-xs ${
                     m.role === "user"
-                      ? "bg-[#213183] text-white rounded-br-none shadow-sm"
-                      : "bg-[#fbfbfa] text-[#111111] border border-[#e6e6e6] rounded-bl-none shadow-sm"
+                      ? "bg-[#0075de] text-white rounded-br-none shadow-sm"
+                      : "bg-[#f6f5f4] dark:bg-[#191919] text-[#000000] dark:text-[#ffffff] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-bl-none shadow-sm"
                   }`}>
                     {/* Role Header */}
-                    <div class="flex items-center justify-between text-[11px] font-mono mb-2 pb-1.5 border-b border-black/5 text-[#615d59]">
-                      <span class={`font-bold uppercase tracking-wider ${m.role === "user" ? "text-white/80" : "text-[#111111]"}`}>
+                    <div className={`flex items-center justify-between text-[11px] font-mono mb-2 pb-1.5 border-b ${
+                      m.role === "user" ? "border-white/20 text-white/80" : "border-[#e6e6e6] dark:border-[#2f2f2f] text-[#615d59] dark:text-[#888888]"
+                    }`}>
+                      <span className="font-semibold uppercase tracking-wider">
                         {m.role === "user" ? "You (Student)" : "AI Study Tutor"}
                       </span>
                       {m.timestamp && (
-                        <span class={m.role === "user" ? "text-white/60" : "text-[#a39e98]"}>
-                          {new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </span>
+                        <span>{new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                       )}
                     </div>
 
-                    <div class={`leading-relaxed font-sans text-sm ${m.role === "user" ? "text-white" : "text-[#31302e]"}`}>
-                      <FormattedTutorResponse text={m.text} />
+                    <div className="leading-relaxed font-sans text-xs">
+                      {m.role === "user" ? (
+                        <p>{m.text}</p>
+                      ) : (
+                        <FormattedTutorResponse text={m.text} />
+                      )}
                     </div>
 
                     {/* Citations Box */}
                     {m.citations && m.citations.length > 0 && (
-                      <div class="mt-3.5 pt-3 border-t border-[#e6e6e6] text-xs font-mono space-y-2">
-                        <div class="text-[#0075de] font-bold uppercase tracking-wider text-[11px] flex items-center justify-between">
-                          <span>Grounding Citations & Sources:</span>
-                          <span class="text-[#615d59] text-[10px]">{m.citations.length} Sources</span>
+                      <div className="mt-3.5 pt-3 border-t border-[#e6e6e6] dark:border-[#2f2f2f] text-xs font-mono space-y-2">
+                        <div className="text-[#0075de] font-bold uppercase tracking-wider text-[11px] flex items-center justify-between">
+                          <span>Grounding Citations & Verified References:</span>
+                          <span className="text-[#615d59] dark:text-[#888888] text-[10px]">{m.citations.length} Sources</span>
                         </div>
                         {m.citations.map((c, cIdx) => (
-                          <div key={cIdx} class="p-3 bg-white rounded-lg border border-[#e6e6e6] text-[#31302e] space-y-1">
-                            <div class="flex items-center justify-between">
-                              <span class="font-bold text-[#111111]">{c.document_name}</span>
-                              <span class="text-[#0f6d23] font-mono text-[10px] bg-[#eef9f0] px-2 py-0.5 rounded-full border border-[#b7ecc2]">
+                          <div key={cIdx} className="p-3 bg-[#ffffff] dark:bg-[#202020] rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] text-[#31302e] dark:text-[#d4d4d4] space-y-1">
+                            <div className="flex items-center justify-between">
+                              <span className="font-bold text-[#0075de] font-sans text-xs">{c.document_name}</span>
+                              <span className="text-[#1aae39] font-mono text-[10px] bg-[#eef9f1] dark:bg-[#1aae39]/15 px-2 py-0.5 rounded-full border border-[#c6eed0] dark:border-[#1aae39]/30 font-semibold">
                                 Relevance: {(c.relevance_score * 100).toFixed(1)}%
                               </span>
                             </div>
-                            <div class="text-[#615d59] text-[11px]">Page: {c.page_number}</div>
-                            <div class="text-[#31302e] text-[11px] italic mt-1 bg-[#f6f5f4] p-2 rounded border border-[#e6e6e6] font-sans">
+                            <div className="text-[#615d59] dark:text-[#888888] text-[11px]">Page: {c.page_number}</div>
+                            <div className="text-[#31302e] dark:text-[#d4d4d4] text-[11px] italic mt-1 bg-[#f6f5f4] dark:bg-[#191919] p-2 rounded border border-[#e6e6e6] dark:border-[#2f2f2f] font-sans">
                               "{c.snippet}"
                             </div>
                           </div>
@@ -1058,16 +1173,16 @@
 
                     {/* Grounding & Confidence Badges */}
                     {m.found_in_notes !== undefined && (
-                      <div class="mt-3 pt-2 border-t border-[#e6e6e6] text-[11px] font-mono flex items-center justify-between flex-wrap gap-2">
-                        <div class="flex items-center space-x-2">
-                          <span class={`px-2 py-0.5 rounded-full font-bold ${
+                      <div className="mt-3 pt-2 border-t border-[#e6e6e6] dark:border-[#2f2f2f] text-[11px] font-mono flex items-center justify-between flex-wrap gap-2">
+                        <div className="flex items-center space-x-2">
+                          <span className={`px-2 py-0.5 rounded-full font-semibold border ${
                             m.found_in_notes
-                              ? "bg-[#eef9f0] text-[#0f6d23] border border-[#b7ecc2]"
-                              : "bg-[#fff4ec] text-[#963800] border border-[#fed6b8]"
+                              ? "bg-[#eef9f1] dark:bg-[#1aae39]/15 text-[#1aae39] border-[#c6eed0] dark:border-[#1aae39]/30"
+                              : "bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00] border-[#fcdcc4] dark:border-[#dd5b00]/30"
                           }`}>
                             {m.found_in_notes ? "[Grounded in Notes]" : "[Out of Notes Scope]"}
                           </span>
-                          <span class="text-[#615d59]">
+                          <span className="text-[#615d59] dark:text-[#888888]">
                             Confidence: {m.confidence !== undefined ? `${(m.confidence * 100).toFixed(1)}%` : "N/A"}
                           </span>
                         </div>
@@ -1075,7 +1190,7 @@
                         {m.role === "assistant" && (
                           <button
                             onClick={() => handleCopy(m.text, idx)}
-                            class="btn-notion-utility text-[10px] font-mono px-2 py-0.5 text-[#615d59]"
+                            className="text-[10px] font-mono text-[#615d59] dark:text-[#888888] hover:text-[#000000] dark:hover:text-[#ffffff] px-2 py-0.5 rounded bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] border border-[#e6e6e6] dark:border-[#2f2f2f] transition"
                           >
                             {copiedIdx === idx ? "Copied!" : "Copy Answer"}
                           </button>
@@ -1088,32 +1203,44 @@
             )}
 
             {loading && (
-              <div class="p-3 bg-[#fbfbfa] rounded-xl border border-[#b8dbf9] text-xs font-mono text-[#0075de] flex items-center space-x-2 animate-pulse">
+              <div className="p-3 bg-[#f6f5f4] dark:bg-[#191919] rounded-lg border border-[#c5e1fb] dark:border-[#0075de]/30 text-xs font-mono text-[#0075de] flex items-center space-x-2 animate-pulse">
                 <span>[Retrieving relevant chunks from FAISS vector store & synthesizing grounded answer...]</span>
               </div>
             )}
           </div>
 
-          {/* Input Form */}
-          <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} class="space-y-1">
-            <div class="flex gap-2">
+          {/* Input Form with Char Counter */}
+          <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="space-y-1">
+            <div className="flex gap-2">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask any conceptual or technical question grounded in your notes..."
                 maxLength="1000"
-                class="flex-1 bg-white border border-[#e6e6e6] rounded-lg px-4 py-3 text-sm text-[#111111] placeholder:text-[#a39e98] focus:outline-none focus:ring-2 focus:ring-[#0075de] font-sans shadow-sm"
+                className="flex-1 bg-[#ffffff] dark:bg-[#202020] border border-[#dddddd] dark:border-[#383838] rounded-md px-4 py-2.5 text-xs text-[#000000] dark:text-[#ffffff] placeholder:text-[#a39e98] dark:placeholder:text-[#666666] focus:outline-none focus:border-[#0075de] focus:ring-1 focus:ring-[#0075de] font-sans shadow-sm transition-colors"
               />
+              <button
+                type="button"
+                onClick={toggleVoiceInput}
+                title={isListening ? "Listening... Click to stop" : "Voice input - speak your question"}
+                className={`p-2.5 rounded-full border transition flex items-center justify-center shadow-sm ${
+                  isListening
+                    ? "bg-[#dd5b00] text-white border-[#dd5b00] animate-pulse"
+                    : "bg-[#ffffff] dark:bg-[#202020] text-[#615d59] dark:text-[#888888] hover:text-[#0075de] hover:border-[#0075de] border-[#dddddd] dark:border-[#383838]"
+                }`}
+              >
+                <Icons.Mic />
+              </button>
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                class="btn-notion-primary px-6 py-3 text-xs font-mono uppercase font-bold tracking-wider disabled:opacity-50 shadow-sm"
+                className="bg-[#0075de] hover:bg-[#005bab] disabled:bg-[#e6e6e6] dark:disabled:bg-[#2a2a2a] disabled:text-[#a39e98] text-white font-semibold px-6 py-2.5 rounded-full text-xs transition shadow-sm font-sans"
               >
                 {loading ? "Searching..." : "Ask Notes"}
               </button>
             </div>
-            <div class="flex justify-between items-center text-[10px] font-mono text-[#a39e98] px-1">
+            <div className="flex justify-between items-center text-[10px] font-mono text-[#a39e98] dark:text-[#666666] px-1">
               <span>Press Enter to send</span>
               <span>{input.length} / 1000 characters</span>
             </div>
@@ -1123,7 +1250,7 @@
     }
 
     // ==========================================
-    // 3. NOTION QUESTION CLASSIFIER VIEW
+    // 3. NOTION SUBJECT CLASSIFIER VIEW
     // ==========================================
     function ClassifierView() {
       const [question, setQuestion] = useState("");
@@ -1161,93 +1288,134 @@
       };
 
       return (
-        <div class="max-w-3xl mx-auto space-y-6">
+        <div className="max-w-3xl mx-auto space-y-6">
           <div>
-            <h2 class="text-2xl font-bold text-[#111111] notion-headline">Question Subject Classifier</h2>
-            <p class="text-xs text-[#615d59] mt-1">Classify questions into Python, AI, or ML using the PyTorch MLP neural model.</p>
+            <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Question Subject Classifier</h2>
+            <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Classify student queries into Python, AI, or ML using our trained PyTorch MLP neural network.</p>
           </div>
 
           {/* Preset Test Questions */}
-          <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
-            <span class="text-[#a39e98]">Quick Samples:</span>
+          <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
+            <span className="text-[#a39e98] dark:text-[#666666]">Quick Test Samples:</span>
             <button
               type="button"
               onClick={() => { setQuestion("What is the Global Interpreter Lock in Python and how does it manage thread execution?"); }}
-              class="px-3 py-1 rounded-full bg-[#f7f1fe] text-[#5c2596] border border-[#e3cffc] hover:bg-[#eedcfd] transition text-[11px]"
+              className="px-3 py-1 rounded-full bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30 hover:border-[#0075de] transition text-[11px] font-sans font-medium shadow-sm"
             >
               Python (GIL)
             </button>
             <button
               type="button"
               onClick={() => { setQuestion("How does backpropagation compute gradient descent to minimize loss in neural networks?"); }}
-              class="px-3 py-1 rounded-full bg-[#edf8f7] text-[#156360] border border-[#a8e2e0] hover:bg-[#d8f2f0] transition text-[11px]"
+              className="px-3 py-1 rounded-full bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] text-[#2a9d99] border border-[#bdedeb] dark:border-[#2a9d99]/30 hover:border-[#2a9d99] transition text-[11px] font-sans font-medium shadow-sm"
             >
-              ML (Backprop)
+              ML (Backpropagation)
             </button>
             <button
               type="button"
               onClick={() => { setQuestion("How does the A* search algorithm evaluate paths using admissible heuristics?"); }}
-              class="px-3 py-1 rounded-full bg-[#fff4ec] text-[#963800] border border-[#fed6b8] hover:bg-[#fee7d3] transition text-[11px]"
+              className="px-3 py-1 rounded-full bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] text-[#dd5b00] border border-[#fcdcc4] dark:border-[#dd5b00]/30 hover:border-[#dd5b00] transition text-[11px] font-sans font-medium shadow-sm"
             >
-              AI (A* Search)
+              AI (A* Heuristics)
             </button>
           </div>
 
-          <form onSubmit={handleClassify} class="space-y-4">
+          <form onSubmit={handleClassify} className="space-y-4">
             <div>
-              <label class="block text-xs font-mono uppercase text-[#615d59] mb-2">Student Question:</label>
+              <label className="block text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888] mb-2">Student Question:</label>
               <textarea
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 placeholder="e.g. How does backpropagation update weights in a neural network?"
                 rows="3"
-                class="w-full bg-white border border-[#e6e6e6] rounded-lg p-3 text-sm text-[#111111] focus:outline-none focus:ring-2 focus:ring-[#0075de] font-sans shadow-sm"
+                className="w-full bg-[#ffffff] dark:bg-[#202020] border border-[#dddddd] dark:border-[#383838] rounded-md p-3 text-xs text-[#000000] dark:text-[#ffffff] focus:outline-none focus:border-[#0075de] focus:ring-1 focus:ring-[#0075de] font-sans shadow-sm transition-colors"
               />
             </div>
             <button
               type="submit"
               disabled={loading || !question.trim()}
-              class="btn-notion-primary px-6 py-2.5 text-xs font-mono uppercase font-bold tracking-wider disabled:opacity-50 shadow-sm"
+              className="bg-[#0075de] hover:bg-[#005bab] disabled:bg-[#e6e6e6] dark:disabled:bg-[#2a2a2a] disabled:text-[#a39e98] px-6 py-2.5 rounded-full text-xs font-semibold text-white transition shadow-sm font-sans"
             >
               {loading ? "Classifying..." : "Classify Question"}
             </button>
           </form>
 
           {error && (
-            <div class="p-4 bg-[#fff0f9] border border-[#ffc2ea] rounded-xl text-sm text-[#a8177a]">
+            <div className="p-4 bg-[#fef4ec] dark:bg-[#dd5b00]/15 border border-[#fcdcc4] dark:border-[#dd5b00]/30 rounded-xl text-xs text-[#dd5b00]">
               {error}
             </div>
           )}
 
           {result && (
-            <div class="notion-card p-6 space-y-4">
-              <div class="flex items-center justify-between border-b border-[#e6e6e6] pb-4">
+            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-6 space-y-4 notion-shadow-sm transition-colors">
+              <div className="flex items-center justify-between border-b border-[#e6e6e6] dark:border-[#2f2f2f] pb-4">
                 <div>
-                  <div class="text-xs font-mono text-[#615d59]">Predicted Subject</div>
-                  <div class="text-2xl font-bold text-[#0075de] mt-1 notion-headline">{result.category}</div>
+                  <div className="text-xs font-mono text-[#615d59] dark:text-[#888888]">Predicted Subject</div>
+                  <div className="text-2xl font-bold text-[#0075de] mt-1 tracking-tight">{result.category}</div>
                 </div>
-                <div class="text-right">
-                  <div class="text-xs font-mono text-[#615d59]">Confidence Score</div>
-                  <div class="text-2xl font-bold text-[#0f6d23] mt-1 font-mono">{(result.confidence * 100).toFixed(1)}%</div>
+                <div className="text-right">
+                  <div className="text-xs font-mono text-[#615d59] dark:text-[#888888]">Confidence Score</div>
+                  <div className="text-2xl font-bold text-[#1aae39] mt-1 font-mono">{(result.confidence * 100).toFixed(1)}%</div>
                 </div>
               </div>
 
               <div>
-                <div class="text-xs font-mono uppercase text-[#615d59] mb-2">Class Probability Distribution:</div>
-                <div class="space-y-2">
+                <div className="text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888] mb-2">Class Probability Distribution:</div>
+                <div className="space-y-2">
                   {Object.entries(result.probabilities).map(([cat, prob]) => (
-                    <div key={cat} class="space-y-1">
-                      <div class="flex justify-between text-xs font-mono text-[#31302e]">
+                    <div key={cat} className="space-y-1">
+                      <div className="flex justify-between text-xs font-mono text-[#31302e] dark:text-[#d4d4d4]">
                         <span>{cat}</span>
                         <span>{(prob * 100).toFixed(1)}%</span>
                       </div>
-                      <div class="w-full bg-[#f6f5f4] h-2 rounded-full overflow-hidden border border-[#e6e6e6]">
-                        <div class="bg-[#0075de] h-full rounded-full transition-all" style={{ width: `${prob * 100}%` }}></div>
+                      <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-2 rounded-full overflow-hidden">
+                        <div className="bg-[#0075de] h-full rounded-full transition-all" style={{ width: `${prob * 100}%` }}></div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
+
+              {/* Explainable AI (XAI) Feature Saliency Attribution */}
+              {result.explanation && (
+                <div className="p-4 bg-[#f6f5f4] dark:bg-[#191919] rounded-xl border border-[#c5e1fb] dark:border-[#0075de]/30 text-xs space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30">
+                      Explainable AI (XAI)
+                    </span>
+                    <span className="text-[11px] font-mono text-[#615d59] dark:text-[#888888]">
+                      Input * Gradient Saliency
+                    </span>
+                  </div>
+                  <p className="text-[#31302e] dark:text-[#d4d4d4] font-medium leading-relaxed">
+                    {result.explanation}
+                  </p>
+                </div>
+              )}
+
+              {result.top_features && result.top_features.length > 0 && (
+                <div className="space-y-2 pt-2 border-t border-[#e6e6e6] dark:border-[#2f2f2f]">
+                  <div className="text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888]">
+                    Influential Keywords (Attribution Weight):
+                  </div>
+                  <div className="space-y-1.5">
+                    {result.top_features.map((feat, fIdx) => (
+                      <div key={fIdx} className="space-y-1">
+                        <div className="flex justify-between text-xs font-mono text-[#31302e] dark:text-[#d4d4d4]">
+                          <span className="font-semibold text-[#0075de] dark:text-[#62aef0]">"{feat.word}"</span>
+                          <span>{feat.importance_percentage || feat.percentage}% weight</span>
+                        </div>
+                        <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden">
+                          <div
+                            className="bg-[#0075de] h-full rounded-full transition-all"
+                            style={{ width: `${Math.min(100, (feat.importance_percentage || feat.percentage) * 1.5)}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -1255,7 +1423,7 @@
     }
 
     // ==========================================
-    // 4. NOTION DOCUMENTS VIEW (FAISS Knowledge Base)
+    // 4. NOTION DOCUMENTS & VECTOR STORE VIEW
     // ==========================================
     function DocumentsView({ onUploaded }) {
       const [documents, setDocuments] = useState([]);
@@ -1418,24 +1586,24 @@
       const totalChunksAcrossAll = documents.reduce((acc, d) => acc + (d.chunks_count || 0), 0);
 
       return (
-        <div class="max-w-5xl mx-auto space-y-6">
+        <div className="max-w-5xl mx-auto space-y-6">
           {/* Header & Stats Bar */}
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#e6e6e6]">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
             <div>
-              <h2 class="text-2xl font-bold text-[#111111] notion-headline">Study Documents & FAISS Store</h2>
-              <p class="text-xs text-[#615d59] mt-0.5">Upload, chunk, embed, and inspect technical lecture notes.</p>
+              <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Study Documents & Vector Knowledge Base</h2>
+              <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Upload, chunk, embed, and inspect technical lecture notes in FAISS vector store.</p>
             </div>
-            <div class="flex items-center space-x-2 text-xs font-mono">
-              <span class="px-3 py-1.5 rounded-lg bg-white border border-[#e6e6e6] text-[#615d59] shadow-sm">
-                Docs: <strong class="text-[#111111]">{documents.length}</strong>
+            <div className="flex items-center space-x-2 text-xs font-mono">
+              <span className="px-3 py-1.5 rounded-md bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] text-[#31302e] dark:text-[#d4d4d4]">
+                Docs: <strong className="text-[#000000] dark:text-[#ffffff]">{documents.length}</strong>
               </span>
-              <span class="px-3 py-1.5 rounded-lg bg-white border border-[#e6e6e6] text-[#615d59] shadow-sm">
-                Total Chunks: <strong class="text-[#0075de]">{totalChunksAcrossAll}</strong>
+              <span className="px-3 py-1.5 rounded-md bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] text-[#31302e] dark:text-[#d4d4d4]">
+                Total Chunks: <strong className="text-[#0075de]">{totalChunksAcrossAll}</strong>
               </span>
               <button
                 onClick={handleLoadSample}
                 disabled={uploading}
-                class="btn-notion-utility px-3 py-1.5 text-xs font-mono text-[#0075de] disabled:opacity-50"
+                className="px-3 py-1.5 rounded-md bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] border border-[#e6e6e6] dark:border-[#2f2f2f] text-[#0075de] transition font-sans font-medium text-xs disabled:opacity-50"
               >
                 Reload Sample Notes
               </button>
@@ -1447,10 +1615,10 @@
             onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
-            class={`border-2 border-dashed rounded-xl p-8 text-center transition select-none bg-white ${
+            className={`border-2 border-dashed rounded-xl p-8 text-center transition select-none ${
               isDragging
-                ? "border-[#0075de] bg-[#eef6fc]"
-                : "border-[#e6e6e6] hover:border-[#b8dbf9]"
+                ? "border-[#0075de] bg-[#eef6fc] dark:bg-[#0075de]/10"
+                : "border-[#dddddd] dark:border-[#383838] hover:border-[#0075de] bg-[#ffffff] dark:bg-[#202020]"
             }`}
           >
             <input
@@ -1462,43 +1630,42 @@
                   processFile(e.target.files[0]);
                 }
               }}
-              class="hidden"
+              className="hidden"
               disabled={uploading}
             />
 
-            <label for="filePicker" class="cursor-pointer block space-y-3">
-              <div class="inline-flex p-3 rounded-full bg-[#f6f5f4] text-[#0075de] border border-[#e6e6e6]">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+            <label htmlFor="filePicker" className="cursor-pointer block space-y-3">
+              <div className="inline-flex p-3 rounded-full bg-[#f6f5f4] dark:bg-[#191919] text-[#0075de] border border-[#e6e6e6] dark:border-[#2f2f2f]">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
               </div>
               <div>
-                <span class="text-sm font-bold text-[#111111] tracking-tight block">
+                <span className="text-sm font-bold text-[#000000] dark:text-[#ffffff] block">
                   {uploading ? "Processing Document..." : "Drag and drop PDF or TXT lecture notes here"}
                 </span>
-                <span class="text-xs text-[#615d59] mt-1 block">
-                  or <span class="text-[#0075de] underline font-medium">browse local files</span> (Max 15MB)
+                <span className="text-xs text-[#615d59] dark:text-[#888888] mt-1 block">
+                  or <span className="text-[#0075de] underline font-medium">browse computer files</span> (Max 15MB)
                 </span>
               </div>
-              <div class="flex items-center justify-center space-x-3 text-[11px] font-mono text-[#a39e98]">
+              <div className="flex items-center justify-center space-x-3 text-[11px] font-mono text-[#a39e98] dark:text-[#666666]">
                 <span>PDF (PyPDF extracted)</span>
                 <span>•</span>
                 <span>TXT (UTF-8)</span>
                 <span>•</span>
-                <span>400-char Chunking</span>
+                <span>Sentence Boundary Chunking</span>
               </div>
             </label>
 
-            {/* Ingestion Pipeline Tracker */}
             {uploading && (
-              <div class="mt-4 max-w-md mx-auto p-3.5 bg-[#fbfbfa] rounded-xl border border-[#b8dbf9] space-y-2">
-                <div class="flex items-center justify-between text-xs font-mono text-[#0075de]">
-                  <span class="font-bold">Vector Ingestion Pipeline</span>
-                  <span class="animate-pulse">Active</span>
+              <div className="mt-4 max-w-md mx-auto p-3.5 bg-[#f6f5f4] dark:bg-[#191919] rounded-xl border border-[#c5e1fb] dark:border-[#0075de]/30 space-y-2">
+                <div className="flex items-center justify-between text-xs font-mono text-[#0075de]">
+                  <span className="font-bold">Vector Ingestion Pipeline</span>
+                  <span className="animate-pulse">Running</span>
                 </div>
-                <div class="text-xs font-mono text-[#31302e] text-left bg-white p-2 rounded border border-[#e6e6e6]">
+                <div className="text-xs font-mono text-[#31302e] dark:text-[#d4d4d4] text-left bg-[#ffffff] dark:bg-[#202020] p-2 rounded border border-[#e6e6e6] dark:border-[#2f2f2f]">
                   {uploadStage}
                 </div>
-                <div class="w-full bg-[#e6e6e6] h-1.5 rounded-full overflow-hidden">
-                  <div class="bg-[#0075de] h-full rounded-full animate-pulse" style={{ width: '80%' }}></div>
+                <div className="w-full bg-[#e6e6e6] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-[#0075de] h-full rounded-full animate-pulse" style={{ width: '80%' }}></div>
                 </div>
               </div>
             )}
@@ -1506,25 +1673,25 @@
 
           {/* Feedback Banners */}
           {statusMsg && (
-            <div class={`p-4 rounded-xl text-xs font-mono flex items-center justify-between ${
+            <div className={`p-4 rounded-xl text-xs font-mono flex items-center justify-between border ${
               statusMsg.type === 'success'
-                ? "bg-[#eef9f0] border border-[#b7ecc2] text-[#0f6d23]"
+                ? "bg-[#eef9f1] dark:bg-[#1aae39]/15 border-[#c6eed0] dark:border-[#1aae39]/30 text-[#1aae39]"
                 : statusMsg.type === 'error'
-                ? "bg-[#fff0f9] border border-[#ffc2ea] text-[#a8177a]"
-                : "bg-[#eef6fc] border border-[#b8dbf9] text-[#0c5ea8]"
+                ? "bg-[#fef4ec] dark:bg-[#dd5b00]/15 border-[#fcdcc4] dark:border-[#dd5b00]/30 text-[#dd5b00]"
+                : "bg-[#eef6fc] dark:bg-[#0075de]/15 border-[#c5e1fb] dark:border-[#0075de]/30 text-[#0075de]"
             }`}>
               <span>{statusMsg.text}</span>
-              <button onClick={() => setStatusMsg(null)} class="text-[#615d59] hover:text-[#111111] font-bold ml-4">✕</button>
+              <button onClick={() => setStatusMsg(null)} className="text-[#615d59] dark:text-[#888888] hover:text-[#000000] dark:hover:text-[#ffffff] font-bold ml-4">✕</button>
             </div>
           )}
 
           {/* Document Inventory Table */}
-          <div class="notion-card overflow-hidden">
-            <div class="p-4 border-b border-[#e6e6e6] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#fbfbfa]">
-              <div class="flex items-center space-x-2">
-                <span class="text-xs font-mono uppercase tracking-wider text-[#615d59]">Registered Documents</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white text-[#615d59] border border-[#e6e6e6]">
-                  {documents.length} Files
+          <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl overflow-hidden notion-shadow-sm transition-colors">
+            <div className="p-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#fdfdfd] dark:bg-[#1d1d1d]">
+              <div className="flex items-center space-x-2">
+                <span className="text-xs font-mono uppercase font-bold tracking-wider text-[#615d59] dark:text-[#888888]">Registered Documents</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#f6f5f4] dark:bg-[#191919] text-[#615d59] dark:text-[#888888] border border-[#e6e6e6] dark:border-[#2f2f2f]">
+                  {documents.length} Files in Knowledge Base
                 </span>
               </div>
               <div>
@@ -1532,65 +1699,65 @@
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Filter documents..."
-                  class="bg-white border border-[#e6e6e6] rounded-lg px-3 py-1.5 text-xs text-[#111111] placeholder:text-[#a39e98] focus:outline-none focus:ring-1 focus:ring-[#0075de] font-sans w-60"
+                  placeholder="Filter documents by name..."
+                  className="bg-[#f6f5f4] dark:bg-[#191919] border border-[#dddddd] dark:border-[#383838] rounded-md px-3 py-1.5 text-xs text-[#000000] dark:text-[#ffffff] placeholder:text-[#a39e98] dark:placeholder:text-[#666666] focus:outline-none focus:border-[#0075de] font-sans w-64"
                 />
               </div>
             </div>
 
             {filteredDocs.length === 0 ? (
-              <div class="p-10 text-center space-y-2">
-                <div class="text-xs font-mono text-[#a39e98]">
+              <div className="p-10 text-center space-y-2">
+                <div className="text-xs font-mono text-[#a39e98] dark:text-[#666666]">
                   {documents.length === 0
                     ? "No study notes indexed yet. Drag and drop a file above or click 'Reload Sample Notes'."
                     : "No documents matching search filter."}
                 </div>
               </div>
             ) : (
-              <div class="divide-y divide-[#e6e6e6]">
+              <div className="divide-y divide-[#e6e6e6] dark:divide-[#2f2f2f]">
                 {filteredDocs.map(doc => {
                   const isPdf = doc.file_type.toLowerCase() === "pdf";
                   const isBeingInspected = inspectDoc === doc.filename;
 
                   return (
-                    <div key={doc.id} class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:bg-[#fbfbfa] transition">
-                      <div class="flex items-start space-x-3.5">
-                        <div class={`p-2 rounded-lg border text-xs font-mono font-bold uppercase mt-0.5 ${
+                    <div key={doc.id} className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:bg-[#f6f5f4]/60 dark:hover:bg-[#252525] transition">
+                      <div className="flex items-start space-x-3.5">
+                        <div className={`p-2 rounded-md border text-xs font-mono font-bold uppercase mt-0.5 ${
                           isPdf
-                            ? "bg-[#fff0f9] border-[#ffc2ea] text-[#a8177a]"
-                            : "bg-[#eef6fc] border-[#b8dbf9] text-[#0c5ea8]"
+                            ? "bg-[#fff0f9] dark:bg-[#ff64c8]/15 border-[#ffd1f0] dark:border-[#ff64c8]/30 text-[#ff64c8]"
+                            : "bg-[#eef6fc] dark:bg-[#0075de]/15 border-[#c5e1fb] dark:border-[#0075de]/30 text-[#0075de]"
                         }`}>
                           {doc.file_type}
                         </div>
                         <div>
-                          <div class="text-sm font-bold text-[#111111] tracking-tight">{doc.filename}</div>
-                          <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono text-[#615d59] mt-1">
-                            <span>Chunks: <strong class="text-[#0075de]">{doc.chunks_count}</strong></span>
+                          <div className="text-xs font-bold text-[#000000] dark:text-[#ffffff]">{doc.filename}</div>
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono text-[#615d59] dark:text-[#888888] mt-0.5">
+                            <span>Chunks: <strong className="text-[#0075de]">{doc.chunks_count}</strong></span>
                             <span>•</span>
                             <span>Size: {(doc.file_size_bytes / 1024).toFixed(1)} KB</span>
                             <span>•</span>
                             <span>Indexed: {doc.uploaded_at ? new Date(doc.uploaded_at).toLocaleDateString() : "Active"}</span>
                             <span>•</span>
-                            <span class="text-[#0f6d23] font-semibold">[FAISS FlatIP]</span>
+                            <span className="text-[#1aae39] font-semibold">[FAISS FlatIP]</span>
                           </div>
                         </div>
                       </div>
 
-                      <div class="flex items-center space-x-2 self-end md:self-auto">
+                      <div className="flex items-center space-x-2 self-end md:self-auto">
                         <button
                           onClick={() => handleInspect(doc.filename)}
-                          class={`text-xs font-mono px-3 py-1.5 rounded-lg border transition ${
+                          className={`text-xs font-mono px-3 py-1.5 rounded-md border transition flex items-center space-x-1.5 ${
                             isBeingInspected
                               ? "bg-[#0075de] text-white border-[#0075de]"
-                              : "btn-notion-utility text-[#31302e]"
+                              : "bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] border-[#e6e6e6] dark:border-[#2f2f2f] text-[#31302e] dark:text-[#d4d4d4]"
                           }`}
                         >
-                          {isBeingInspected ? "Inspecting" : "Inspect Chunks"}
+                          <span>{isBeingInspected ? "Inspecting" : "Inspect Chunks"}</span>
                         </button>
 
                         <button
                           onClick={() => handleDelete(doc.filename)}
-                          class="text-xs font-mono text-[#a8177a] hover:bg-[#fff0f9] px-3 py-1.5 rounded-lg border border-[#ffc2ea] transition"
+                          className="text-xs font-mono text-[#dd5b00] hover:text-[#793400] px-3 py-1.5 rounded-md bg-[#ffffff] dark:bg-[#202020] hover:bg-[#fef4ec] dark:hover:bg-[#dd5b00]/20 border border-[#e6e6e6] dark:border-[#2f2f2f] transition"
                         >
                           Delete
                         </button>
@@ -1604,19 +1771,19 @@
 
           {/* Interactive Chunk Inspector Panel */}
           {inspectDoc && (
-            <div class="notion-card-elevated p-6 space-y-4">
-              <div class="flex items-center justify-between pb-3 border-b border-[#e6e6e6]">
+            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#c5e1fb] dark:border-[#0075de]/30 rounded-xl p-6 space-y-4 notion-shadow transition-colors">
+              <div className="flex items-center justify-between pb-3 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
                 <div>
-                  <div class="text-xs font-mono text-[#0075de] uppercase tracking-wider">Chunk Inspector</div>
-                  <h3 class="text-lg font-bold text-[#111111] notion-headline mt-0.5">{inspectDoc}</h3>
+                  <div className="text-xs font-mono text-[#0075de] uppercase font-bold">Chunk Inspector</div>
+                  <h3 className="text-lg font-bold text-[#000000] dark:text-[#ffffff] mt-0.5">{inspectDoc}</h3>
                 </div>
-                <div class="flex items-center space-x-3">
-                  <span class="text-xs font-mono text-[#615d59]">
+                <div className="flex items-center space-x-3">
+                  <span className="text-xs font-mono text-[#615d59] dark:text-[#888888]">
                     {docChunks.length} Chunks Loaded
                   </span>
                   <button
                     onClick={() => setInspectDoc(null)}
-                    class="btn-notion-utility text-xs font-mono px-2.5 py-1"
+                    className="text-xs font-mono px-3 py-1 rounded-md bg-[#f6f5f4] dark:bg-[#191919] hover:bg-[#e6e6e6] dark:hover:bg-[#2a2a2a] text-[#31302e] dark:text-[#d4d4d4]"
                   >
                     Close
                   </button>
@@ -1624,26 +1791,26 @@
               </div>
 
               {loadingChunks ? (
-                <div class="p-8 text-center text-xs font-mono text-[#0075de]">
+                <div className="p-8 text-center text-xs font-mono text-[#0075de]">
                   Retrieving chunk embeddings from FAISS metadata...
                 </div>
               ) : docChunks.length === 0 ? (
-                <div class="p-6 text-center text-xs font-mono text-[#a39e98]">
+                <div className="p-6 text-center text-xs font-mono text-[#a39e98] dark:text-[#666666]">
                   No chunk records found for this document in active index.
                 </div>
               ) : (
-                <div class="space-y-3 max-h-96 overflow-y-auto pr-2">
+                <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
                   {docChunks.map((chunk, cIdx) => (
-                    <div key={cIdx} class="p-4 bg-[#fbfbfa] rounded-lg border border-[#e6e6e6] space-y-2">
-                      <div class="flex items-center justify-between text-xs font-mono">
-                        <span class="text-[#0075de] font-bold">Chunk #{chunk.chunk_id + 1}</span>
-                        <div class="flex items-center space-x-2 text-[#615d59]">
+                    <div key={cIdx} className="p-4 bg-[#f6f5f4] dark:bg-[#191919] rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] space-y-2">
+                      <div className="flex items-center justify-between text-xs font-mono">
+                        <span className="text-[#0075de] font-bold">Chunk #{chunk.chunk_id + 1}</span>
+                        <div className="flex items-center space-x-2 text-[#615d59] dark:text-[#888888]">
                           <span>Page {chunk.page_number}</span>
                           <span>•</span>
                           <span>{chunk.char_length} Characters</span>
                         </div>
                       </div>
-                      <p class="text-xs text-[#31302e] leading-relaxed font-sans bg-white p-3 rounded border border-[#e6e6e6]">
+                      <p className="text-xs text-[#31302e] dark:text-[#d4d4d4] leading-relaxed font-sans bg-[#ffffff] dark:bg-[#202020] p-3 rounded border border-[#e6e6e6] dark:border-[#2f2f2f]">
                         {chunk.text}
                       </p>
                     </div>
@@ -1706,20 +1873,20 @@
       };
 
       return (
-        <div class="max-w-3xl mx-auto space-y-6">
+        <div className="max-w-3xl mx-auto space-y-6">
           <div>
-            <h2 class="text-2xl font-bold text-[#111111] notion-headline">Notes Summarizer Tool</h2>
-            <p class="text-xs text-[#615d59] mt-1">Distill lengthy study material into executive summaries and core takeaways.</p>
+            <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Notes Summarizer Tool</h2>
+            <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Distill lengthy study material into structured executive overviews and core takeaways.</p>
           </div>
 
-          <div class="notion-card p-6 space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-6 rounded-xl space-y-4 notion-shadow-sm transition-colors">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-mono uppercase text-[#615d59] mb-2">Document to Summarize:</label>
+                <label className="block text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888] mb-2">Document to Summarize:</label>
                 <select
                   value={selectedDoc}
                   onChange={(e) => setSelectedDoc(e.target.value)}
-                  class="w-full bg-[#fbfbfa] border border-[#e6e6e6] rounded-lg p-2.5 text-sm text-[#111111] focus:outline-none focus:ring-2 focus:ring-[#0075de] font-sans"
+                  className="w-full bg-[#ffffff] dark:bg-[#191919] border border-[#dddddd] dark:border-[#383838] rounded-md p-2.5 text-xs text-[#000000] dark:text-[#ffffff] focus:outline-none focus:border-[#0075de] font-sans"
                 >
                   <option value="">All Uploaded Notes</option>
                   {docList.map(d => (
@@ -1728,52 +1895,52 @@
                 </select>
               </div>
               <div>
-                <label class="block text-xs font-mono uppercase text-[#615d59] mb-2">Max Takeaway Points: {maxPoints}</label>
+                <label className="block text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888] mb-2">Max Takeaway Points: {maxPoints}</label>
                 <input
                   type="range"
                   min="3"
                   max="10"
                   value={maxPoints}
                   onChange={(e) => setMaxPoints(parseInt(e.target.value))}
-                  class="w-full accent-[#0075de] cursor-pointer mt-2"
+                  className="w-full accent-[#0075de] cursor-pointer mt-2"
                 />
               </div>
             </div>
             <button
               onClick={handleSummarize}
               disabled={loading}
-              class="btn-notion-primary px-6 py-2.5 text-xs font-mono uppercase font-bold tracking-wider disabled:opacity-50 shadow-sm"
+              className="bg-[#0075de] hover:bg-[#005bab] disabled:bg-[#e6e6e6] dark:disabled:bg-[#2a2a2a] disabled:text-[#a39e98] px-6 py-2.5 rounded-full text-xs font-semibold text-white transition shadow-sm font-sans"
             >
               {loading ? "Analyzing Notes..." : "Generate Summary"}
             </button>
           </div>
 
           {error && (
-            <div class="p-4 bg-[#fff0f9] border border-[#ffc2ea] rounded-xl text-sm text-[#a8177a]">
+            <div className="p-4 bg-[#fef4ec] dark:bg-[#dd5b00]/15 border border-[#fcdcc4] dark:border-[#dd5b00]/30 rounded-xl text-xs text-[#dd5b00]">
               {error}
             </div>
           )}
 
           {summary && (
-            <div class="notion-card p-6 space-y-5">
+            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-6 space-y-5 notion-shadow-sm transition-colors">
               <div>
-                <div class="text-xs font-mono text-[#0075de] uppercase">Document Analyzed</div>
-                <div class="text-lg font-bold text-[#111111] notion-headline mt-1">{summary.document_name}</div>
+                <div className="text-xs font-mono text-[#0075de] uppercase font-bold">Document Analyzed</div>
+                <div className="text-lg font-bold text-[#000000] dark:text-[#ffffff] mt-1">{summary.document_name}</div>
               </div>
 
               <div>
-                <div class="text-xs font-mono uppercase text-[#615d59] mb-2">Executive Summary:</div>
-                <p class="text-sm text-[#31302e] leading-relaxed bg-[#fbfbfa] p-4 rounded-lg border border-[#e6e6e6]">
+                <div className="text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888] mb-2">Executive Summary:</div>
+                <p className="text-xs text-[#31302e] dark:text-[#d4d4d4] leading-relaxed bg-[#f6f5f4] dark:bg-[#191919] p-4 rounded-xl border border-[#e6e6e6] dark:border-[#2f2f2f]">
                   {summary.executive_summary}
                 </p>
               </div>
 
               <div>
-                <div class="text-xs font-mono uppercase text-[#615d59] mb-2">Key Core Takeaways:</div>
-                <ul class="space-y-2">
+                <div className="text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888] mb-2">Key Core Takeaways:</div>
+                <ul className="space-y-2">
                   {summary.key_takeaways.map((pt, idx) => (
-                    <li key={idx} class="text-sm text-[#31302e] flex items-start space-x-2">
-                      <span class="text-[#0075de] font-mono text-xs mt-0.5">•</span>
+                    <li key={idx} className="text-xs text-[#31302e] dark:text-[#d4d4d4] flex items-start space-x-2">
+                      <span className="text-[#0075de] font-mono text-xs mt-0.5">•</span>
                       <span>{pt}</span>
                     </li>
                   ))}
@@ -1856,20 +2023,20 @@
       };
 
       return (
-        <div class="max-w-3xl mx-auto space-y-6">
+        <div className="max-w-3xl mx-auto space-y-6">
           <div>
-            <h2 class="text-2xl font-bold text-[#111111] notion-headline">Practice Quiz Generator</h2>
-            <p class="text-xs text-[#615d59] mt-1">Generate multiple-choice practice tests grounded in your study notes.</p>
+            <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Interactive MCQ Quiz Generator</h2>
+            <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Generate multiple-choice practice tests grounded in your study notes with explanations.</p>
           </div>
 
-          <div class="notion-card p-6 space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-6 rounded-xl space-y-4 notion-shadow-sm transition-colors">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-mono uppercase text-[#615d59] mb-2">Subject / Topic:</label>
+                <label className="block text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888] mb-2">Subject / Topic:</label>
                 <select
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
-                  class="w-full bg-[#fbfbfa] border border-[#e6e6e6] rounded-lg p-2.5 text-sm text-[#111111] focus:outline-none focus:ring-2 focus:ring-[#0075de] font-sans"
+                  className="w-full bg-[#ffffff] dark:bg-[#191919] border border-[#dddddd] dark:border-[#383838] rounded-md p-2.5 text-xs text-[#000000] dark:text-[#ffffff] focus:outline-none focus:border-[#0075de] font-sans"
                 >
                   <option value="Python">Python Internals</option>
                   <option value="Machine Learning">Machine Learning & Regularization</option>
@@ -1878,57 +2045,57 @@
                 </select>
               </div>
               <div>
-                <label class="block text-xs font-mono uppercase text-[#615d59] mb-2">Number of Questions: {numQuestions}</label>
+                <label className="block text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888] mb-2">Number of Questions: {numQuestions}</label>
                 <input
                   type="range"
                   min="1"
                   max="5"
                   value={numQuestions}
                   onChange={(e) => setNumQuestions(parseInt(e.target.value))}
-                  class="w-full accent-[#0075de] cursor-pointer mt-2"
+                  className="w-full accent-[#0075de] cursor-pointer mt-2"
                 />
               </div>
             </div>
             <button
               onClick={handleGenerate}
               disabled={loading}
-              class="btn-notion-primary px-6 py-2.5 text-xs font-mono uppercase font-bold tracking-wider disabled:opacity-50 shadow-sm"
+              className="bg-[#0075de] hover:bg-[#005bab] disabled:bg-[#e6e6e6] dark:disabled:bg-[#2a2a2a] disabled:text-[#a39e98] px-6 py-2.5 rounded-full text-xs font-semibold text-white transition shadow-sm font-sans"
             >
               {loading ? "Generating Quiz..." : "Generate Practice Quiz"}
             </button>
           </div>
 
           {quizData && quizData.questions && (
-            <div class="space-y-6">
+            <div className="space-y-6">
               {quizData.questions.map((q, qIndex) => (
-                <div key={q.id} class="notion-card p-6 space-y-3">
-                  <div class="text-sm font-semibold text-[#111111]">
-                    <span class="text-[#0075de] font-mono mr-2">Q{qIndex + 1}.</span>
+                <div key={q.id} className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-6 space-y-3 notion-shadow-sm transition-colors">
+                  <div className="text-xs font-semibold text-[#000000] dark:text-[#ffffff]">
+                    <span className="text-[#0075de] font-mono mr-2 font-bold">Q{qIndex + 1}.</span>
                     {q.question}
                   </div>
 
-                  <div class="space-y-2 pt-2">
+                  <div className="space-y-2 pt-2">
                     {q.options.map((opt, oIndex) => {
                       const letter = opt.charAt(0);
                       const isSelected = userAnswers[q.id] === letter;
                       const isCorrect = q.correct_option === letter;
 
-                      let btnStyle = "bg-[#ffffff] border-[#e6e6e6] text-[#31302e] hover:bg-[#f6f5f4]";
+                      let btnStyle = "bg-[#f6f5f4] dark:bg-[#191919] border-[#e6e6e6] dark:border-[#2f2f2f] text-[#31302e] dark:text-[#d4d4d4] hover:bg-[#ffffff] dark:hover:bg-[#2a2a2a] hover:border-[#0075de]";
                       if (submitted) {
                         if (isCorrect) {
-                          btnStyle = "bg-[#eef9f0] border-[#b7ecc2] text-[#0f6d23] font-semibold";
+                          btnStyle = "bg-[#eef9f1] dark:bg-[#1aae39]/15 border-[#c6eed0] dark:border-[#1aae39]/30 text-[#1aae39] font-semibold";
                         } else if (isSelected && !isCorrect) {
-                          btnStyle = "bg-[#fff0f9] border-[#ffc2ea] text-[#a8177a]";
+                          btnStyle = "bg-[#fef4ec] dark:bg-[#dd5b00]/15 border-[#fcdcc4] dark:border-[#dd5b00]/30 text-[#dd5b00]";
                         }
                       } else if (isSelected) {
-                        btnStyle = "bg-[#eef6fc] border-[#0075de] text-[#0075de] font-semibold";
+                        btnStyle = "bg-[#eef6fc] dark:bg-[#0075de]/15 border-[#0075de] text-[#0075de] dark:text-[#62aef0] font-semibold shadow-sm";
                       }
 
                       return (
                         <button
                           key={oIndex}
                           onClick={() => handleOptionSelect(q.id, opt)}
-                          class={`w-full text-left p-3 rounded-lg text-xs font-sans border transition ${btnStyle}`}
+                          className={`w-full text-left p-3 rounded-lg text-xs font-sans border transition ${btnStyle}`}
                         >
                           {opt}
                         </button>
@@ -1937,9 +2104,9 @@
                   </div>
 
                   {submitted && (
-                    <div class="mt-3 p-3 bg-[#fbfbfa] rounded-lg border border-[#e6e6e6] text-xs font-mono">
-                      <div class="text-[#0f6d23] font-bold">Correct Option: {q.correct_option}</div>
-                      <div class="text-[#615d59] mt-1">{q.explanation}</div>
+                    <div className="mt-3 p-3 bg-[#f6f5f4] dark:bg-[#191919] rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] text-xs font-mono">
+                      <div className="text-[#1aae39] font-bold">Correct Option: {q.correct_option}</div>
+                      <div className="text-[#615d59] dark:text-[#888888] mt-1 font-sans">{q.explanation}</div>
                     </div>
                   )}
                 </div>
@@ -1948,15 +2115,15 @@
               {!submitted ? (
                 <button
                   onClick={handleSubmitQuiz}
-                  class="btn-notion-primary w-full py-3 font-bold text-xs uppercase tracking-wider font-mono shadow-sm"
+                  className="w-full bg-[#1aae39] hover:bg-[#169631] text-white py-3 rounded-full font-bold text-xs uppercase tracking-wider font-sans transition shadow-sm"
                 >
                   Submit Quiz Answers
                 </button>
               ) : (
-                <div class="notion-card-elevated p-6 text-center space-y-2">
-                  <div class="text-xs uppercase font-mono text-[#0f6d23]">Final Quiz Scorecard</div>
-                  <div class="text-3xl font-bold text-[#111111] font-mono notion-headline">{score} / {quizData.questions.length}</div>
-                  <p class="text-xs text-[#615d59]">Score percentage: {((score / quizData.questions.length) * 100).toFixed(0)}% recorded to SQLite database.</p>
+                <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#c6eed0] dark:border-[#1aae39]/30 p-6 rounded-xl text-center space-y-2 notion-shadow-sm transition-colors">
+                  <div className="text-xs uppercase font-mono text-[#1aae39] font-bold">Final Quiz Scorecard</div>
+                  <div className="text-3xl font-bold text-[#000000] dark:text-[#ffffff] font-mono">{score} / {quizData.questions.length}</div>
+                  <p className="text-xs text-[#615d59] dark:text-[#888888]">Score percentage: {((score / quizData.questions.length) * 100).toFixed(0)}% recorded to database.</p>
                 </div>
               )}
             </div>
@@ -1973,6 +2140,37 @@
       const [agentResult, setAgentResult] = useState(null);
       const [loading, setLoading] = useState(false);
       const [error, setError] = useState(null);
+      const [isListening, setIsListening] = useState(false);
+
+      const toggleVoiceInput = () => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+          alert("Voice recognition is not supported in this browser. Please use Chrome or Edge.");
+          return;
+        }
+        if (isListening) {
+          setIsListening(false);
+          return;
+        }
+        try {
+          const recognition = new SpeechRecognition();
+          recognition.lang = "en-US";
+          recognition.interimResults = false;
+          recognition.maxAlternatives = 1;
+          recognition.onstart = () => setIsListening(true);
+          recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            setPrompt(prev => (prev ? prev + " " + transcript : transcript));
+            setIsListening(false);
+          };
+          recognition.onerror = () => setIsListening(false);
+          recognition.onend = () => setIsListening(false);
+          recognition.start();
+        } catch (e) {
+          console.error("Speech recognition start failed", e);
+          setIsListening(false);
+        }
+      };
 
       const handleRunAgent = async (e) => {
         e.preventDefault();
@@ -2005,56 +2203,68 @@
       };
 
       return (
-        <div class="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-4xl mx-auto space-y-6">
           <div>
-            <h2 class="text-2xl font-bold text-[#111111] notion-headline">Autonomous AI Agent</h2>
-            <p class="text-xs text-[#615d59] mt-1">Natural language prompt routing. Automatically detects intent and executes Answer, Summary, or Quiz tool.</p>
+            <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Autonomous AI Agent</h2>
+            <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Natural language prompt routing. The agent automatically detects intent and executes Answer, Summary, or Quiz tool.</p>
           </div>
 
-          <form onSubmit={handleRunAgent} class="space-y-3">
-            <div class="flex gap-2">
+          <form onSubmit={handleRunAgent} className="space-y-3">
+            <div className="flex gap-2">
               <input
                 type="text"
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="e.g. 'Summarize my notes', 'Create 3 MCQs on Python', or 'Explain the GIL'"
-                class="flex-1 bg-white border border-[#e6e6e6] rounded-lg px-4 py-3 text-sm text-[#111111] placeholder:text-[#a39e98] focus:outline-none focus:ring-2 focus:ring-[#0075de] font-sans shadow-sm"
+                className="flex-1 bg-[#ffffff] dark:bg-[#202020] border border-[#dddddd] dark:border-[#383838] rounded-md px-4 py-2.5 text-xs text-[#000000] dark:text-[#ffffff] focus:outline-none focus:border-[#0075de] font-sans shadow-sm transition-colors"
               />
+              <button
+                type="button"
+                onClick={toggleVoiceInput}
+                title={isListening ? "Listening... Click to stop" : "Voice input - speak your question"}
+                className={`p-2.5 rounded-full border transition flex items-center justify-center shadow-sm ${
+                  isListening
+                    ? "bg-[#dd5b00] text-white border-[#dd5b00] animate-pulse"
+                    : "bg-[#ffffff] dark:bg-[#202020] text-[#615d59] dark:text-[#888888] hover:text-[#0075de] hover:border-[#0075de] border-[#dddddd] dark:border-[#383838]"
+                }`}
+              >
+                <Icons.Mic />
+              </button>
               <button
                 type="submit"
                 disabled={loading || !prompt.trim()}
-                class="btn-notion-primary px-6 py-3 text-xs font-mono uppercase tracking-wider font-bold disabled:opacity-50 shadow-sm"
+                className="bg-[#0075de] hover:bg-[#005bab] disabled:bg-[#e6e6e6] dark:disabled:bg-[#2a2a2a] disabled:text-[#a39e98] px-6 py-2.5 rounded-full text-xs font-semibold text-white transition shadow-sm font-sans"
               >
                 {loading ? "Agent Running..." : "Execute"}
               </button>
             </div>
-            <div class="flex flex-wrap items-center gap-2 text-xs font-mono text-[#615d59]">
-              <span class="text-[#a39e98]">Suggested Prompts:</span>
+            <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-[#615d59] dark:text-[#888888]">
+              <span className="text-[#a39e98] dark:text-[#666666]">Suggested Prompts:</span>
               <button
                 type="button"
                 onClick={() => setPrompt("Explain Python memory management and the GIL")}
-                class="px-3 py-1 rounded-full bg-[#fbfbfa] hover:bg-[#f6f5f4] border border-[#e6e6e6] text-[#0075de] transition text-[11px]"
+                className="px-2.5 py-1 rounded-full bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] border border-[#c5e1fb] dark:border-[#0075de]/30 text-[#0075de] transition text-[11px] font-sans shadow-sm"
               >
                 [Q&A] "Explain GIL"
               </button>
               <button
                 type="button"
                 onClick={() => setPrompt("Summarize MongoDB Handbook.pdf")}
-                class="px-3 py-1 rounded-full bg-[#fbfbfa] hover:bg-[#f6f5f4] border border-[#e6e6e6] text-[#0c5ea8] transition text-[11px]"
+                className="px-2.5 py-1 rounded-full bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] border border-[#c5e1fb] dark:border-[#0075de]/30 text-[#0075de] transition text-[11px] font-sans shadow-sm"
               >
                 [Summary] "Summarize MongoDB"
               </button>
               <button
                 type="button"
                 onClick={() => setPrompt("Create a 3 question practice quiz on MongoDB")}
-                class="px-3 py-1 rounded-full bg-[#fbfbfa] hover:bg-[#f6f5f4] border border-[#e6e6e6] text-[#963800] transition text-[11px]"
+                className="px-2.5 py-1 rounded-full bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] border border-[#fcdcc4] dark:border-[#dd5b00]/30 text-[#dd5b00] transition text-[11px] font-sans shadow-sm"
               >
                 [Quiz] "MongoDB Quiz"
               </button>
               <button
                 type="button"
                 onClick={() => setPrompt("Create 3 MCQs on Machine Learning")}
-                class="px-3 py-1 rounded-full bg-[#fbfbfa] hover:bg-[#f6f5f4] border border-[#e6e6e6] text-[#0f6d23] transition text-[11px]"
+                className="px-2.5 py-1 rounded-full bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] border border-[#c6eed0] dark:border-[#1aae39]/30 text-[#1aae39] transition text-[11px] font-sans shadow-sm"
               >
                 [Quiz] "ML MCQs"
               </button>
@@ -2062,62 +2272,62 @@
           </form>
 
           {error && (
-            <div class="p-4 bg-[#fff0f9] border border-[#ffc2ea] rounded-xl text-sm text-[#a8177a]">
+            <div className="p-4 bg-[#fef4ec] dark:bg-[#dd5b00]/15 border border-[#fcdcc4] dark:border-[#dd5b00]/30 rounded-xl text-xs text-[#dd5b00]">
               {error}
             </div>
           )}
 
           {agentResult && (
-            <div class="space-y-6">
-              <div class="notion-card p-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-b border-[#e6e6e6] pb-4">
+            <div className="space-y-6">
+              <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-6 notion-shadow-sm transition-colors">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f] pb-4">
                   <div>
-                    <div class="text-xs font-mono text-[#615d59]">Detected Intent</div>
-                    <div class="text-xl font-bold text-[#0075de] mt-1 font-mono">{agentResult.intent}</div>
+                    <div className="text-xs font-mono text-[#615d59] dark:text-[#888888]">Detected Intent</div>
+                    <div className="text-xl font-bold text-[#0075de] mt-1 font-mono">{agentResult.intent}</div>
                   </div>
                   <div>
-                    <div class="text-xs font-mono text-[#615d59]">Confidence Score</div>
-                    <div class="text-xl font-bold text-[#0f6d23] mt-1 font-mono">{(agentResult.confidence * 100).toFixed(0)}%</div>
+                    <div className="text-xs font-mono text-[#615d59] dark:text-[#888888]">Confidence Score</div>
+                    <div className="text-xl font-bold text-[#1aae39] mt-1 font-mono">{(agentResult.confidence * 100).toFixed(0)}%</div>
                   </div>
                   <div>
-                    <div class="text-xs font-mono text-[#615d59]">Routed Tool</div>
-                    <div class="text-xl font-bold text-[#963800] mt-1 font-mono">{agentResult.tool_used}</div>
+                    <div className="text-xs font-mono text-[#615d59] dark:text-[#888888]">Routed Tool</div>
+                    <div className="text-xl font-bold text-[#dd5b00] mt-1 font-mono">{agentResult.tool_used}</div>
                   </div>
                 </div>
 
-                <div class="mt-4">
-                  <div class="text-xs font-mono uppercase text-[#615d59] mb-2 flex items-center justify-between">
+                <div className="mt-4">
+                  <div className="text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888] mb-2 flex items-center justify-between">
                     <span>Autonomous State Machine Trace:</span>
-                    <span class="text-[10px] text-[#0f6d23] font-bold bg-[#eef9f0] px-2.5 py-0.5 rounded-full border border-[#b7ecc2]">
+                    <span className="text-[10px] text-[#1aae39] font-bold bg-[#eef9f1] dark:bg-[#1aae39]/15 px-2 py-0.5 rounded-full border border-[#c6eed0] dark:border-[#1aae39]/30">
                       {agentResult.execution_trace.length} States Resolved
                     </span>
                   </div>
-                  <div class="bg-[#fbfbfa] rounded-xl p-4 border border-[#e6e6e6] space-y-2 font-mono text-xs shadow-inner">
+                  <div className="bg-[#f6f5f4] dark:bg-[#191919] rounded-xl p-4 border border-[#e6e6e6] dark:border-[#2f2f2f] space-y-2 font-mono text-xs shadow-inner">
                     {agentResult.execution_trace.map((step, idx) => {
-                      let tagColor = "bg-[#f6f5f4] text-[#615d59] border-[#e6e6e6]";
+                      let tagColor = "bg-[#ffffff] dark:bg-[#202020] text-[#31302e] dark:text-[#d4d4d4] border-[#e6e6e6] dark:border-[#2f2f2f]";
                       let tagText = "STEP";
                       if (step.includes("[START]")) {
-                        tagColor = "bg-[#eef6fc] text-[#0c5ea8] border-[#b8dbf9]";
+                        tagColor = "bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border-[#c5e1fb] dark:border-[#0075de]/30";
                         tagText = "START";
                       } else if (step.includes("[INTENT_DETECTION]")) {
-                        tagColor = "bg-[#f7f1fe] text-[#5c2596] border-[#e3cffc]";
+                        tagColor = "bg-[#f8f2fd] dark:bg-[#d6b6f6]/15 text-[#391c57] dark:text-[#d6b6f6] border-[#ecdcfc] dark:border-[#d6b6f6]/30";
                         tagText = "INTENT";
                       } else if (step.includes("[TOOL_ROUTED]")) {
-                        tagColor = "bg-[#fff4ec] text-[#963800] border-[#fed6b8]";
+                        tagColor = "bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00] border-[#fcdcc4] dark:border-[#dd5b00]/30";
                         tagText = "ROUTER";
                       } else if (step.includes("[EXECUTION_SUCCESS]")) {
-                        tagColor = "bg-[#eef9f0] text-[#0f6d23] border-[#b7ecc2]";
+                        tagColor = "bg-[#eef9f1] dark:bg-[#1aae39]/15 text-[#1aae39] border-[#c6eed0] dark:border-[#1aae39]/30";
                         tagText = "EXEC";
                       } else if (step.includes("[RESPONSE_SYNTHESIS]")) {
-                        tagColor = "bg-[#fff0f9] text-[#a8177a] border-[#ffc2ea]";
+                        tagColor = "bg-[#fff0f9] dark:bg-[#ff64c8]/15 text-[#ff64c8] border-[#ffd1f0] dark:border-[#ff64c8]/30";
                         tagText = "SYNTH";
                       }
                       return (
-                        <div key={idx} class="flex items-start space-x-2.5 p-2 rounded-lg bg-white border border-[#e6e6e6]">
-                          <span class={`px-2 py-0.5 text-[9px] font-bold rounded-full border uppercase shrink-0 ${tagColor}`}>
+                        <div key={idx} className="flex items-start space-x-2.5 p-2 rounded-lg bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f]">
+                          <span className={`px-1.5 py-0.5 text-[9px] font-bold rounded-full border uppercase shrink-0 ${tagColor}`}>
                             {tagText}
                           </span>
-                          <span class="text-[#31302e] leading-relaxed font-mono text-[11px] flex-1">
+                          <span className="text-[#31302e] dark:text-[#d4d4d4] leading-relaxed font-mono text-[11px] flex-1">
                             {step.replace(/^\[[A-Z_]+\]\s*/, "")}
                           </span>
                         </div>
@@ -2127,9 +2337,9 @@
                 </div>
               </div>
 
-              <div class="notion-card p-6 space-y-2">
-                <div class="text-xs font-mono uppercase text-[#615d59]">Synthesized Agent Response:</div>
-                <div class="bg-[#fbfbfa] p-5 rounded-lg border border-[#e6e6e6] text-sm text-[#31302e] font-sans">
+              <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-6 space-y-2 notion-shadow-sm transition-colors">
+                <div className="text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888]">Synthesized Agent Response:</div>
+                <div className="bg-[#f6f5f4] dark:bg-[#191919] p-5 rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] text-xs text-[#31302e] dark:text-[#d4d4d4] font-sans">
                   <FormattedTutorResponse text={agentResult.agent_response} />
                 </div>
               </div>
@@ -2140,64 +2350,343 @@
     }
 
     // ==========================================
-    // 8. NOTION SYSTEM DIAGNOSTICS & SETTINGS VIEW
+    // 8. INTERACTIVE 3D FLIP FLASHCARDS VIEW
     // ==========================================
-    function SettingsView({ status }) {
+    function FlashcardsView() {
+      const [cards, setCards] = useState([]);
+      const [currentIndex, setCurrentIndex] = useState(0);
+      const [isFlipped, setIsFlipped] = useState(false);
+      const [loading, setLoading] = useState(true);
+      const [filterTopic, setFilterTopic] = useState("All");
+      const [knownCount, setKnownCount] = useState(0);
+
+      const loadCards = async () => {
+        setLoading(true);
+        try {
+          const res = await fetch(`${API_BASE}/flashcards?count=20`);
+          if (res.ok) {
+            const data = await res.json();
+            setCards(data);
+            setCurrentIndex(0);
+            setIsFlipped(false);
+          }
+        } catch (e) {
+          console.error("Failed to load flashcards", e);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      useEffect(() => {
+        loadCards();
+      }, []);
+
+      const availableTopics = ["All", ...Array.from(new Set(cards.map(c => c.topic))).filter(Boolean)];
+
+      const filteredCards = filterTopic === "All"
+        ? cards
+        : cards.filter(c => (c.topic || "").toLowerCase() === filterTopic.toLowerCase());
+
+      const currentCard = filteredCards[currentIndex];
+
+      const handleNext = () => {
+        if (currentIndex < filteredCards.length - 1) {
+          setIsFlipped(false);
+          setCurrentIndex(prev => prev + 1);
+        }
+      };
+
+      const handlePrev = () => {
+        if (currentIndex > 0) {
+          setIsFlipped(false);
+          setCurrentIndex(prev => prev - 1);
+        }
+      };
+
+      const handleShuffle = () => {
+        setIsFlipped(false);
+        setCards(prev => [...prev].sort(() => Math.random() - 0.5));
+        setCurrentIndex(0);
+      };
+
+      const handleMarkMastered = () => {
+        setKnownCount(prev => prev + 1);
+        handleNext();
+      };
+
       return (
-        <div class="max-w-3xl mx-auto space-y-6">
-          <div>
-            <h2 class="text-2xl font-bold text-[#111111] notion-headline">System Diagnostics & Security Settings</h2>
-            <p class="text-xs text-[#615d59] mt-1">Runtime health, guardrail parameters, and active models.</p>
+        <div className="max-w-2xl mx-auto space-y-6 select-none">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
+            <div>
+              <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Interactive 3D Flashcards</h2>
+              <p className="text-xs text-[#615d59] dark:text-[#888888] mt-0.5">Active recall and spaced repetition flashcards extracted directly from your study notes.</p>
+            </div>
+            <div className="flex items-center space-x-2 text-xs font-mono">
+              <span className="px-3 py-1 rounded-full bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00] border border-[#fcdcc4] dark:border-[#dd5b00]/30 font-semibold">
+                Active Recall
+              </span>
+            </div>
           </div>
 
-          <div class="notion-card divide-y divide-[#e6e6e6] overflow-hidden">
-            <div class="p-4 flex justify-between items-center">
-              <div>
-                <div class="text-sm font-semibold text-[#111111]">Backend Server Status</div>
-                <div class="text-xs text-[#615d59]">FastAPI ASGI Server at 127.0.0.1:8000</div>
+          {/* Filter Bar & Progress */}
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+            <div className="flex items-center space-x-2">
+              <span className="text-[#a39e98] dark:text-[#666666]">Topic:</span>
+              {availableTopics.map(t => (
+                <button
+                  key={t}
+                  onClick={() => { setFilterTopic(t); setCurrentIndex(0); setIsFlipped(false); }}
+                  className={`px-2.5 py-1 rounded-full border transition ${
+                    filterTopic === t
+                      ? "bg-[#0075de] text-white border-[#0075de]"
+                      : "bg-[#ffffff] dark:bg-[#202020] text-[#615d59] dark:text-[#888888] border-[#e6e6e6] dark:border-[#2f2f2f] hover:text-[#0075de] dark:hover:text-[#62aef0]"
+                  }`}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+
+            <div className="text-[#615d59] dark:text-[#888888]">
+              Mastered: <span className="font-bold text-[#1aae39]">{knownCount}</span>
+            </div>
+          </div>
+
+          {loading ? (
+            <div className="p-8 text-center text-xs font-mono text-[#0075de] animate-pulse">
+              [Extracting conceptual flashcards from notes...]
+            </div>
+          ) : filteredCards.length === 0 ? (
+            <div className="p-8 text-center bg-[#ffffff] dark:bg-[#202020] rounded-xl border border-[#e6e6e6] dark:border-[#2f2f2f] text-xs text-[#615d59] dark:text-[#888888]">
+              No flashcards found for this topic.
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {/* 3D Flip Card Container */}
+              <div
+                onClick={() => setIsFlipped(!isFlipped)}
+                className="perspective-1000 cursor-pointer w-full h-80"
+              >
+                <div
+                  className={`relative w-full h-full duration-500 transform-style-3d transition-transform ${
+                    isFlipped ? "rotate-y-180" : ""
+                  }`}
+                >
+                  {/* Card Front (Question / Concept) */}
+                  <div className="absolute w-full h-full backface-hidden bg-[#ffffff] dark:bg-[#202020] border-2 border-[#e6e6e6] dark:border-[#2f2f2f] rounded-2xl p-8 flex flex-col justify-between shadow-md hover:border-[#0075de] transition-colors">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30 font-semibold">
+                        {currentCard.topic}
+                      </span>
+                      <span className="text-[#a39e98] dark:text-[#666666]">
+                        Card {currentIndex + 1} of {filteredCards.length}
+                      </span>
+                    </div>
+
+                    <div className="text-center my-auto px-4">
+                      <span className="text-[11px] font-mono text-[#a39e98] dark:text-[#666666] uppercase tracking-wider block mb-2">Question / Concept</span>
+                      <h3 className="text-xl md:text-2xl font-bold text-[#000000] dark:text-[#ffffff] leading-snug">
+                        {currentCard.front}
+                      </h3>
+                    </div>
+
+                    <div className="text-center text-[11px] font-mono text-[#a39e98] dark:text-[#666666]">
+                      Click card or press Flip to reveal answer
+                    </div>
+                  </div>
+
+                  {/* Card Back (Answer / Key Takeaway) */}
+                  <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#0075de] text-white rounded-2xl p-8 flex flex-col justify-between shadow-md">
+                    <div className="flex items-center justify-between text-xs font-mono text-white/80">
+                      <span className="px-2.5 py-0.5 rounded-full bg-white/20 text-white font-semibold">
+                        {currentCard.topic} - Answer
+                      </span>
+                      <span>Card {currentIndex + 1} of {filteredCards.length}</span>
+                    </div>
+
+                    <div className="text-center my-auto px-4">
+                      <span className="text-[11px] font-mono text-white/70 uppercase tracking-wider block mb-2">Key Takeaway</span>
+                      <p className="text-base md:text-lg font-medium leading-relaxed">
+                        {currentCard.back}
+                      </p>
+                    </div>
+
+                    <div className="text-center text-[11px] font-mono text-white/70">
+                      Click to flip back
+                    </div>
+                  </div>
+                </div>
               </div>
-              <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-[#eef9f0] text-[#0f6d23] border border-[#b7ecc2] font-bold">
+
+              {/* Controls Bar */}
+              <div className="flex items-center justify-between gap-2 pt-2">
+                <button
+                  onClick={handlePrev}
+                  disabled={currentIndex === 0}
+                  className="px-4 py-2 rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] disabled:opacity-40 text-xs font-semibold text-[#000000] dark:text-[#ffffff] transition shadow-sm font-sans"
+                >
+                  ← Previous
+                </button>
+
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => setIsFlipped(!isFlipped)}
+                    className="px-5 py-2 rounded-lg bg-[#0075de] hover:bg-[#005bab] text-white text-xs font-semibold transition shadow-sm font-sans"
+                  >
+                    {isFlipped ? "Show Question" : "Flip Card"}
+                  </button>
+                  <button
+                    onClick={handleShuffle}
+                    className="px-3 py-2 rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] text-xs text-[#615d59] dark:text-[#888888] hover:text-[#000000] dark:hover:text-[#ffffff] transition shadow-sm font-sans"
+                    title="Shuffle Cards"
+                  >
+                    Shuffle
+                  </button>
+                  <button
+                    onClick={handleMarkMastered}
+                    className="px-4 py-2 rounded-lg bg-[#eef9f1] dark:bg-[#1aae39]/15 hover:bg-[#c6eed0] text-[#1aae39] border border-[#c6eed0] dark:border-[#1aae39]/30 text-xs font-semibold transition shadow-sm font-sans"
+                  >
+                    Mark Mastered
+                  </button>
+                </div>
+
+                <button
+                  onClick={handleNext}
+                  disabled={currentIndex === filteredCards.length - 1}
+                  className="px-4 py-2 rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] disabled:opacity-40 text-xs font-semibold text-[#000000] dark:text-[#ffffff] transition shadow-sm font-sans"
+                >
+                  Next →
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ==========================================
+    // 9. NOTION SYSTEM HEALTH & DIAGNOSTICS VIEW
+    // ==========================================
+    function SettingsView({ status, darkMode, onToggleTheme }) {
+      return (
+        <div className="max-w-3xl mx-auto space-y-6">
+          <div>
+            <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">System Diagnostics & Security Settings</h2>
+            <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Runtime health, guardrail parameters, and active models.</p>
+          </div>
+
+          <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl divide-y divide-[#e6e6e6] dark:divide-[#2f2f2f] notion-shadow-sm transition-colors">
+            {/* Appearance Setting Row */}
+            <div className="p-4 flex justify-between items-center">
+              <div>
+                <div className="text-xs font-semibold text-[#000000] dark:text-[#ffffff]">Theme & Appearance</div>
+                <div className="text-xs text-[#615d59] dark:text-[#888888]">Toggle between Notion Daylight Mode and Dark Mode</div>
+              </div>
+              <button
+                onClick={onToggleTheme}
+                className="px-3 py-1.5 rounded-full border border-[#e6e6e6] dark:border-[#383838] bg-[#f6f5f4] dark:bg-[#2a2a2a] text-xs font-mono font-semibold flex items-center space-x-2 text-[#31302e] dark:text-[#e0e0e0] hover:border-[#0075de] transition shadow-sm"
+              >
+                {darkMode ? <Icons.Sun /> : <Icons.Moon />}
+                <span>{darkMode ? "Dark Mode Active" : "Daylight Mode Active"}</span>
+              </button>
+            </div>
+
+            <div className="p-4 flex justify-between items-center">
+              <div>
+                <div className="text-xs font-semibold text-[#000000] dark:text-[#ffffff]">Backend Server Status</div>
+                <div className="text-xs text-[#615d59] dark:text-[#888888]">FastAPI ASGI Server at 127.0.0.1:8000</div>
+              </div>
+              <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#eef9f1] dark:bg-[#1aae39]/15 text-[#1aae39] border border-[#c6eed0] dark:border-[#1aae39]/30 font-bold">
                 {status}
               </span>
             </div>
 
-            <div class="p-4 flex justify-between items-center">
+            <div className="p-4 flex justify-between items-center">
               <div>
-                <div class="text-sm font-semibold text-[#111111]">Prompt Injection Guard</div>
-                <div class="text-xs text-[#615d59]">Blocks adversarial system prompt overrides and DAN jailbreaks</div>
+                <div className="text-xs font-semibold text-[#000000] dark:text-[#ffffff]">Prompt Injection Guard</div>
+                <div className="text-xs text-[#615d59] dark:text-[#888888]">Blocks adversarial system prompt overrides and DAN jailbreaks</div>
               </div>
-              <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">
+              <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30 font-semibold">
                 ACTIVE
               </span>
             </div>
 
-            <div class="p-4 flex justify-between items-center">
+            <div className="p-4 flex justify-between items-center">
               <div>
-                <div class="text-sm font-semibold text-[#111111]">PII & Secret Sanitizer</div>
-                <div class="text-xs text-[#615d59]">Automatic masking for emails, phone numbers, and API tokens</div>
+                <div className="text-xs font-semibold text-[#000000] dark:text-[#ffffff]">Sensitive Data Filter (PII Redaction)</div>
+                <div className="text-xs text-[#615d59] dark:text-[#888888]">Auto-masks emails, phone numbers, and API keys</div>
               </div>
-              <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">
+              <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30 font-semibold">
                 ACTIVE
               </span>
             </div>
 
-            <div class="p-4 flex justify-between items-center">
+            <div className="p-4 flex justify-between items-center">
               <div>
-                <div class="text-sm font-semibold text-[#111111]">Rate Limiter</div>
-                <div class="text-xs text-[#615d59]">In-memory sliding window (120 requests/minute per client IP)</div>
+                <div className="text-xs font-semibold text-[#000000] dark:text-[#ffffff]">Anti-Hallucination Rejection Threshold</div>
+                <div className="text-xs text-[#615d59] dark:text-[#888888]">Minimum cosine similarity to prevent out-of-scope answers</div>
               </div>
-              <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">
-                ACTIVE
+              <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#f6f5f4] dark:bg-[#191919] text-[#31302e] dark:text-[#d4d4d4] border border-[#e6e6e6] dark:border-[#2f2f2f] font-bold">
+                0.35 COSINE
               </span>
             </div>
 
-            <div class="p-4 flex justify-between items-center">
+            <div className="p-4 flex justify-between items-center">
               <div>
-                <div class="text-sm font-semibold text-[#111111]">Anti-Hallucination Threshold</div>
-                <div class="text-xs text-[#615d59]">Strictly rejects queries below 0.35 semantic relevance</div>
+                <div className="text-xs font-semibold text-[#000000] dark:text-[#ffffff]">API Rate Limiting</div>
+                <div className="text-xs text-[#615d59] dark:text-[#888888]">Sliding window throttling for server stability</div>
               </div>
-              <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-[#f6f5f4] text-[#615d59] border border-[#e6e6e6]">
-                0.35 Min Score
+              <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#f6f5f4] dark:bg-[#191919] text-[#31302e] dark:text-[#d4d4d4] border border-[#e6e6e6] dark:border-[#2f2f2f] font-bold">
+                120 REQ / MIN
+              </span>
+            </div>
+
+            <div className="p-4 flex justify-between items-center">
+              <div>
+                <div className="text-xs font-semibold text-[#000000] dark:text-[#ffffff]">Neural Question Classifier</div>
+                <div className="text-xs text-[#615d59] dark:text-[#888888]">PyTorch MLP with 3-class Softmax (Python, AI, ML)</div>
+              </div>
+              <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#f8f2fd] dark:bg-[#d6b6f6]/15 text-[#391c57] dark:text-[#d6b6f6] border border-[#ecdcfc] dark:border-[#d6b6f6]/30 font-bold">
+                96.15% TEST ACC
+              </span>
+            </div>
+
+            <div className="p-4 flex justify-between items-center">
+              <div>
+                <div className="text-xs font-semibold text-[#000000] dark:text-[#ffffff]">Dense Vector Embedding Model</div>
+                <div className="text-xs text-[#615d59] dark:text-[#888888]">Pretrained Transformer (384-dimensional dense vectors)</div>
+              </div>
+              <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30 font-semibold">
+                all-MiniLM-L6-v2
+              </span>
+            </div>
+
+            <div className="p-4 flex justify-between items-center">
+              <div>
+                <div className="text-xs font-semibold text-[#000000] dark:text-[#ffffff]">Vector Database Index</div>
+                <div className="text-xs text-[#615d59] dark:text-[#888888]">FAISS IndexFlatIP (Inner Product on L2-normalized vectors)</div>
+              </div>
+              <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#fff0f9] dark:bg-[#ff64c8]/15 text-[#ff64c8] border border-[#ffd1f0] dark:border-[#ff64c8]/30 font-semibold">
+                FAISS FlatIP
+              </span>
+            </div>
+
+            <div className="p-4 flex justify-between items-center">
+              <div>
+                <div className="text-xs font-semibold text-[#000000] dark:text-[#ffffff]">Relational Database & Chat Memory</div>
+                <div className="text-xs text-[#615d59] dark:text-[#888888]">
+                  {status?.database_engine === "mysql"
+                    ? "MySQL database (XAMPP / Server 8.0) with live sync to chat_memory.json"
+                    : "SQLite 3 database (automatic fallback) with live sync to chat_memory.json"}
+                </div>
+              </div>
+              <span className={`text-xs font-mono px-3 py-1 rounded-full font-semibold border ${
+                status?.database_engine === "mysql"
+                  ? "bg-[#ecfbf2] dark:bg-[#1aae39]/15 text-[#1aae39] border-[#c4f2d2] dark:border-[#1aae39]/30"
+                  : "bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00] border-[#fcdcc4] dark:border-[#dd5b00]/30"
+              }`}>
+                {status?.database_engine === "mysql" ? "MySQL" : "SQLite 3"}
               </span>
             </div>
           </div>
@@ -2205,7 +2694,9 @@
       );
     }
 
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    // Mount the Application
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
   </script>
 </body>
 </html>

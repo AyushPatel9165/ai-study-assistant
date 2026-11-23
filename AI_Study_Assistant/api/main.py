@@ -133,6 +133,8 @@ class ClassificationResponse(BaseModel):
     confidence: float
     probabilities: Dict[str, float]
     cleaned_question: str
+    top_features: Optional[List[Dict[str, Any]]] = None
+    explanation: Optional[str] = None
 
 class CitationItem(BaseModel):
     document_name: str
@@ -143,6 +145,7 @@ class CitationItem(BaseModel):
 class AskRequest(BaseModel):
     query: str = Field(..., min_length=1, max_length=1000)
     session_id: str = Field(default="default_session")
+    previous_query: Optional[str] = None
 
 class AskResponse(BaseModel):
     question: str
@@ -251,6 +254,19 @@ def health_check() -> HealthResponse:
         python_version=sys.version.split()[0]
     )
 
+@app.get("/database/status", tags=["System"])
+def get_database_status() -> Dict[str, Any]:
+    """Returns database status and current engine (MySQL or SQLite)."""
+    db = get_db()
+    info = db.get_engine_info()
+    metrics = db.get_metrics()
+    info.update({
+        "total_documents": metrics["total_documents"],
+        "total_conversations": metrics["total_questions_asked"],
+        "total_quizzes": metrics["total_quizzes_generated"]
+    })
+    return info
+
 @app.get("/metrics", response_model=MetricsResponse, tags=["Dashboard"])
 def get_dashboard_metrics() -> MetricsResponse:
     """Returns aggregated usage statistics for the frontend dashboard cards."""
@@ -268,6 +284,7 @@ def get_dashboard_summary() -> Dict[str, Any]:
     """Returns comprehensive analytics, metrics, recent activities, and system info for the dashboard."""
     db = get_db()
     summary = db.get_dashboard_summary()
+    engine_name = "MySQL" if db.engine == "mysql" else "SQLite 3"
     summary["system_info"] = {
         "status": "Online",
         "model": "QuestionClassifierMLP (PyTorch)",
@@ -275,7 +292,8 @@ def get_dashboard_summary() -> Dict[str, Any]:
         "embeddings": "sentence-transformers/all-MiniLM-L6-v2 (384-d)",
         "vector_store": "FAISS IndexFlatIP",
         "anti_hallucination_threshold": 0.35,
-        "database": "SQLite 3",
+        "database": engine_name,
+        "database_engine": db.engine,
         "version": "0.2.0"
     }
     return summary
@@ -584,11 +602,18 @@ def ask_notes(request: AskRequest) -> AskResponse:
         pass
 
     try:
-        rag = get_rag_pipeline()
-        res = rag.query(cleaned_query)
-
-        # Log conversation to SQLite
+        # Multi-turn context resolution: get previous query from session if not passed
+        prev_q = request.previous_query
         db = get_db()
+        if not prev_q:
+            last_convs = db.get_conversations(session_id=request.session_id, limit=1)
+            if last_convs:
+                prev_q = last_convs[0].get("query")
+
+        rag = get_rag_pipeline()
+        res = rag.query(cleaned_query, previous_query=prev_q)
+
+        # Log conversation to database
         db.add_conversation(
             session_id=request.session_id,
             role="student",
@@ -606,6 +631,26 @@ def ask_notes(request: AskRequest) -> AskResponse:
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"RAG query execution failed: {str(e)}"
         )
+
+@app.get("/flashcards", tags=["Study Tools"])
+def get_study_flashcards(topic: Optional[str] = None, limit: int = 8) -> List[Dict[str, Any]]:
+    """Generates interactive revision flashcards from uploaded technical notes."""
+    try:
+        from src.agents.tools.flashcard_tool import FlashcardTool
+        rag = get_rag_pipeline()
+        tool = FlashcardTool(vector_store=rag.vector_store)
+        return tool.generate_flashcards(topic=topic, limit=limit)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Flashcard generation failed: {str(e)}"
+        )
+
+@app.get("/recommendations", tags=["Dashboard"])
+def get_adaptive_recommendations() -> Dict[str, Any]:
+    """Returns weak topic detections and personalized learning recommendations."""
+    db = get_db()
+    return db.get_adaptive_recommendations()
 
 @app.get("/history", tags=["Dashboard"])
 def get_chat_history(session_id: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
@@ -699,3 +744,7 @@ def run_agent(request: AgentRequest) -> AgentResponse:
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Agent workflow encountered an error: {str(e)}"
         )
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("api.main:app", host="127.0.0.1", port=8000, reload=True)

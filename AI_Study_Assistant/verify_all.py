@@ -130,7 +130,7 @@ def run_audit():
     except Exception as e:
         print(f"[FAIL] Check 5/8 - Module 5 Guardrails Failed: {e}\n{traceback.format_exc()}")
 
-    # 6. Database Persistence (SQLite)
+    # 6. Database Persistence (MySQL & SQLite Dual-Engine)
     try:
         from src.database.db import DatabaseManager
         db = DatabaseManager(str(base_dir / "data" / "study_assistant.db"))
@@ -140,10 +140,11 @@ def run_audit():
         assert len(docs) >= 1
         total_d = metrics["total_documents"]
         total_q = metrics["total_questions_asked"]
-        print(f"[OK] Check 6/8 - SQLite Database: {total_d} documents registered, {total_q} questions persisted.")
+        engine_info = db.get_engine_info()
+        print(f"[OK] Check 6/8 - Database Engine ({engine_info['engine'].upper()}): {total_d} documents, {total_q} questions. MySQL/SQLite adapter ready.")
         passed_count += 1
     except Exception as e:
-        print(f"[FAIL] Check 6/8 - SQLite Database Failed: {e}\n{traceback.format_exc()}")
+        print(f"[FAIL] Check 6/8 - Database Failed: {e}\n{traceback.format_exc()}")
 
     # 7. Frontend Dashboard Assets
     try:

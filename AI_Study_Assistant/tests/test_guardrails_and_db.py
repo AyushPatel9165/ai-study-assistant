@@ -166,3 +166,11 @@ def test_api_database_endpoints():
     resp = submit_quiz_score(submit_req)
     assert resp.success is True
     assert resp.percentage == 100.0
+
+def test_database_manager_engine_info_and_fallback():
+    # Test engine info reporting and graceful fallback to SQLite
+    db = DatabaseManager(db_path=None, prefer_mysql=False)
+    info = db.get_engine_info()
+    assert info["engine"] == "sqlite"
+    assert info["is_mysql"] is False
+    assert info["status"] == "connected"

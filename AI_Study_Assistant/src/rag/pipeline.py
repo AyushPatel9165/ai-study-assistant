@@ -100,14 +100,39 @@ class RAGPipeline:
         t = re.sub(r"\bnn\b", "neural network", t, flags=re.IGNORECASE)
         return t
 
-    def query(self, question: str, top_k: int = 3) -> Dict[str, Any]:
+    @staticmethod
+    def resolve_contextual_query(question: str, previous_query: Optional[str] = None) -> str:
+        """
+        Resolves pronouns and follow-up references using previous conversation query.
+        E.g. 'How can I bypass it?' + previous 'GIL in Python' -> 'How can I bypass GIL in Python?'
+        """
+        import re
+        if not previous_query or not previous_query.strip():
+            return question
+
+        q_lower = question.lower()
+        pronouns = [r"\bit\b", r"\bthis\b", r"\bthese\b", r"\bthat\b", r"\bthe above\b", r"\bthem\b"]
+        is_followup = any(re.search(p, q_lower) for p in pronouns) or len(question.split()) <= 3
+
+        if is_followup:
+            prev_terms = re.findall(r"\b[A-Za-z0-9_]{3,}\b", previous_query)
+            stop_words = {"what", "how", "why", "does", "explain", "the", "and", "for", "with", "from", "can", "you", "tell", "about"}
+            meaningful_prev = [t for t in prev_terms if t.lower() not in stop_words][:3]
+            if meaningful_prev:
+                return f"{question} ({' '.join(meaningful_prev)})"
+
+        return question
+
+    def query(self, question: str, previous_query: Optional[str] = None, top_k: int = 3) -> Dict[str, Any]:
         """
         Retrieves relevant study note segments and generates a grounded answer with citations.
+        Supports multi-turn conversational follow-ups.
         """
         if not question or not question.strip():
             raise ValueError("Question cannot be empty.")
 
-        expanded_q = self.expand_academic_terms(question)
+        resolved_q = self.resolve_contextual_query(question, previous_query)
+        expanded_q = self.expand_academic_terms(resolved_q)
         query_emb = self.embedder.encode(expanded_q)
         retrieved_chunks = self.vector_store.similarity_search(
             query_embedding=query_emb,
@@ -123,8 +148,9 @@ class RAGPipeline:
                 score_threshold=0.25
             )
 
-        response = self.generator.generate(query=question, retrieved_chunks=retrieved_chunks)
+        response = self.generator.generate(query=resolved_q, retrieved_chunks=retrieved_chunks)
         response["question"] = question
+        response["resolved_query"] = resolved_q
         response["retrieved_count"] = len(retrieved_chunks)
         return response
 

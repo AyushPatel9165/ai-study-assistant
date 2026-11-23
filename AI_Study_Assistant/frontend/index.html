@@ -3,27 +3,113 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Study Assistant - Student Portal</title>
+  <title>AI Study Assistant - Notion Studio Edition</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    code, pre, .font-mono { font-family: 'JetBrains Mono', monospace; }
+    :root {
+      --canvas-soft: #f6f5f4;
+      --canvas: #ffffff;
+      --hairline: #e6e6e6;
+      --ink: #111111;
+      --ink-secondary: #31302e;
+      --ink-muted: #615d59;
+      --ink-faint: #a39e98;
+      --primary: #0075de;
+      --primary-active: #005bab;
+      --secondary: #213183;
+      --sticker-sky-bg: #eef6fc;
+      --sticker-sky-text: #0c5ea8;
+      --sticker-sky-border: #b8dbf9;
+      --sticker-purple-bg: #f7f1fe;
+      --sticker-purple-text: #5c2596;
+      --sticker-purple-border: #e3cffc;
+      --sticker-pink-bg: #fff0f9;
+      --sticker-pink-text: #a8177a;
+      --sticker-pink-border: #ffc2ea;
+      --sticker-orange-bg: #fff4ec;
+      --sticker-orange-text: #963800;
+      --sticker-orange-border: #fed6b8;
+      --sticker-teal-bg: #edf8f7;
+      --sticker-teal-text: #156360;
+      --sticker-teal-border: #a8e2e0;
+      --sticker-green-bg: #eef9f0;
+      --sticker-green-text: #0f6d23;
+      --sticker-green-border: #b7ecc2;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--canvas-soft);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    code, pre, .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .notion-headline {
+      letter-spacing: -0.035em;
+    }
+    .notion-subheading {
+      letter-spacing: -0.02em;
+    }
+    .notion-card {
+      background-color: #ffffff;
+      border: 1px solid #e6e6e6;
+      border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), 0 4px 12px rgba(0, 0, 0, 0.015);
+    }
+    .notion-card-elevated {
+      background-color: #ffffff;
+      border: 1px solid #e6e6e6;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.04);
+    }
+    .notion-hero-night {
+      background-color: #213183;
+      color: #ffffff;
+      border-radius: 16px;
+    }
+    .btn-notion-primary {
+      background-color: #0075de;
+      color: #ffffff;
+      border-radius: 9999px;
+      transition: all 0.15s ease;
+    }
+    .btn-notion-primary:hover {
+      background-color: #005bab;
+    }
+    .btn-notion-primary:active {
+      transform: scale(0.97);
+    }
+    .btn-notion-utility {
+      background-color: #ffffff;
+      color: #111111;
+      border: 1px solid #e6e6e6;
+      border-radius: 8px;
+      transition: all 0.15s ease;
+    }
+    .btn-notion-utility:hover {
+      background-color: #f6f5f4;
+      border-color: #d8d8d8;
+    }
+    .btn-notion-utility:active {
+      transform: scale(0.98);
+    }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-indigo-600 selection:text-white">
+<body class="bg-[#f6f5f4] text-[#111111] min-h-screen selection:bg-[#0075de] selection:text-white">
   <div id="root"></div>
 
   <script type="text/babel">
     const { useState, useEffect } = React;
     const API_BASE = "";
 
-    // Robust Error Detail Formatter to prevent any [object Object] rendering
     function formatErrorDetail(err, fallback = "Request failed") {
       if (!err) return fallback;
       const detail = err.detail !== undefined ? err.detail : err;
@@ -64,26 +150,25 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
       ),
       Check: () => (
-        <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
+        <svg class="w-3.5 h-3.5 text-[#1aae39]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
       ),
       ArrowRight: () => (
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
       ),
-      Sparkle: () => (
-        <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+      BookOpen: () => (
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
       )
     };
 
-    // Lightweight Markdown & Tutor Formatter
     function renderInlineMarkdown(str) {
       if (!str) return "";
       const tokens = str.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
       return tokens.map((tok, i) => {
         if (tok.startsWith("**") && tok.endsWith("**") && tok.length > 4) {
-          return <strong key={i} class="font-bold text-white">{tok.slice(2, -2)}</strong>;
+          return <strong key={i} class="font-semibold text-[#111111]">{tok.slice(2, -2)}</strong>;
         }
         if (tok.startsWith("`") && tok.endsWith("`") && tok.length > 2) {
-          return <code key={i} class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 font-mono text-indigo-300 text-[11px]">{tok.slice(1, -1)}</code>;
+          return <code key={i} class="px-1.5 py-0.5 rounded bg-[#f6f5f4] border border-[#e6e6e6] font-mono text-[#0075de] text-[11px]">{tok.slice(1, -1)}</code>;
         }
         return <span key={i}>{tok}</span>;
       });
@@ -98,10 +183,10 @@
       const flushBullets = (keyPrefix) => {
         if (currentBullets.length > 0) {
           elements.push(
-            <div key={`${keyPrefix}-bullets`} class="my-2.5 space-y-1.5">
+            <div key={`${keyPrefix}-bullets`} class="my-2 space-y-1.5">
               {currentBullets.map((b, bIdx) => (
-                <div key={bIdx} class="flex items-start space-x-2.5 p-2 rounded-lg bg-slate-900/60 border border-slate-800/80 text-xs text-slate-200">
-                  <span class="text-indigo-400 font-mono mt-0.5 shrink-0">•</span>
+                <div key={bIdx} class="flex items-start space-x-2 text-xs text-[#31302e]">
+                  <span class="text-[#0075de] font-mono mt-0.5 shrink-0">•</span>
                   <div class="flex-1 leading-relaxed">
                     {renderInlineMarkdown(b)}
                   </div>
@@ -123,42 +208,42 @@
         if (trimmed.startsWith("### Concept Overview") || trimmed.startsWith("### Overview")) {
           flushBullets(`h-${idx}`);
           elements.push(
-            <div key={idx} class="mt-3 mb-1.5 flex items-center space-x-2">
-              <span class="px-2 py-0.5 text-[10px] font-mono font-bold uppercase rounded bg-indigo-950 text-indigo-300 border border-indigo-800">
+            <div key={idx} class="mt-3.5 mb-1.5 flex items-center space-x-2">
+              <span class="px-2 py-0.5 text-[10px] font-mono font-semibold uppercase rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">
                 Overview
               </span>
-              <span class="font-bold text-slate-100 text-xs font-mono uppercase tracking-wider">Concept Definition</span>
+              <span class="font-bold text-[#111111] text-xs tracking-tight">Concept Definition</span>
             </div>
           );
         } else if (trimmed.startsWith("### Key Technical Breakdown") || trimmed.startsWith("### Key Mechanics")) {
           flushBullets(`h-${idx}`);
           elements.push(
             <div key={idx} class="mt-3.5 mb-1.5 flex items-center space-x-2">
-              <span class="px-2 py-0.5 text-[10px] font-mono font-bold uppercase rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
-                Mechanisms
+              <span class="px-2 py-0.5 text-[10px] font-mono font-semibold uppercase rounded-full bg-[#edf8f7] text-[#156360] border border-[#a8e2e0]">
+                Mechanics
               </span>
-              <span class="font-bold text-slate-100 text-xs font-mono uppercase tracking-wider">Technical Details</span>
+              <span class="font-bold text-[#111111] text-xs tracking-tight">Technical Breakdown</span>
             </div>
           );
         } else if (trimmed.startsWith("### Practical Takeaways") || trimmed.startsWith("### Practical Usage")) {
           flushBullets(`h-${idx}`);
           elements.push(
             <div key={idx} class="mt-3.5 mb-1.5 flex items-center space-x-2">
-              <span class="px-2 py-0.5 text-[10px] font-mono font-bold uppercase rounded bg-amber-950 text-amber-300 border border-amber-800">
+              <span class="px-2 py-0.5 text-[10px] font-mono font-semibold uppercase rounded-full bg-[#fff4ec] text-[#963800] border border-[#fed6b8]">
                 Takeaways
               </span>
-              <span class="font-bold text-slate-100 text-xs font-mono uppercase tracking-wider">Practical Usage & Guidance</span>
+              <span class="font-bold text-[#111111] text-xs tracking-tight">Practical Guidance</span>
             </div>
           );
         } else if (trimmed.startsWith("•") || trimmed.startsWith("-")) {
           currentBullets.push(trimmed.replace(/^[•\-]\s*/, ""));
         } else if (trimmed.startsWith("---")) {
           flushBullets(`hr-${idx}`);
-          elements.push(<hr key={idx} class="my-3 border-slate-800" />);
+          elements.push(<hr key={idx} class="my-3 border-[#e6e6e6]" />);
         } else {
           flushBullets(`p-${idx}`);
           elements.push(
-            <p key={idx} class="text-xs text-slate-300 leading-relaxed my-1">
+            <p key={idx} class="text-xs text-[#31302e] leading-relaxed my-1">
               {renderInlineMarkdown(trimmed)}
             </p>
           );
@@ -199,52 +284,55 @@
         return () => clearInterval(timer);
       }, []);
 
+      const navItems = [
+        { id: "dashboard", label: "Dashboard", icon: Icons.Dashboard, badge: "Overview", sticker: "bg-[#edf8f7] text-[#156360] border-[#a8e2e0]" },
+        { id: "chat", label: "AI Chat & RAG", icon: Icons.Chat, badge: "NLP", sticker: "bg-[#eef6fc] text-[#0c5ea8] border-[#b8dbf9]" },
+        { id: "classify", label: "Subject Classifier", icon: Icons.Classifier, badge: "PyTorch", sticker: "bg-[#f7f1fe] text-[#5c2596] border-[#e3cffc]" },
+        { id: "documents", label: "My Documents", icon: Icons.Documents, badge: "FAISS", sticker: "bg-[#fff0f9] text-[#a8177a] border-[#ffc2ea]" },
+        { id: "summarizer", label: "Summarizer Tool", icon: Icons.Summarizer, badge: "Notes", sticker: "bg-[#fff4ec] text-[#963800] border-[#fed6b8]" },
+        { id: "quiz", label: "Quiz Generator", icon: Icons.Quiz, badge: "MCQs", sticker: "bg-[#eef9f0] text-[#0f6d23] border-[#b7ecc2]" },
+        { id: "agent", label: "Autonomous Agent", icon: Icons.Agent, badge: "Router", sticker: "bg-[#f7f1fe] text-[#5c2596] border-[#e3cffc]" },
+        { id: "settings", label: "System Health", icon: Icons.Settings, badge: "Status", sticker: "bg-[#eef6fc] text-[#0c5ea8] border-[#b8dbf9]" }
+      ];
+
       return (
-        <div class="flex h-screen overflow-hidden bg-slate-950 font-sans">
-          {/* Sidebar */}
-          <aside class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col justify-between select-none">
+        <div class="flex h-screen overflow-hidden bg-[#f6f5f4]">
+          {/* Notion-style Left Sidebar */}
+          <aside class="w-64 bg-[#ffffff] border-r border-[#e6e6e6] flex flex-col justify-between select-none">
             <div>
-              {/* App Brand */}
-              <div class="p-5 border-b border-slate-800 flex items-center space-x-3">
-                <div class="h-9 w-9 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center font-bold text-white text-sm shadow-lg shadow-indigo-500/20">
-                  AI
+              {/* App Brand Header */}
+              <div class="p-4 border-b border-[#e6e6e6] flex items-center space-x-3">
+                <div class="h-8 w-8 rounded-lg bg-[#111111] text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                  N
                 </div>
                 <div>
-                  <h1 class="text-sm font-bold text-white tracking-wider uppercase font-mono">Study Assistant</h1>
+                  <h1 class="text-xs font-bold text-[#111111] tracking-tight uppercase">AI Study Assistant</h1>
+                  <span class="text-[10px] text-[#615d59]">Student Workspace</span>
                 </div>
               </div>
 
-              {/* Navigation */}
-              <nav class="p-3 space-y-1">
-                {[
-                  { id: "dashboard", label: "Dashboard", icon: Icons.Dashboard, badge: "Overview" },
-                  { id: "chat", label: "AI Chat & RAG", icon: Icons.Chat, badge: "NLP" },
-                  { id: "classify", label: "Subject Classifier", icon: Icons.Classifier, badge: "PyTorch" },
-                  { id: "documents", label: "My Documents", icon: Icons.Documents, badge: "FAISS" },
-                  { id: "summarizer", label: "Summarizer Tool", icon: Icons.Summarizer, badge: "Notes" },
-                  { id: "quiz", label: "Quiz Generator", icon: Icons.Quiz, badge: "MCQs" },
-                  { id: "agent", label: "Autonomous Agent", icon: Icons.Agent, badge: "Router" },
-                  { id: "settings", label: "System Health", icon: Icons.Settings, badge: "Status" }
-                ].map(item => {
+              {/* Navigation Menu */}
+              <nav class="p-2.5 space-y-0.5">
+                {navItems.map(item => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.id;
                   return (
                     <button
                       key={item.id}
                       onClick={() => setActiveTab(item.id)}
-                      class={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-semibold transition ${
+                      class={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition ${
                         isActive
-                          ? "bg-indigo-600/15 text-indigo-400 border border-indigo-500/40 shadow-sm shadow-indigo-950"
-                          : "text-slate-400 hover:bg-slate-800/70 hover:text-slate-200 border border-transparent"
+                          ? "bg-[#f6f5f4] text-[#111111] font-semibold"
+                          : "text-[#615d59] hover:bg-[#f6f5f4] hover:text-[#111111]"
                       }`}
                     >
                       <div class="flex items-center space-x-2.5">
-                        <Icon />
+                        <span class={isActive ? "text-[#0075de]" : "text-[#615d59]"}>
+                          <Icon />
+                        </span>
                         <span>{item.label}</span>
                       </div>
-                      <span class={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
-                        isActive ? "bg-indigo-950 text-indigo-300 border border-indigo-800" : "bg-slate-800/80 text-slate-500"
-                      }`}>
+                      <span class={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${item.sticker}`}>
                         {item.badge}
                       </span>
                     </button>
@@ -254,26 +342,24 @@
             </div>
 
             {/* Sidebar Footer */}
-            <div class="p-4 border-t border-slate-800 bg-slate-900/60">
+            <div class="p-3.5 border-t border-[#e6e6e6] bg-[#fbfbfa]">
               <div class="flex items-center justify-between text-xs font-mono">
-                <span class="text-slate-400">Backend API:</span>
-                <span class={`font-bold flex items-center space-x-1.5 ${
-                  systemStatus === "Online" ? "text-emerald-400" : "text-amber-400"
-                }`}>
+                <span class="text-[#615d59]">FastAPI Engine:</span>
+                <span class="font-semibold flex items-center space-x-1.5 text-[#0f6d23]">
                   <span class={`h-2 w-2 rounded-full ${
-                    systemStatus === "Online" ? "bg-emerald-400 animate-pulse" : "bg-amber-400"
+                    systemStatus === "Online" ? "bg-[#1aae39] animate-pulse" : "bg-[#dd5b00]"
                   }`}></span>
                   <span>{systemStatus}</span>
                 </span>
               </div>
-              <div class="mt-2 text-[10px] font-mono text-slate-500">
-                Host: 127.0.0.1:8000
+              <div class="mt-1 text-[10px] font-mono text-[#a39e98]">
+                127.0.0.1:8000 • Starlette
               </div>
             </div>
           </aside>
 
-          {/* Main Workspace */}
-          <main class="flex-1 overflow-y-auto bg-slate-950 p-6 md:p-8">
+          {/* Main Workspace Area (Warm Canvas) */}
+          <main class="flex-1 overflow-y-auto bg-[#f6f5f4] p-6 md:p-8">
             {activeTab === "dashboard" && (
               <DashboardView
                 data={dashboardData}
@@ -295,7 +381,7 @@
     }
 
     // ==========================================
-    // 1. POLISHED HIGH-FIDELITY DASHBOARD VIEW
+    // 1. NOTION DASHBOARD VIEW (With Deep Indigo Hero)
     // ==========================================
     function DashboardView({ data, loading, onNavigate, onRefresh }) {
       const [quickQuery, setQuickQuery] = useState("");
@@ -338,230 +424,218 @@
       };
 
       return (
-        <div class="max-w-6xl mx-auto space-y-6">
-          {/* Welcome Header */}
-          <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 relative overflow-hidden shadow-xl shadow-slate-950">
+        <div class="max-w-5xl mx-auto space-y-6">
+          {/* Signature Notion "Night" Hero Band */}
+          <div class="notion-hero-night p-6 md:p-8 relative overflow-hidden shadow-sm">
             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <div class="inline-flex items-center space-x-2 px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-mono text-indigo-400 mb-3">
-                  <span class="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-ping"></span>
-                  <span>AI Study Assistant Active</span>
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white text-[#0075de] text-xs font-semibold mb-3 shadow-sm">
+                  <span class="h-1.5 w-1.5 rounded-full bg-[#0075de]"></span>
+                  <span>Notion Edition Study Assistant</span>
                 </div>
-                <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
-                  Welcome to Your Study Assistant
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white notion-headline">
+                  Organized notes. Confident answers.
                 </h2>
-                <p class="text-sm text-slate-400 mt-1 max-w-2xl leading-relaxed">
-                  Personal AI Tutor with PyTorch Neural Question Classification, Grounded RAG with Document Citations, and Autonomous Tool Routing for Python, AI, and Machine Learning.
+                <p class="text-sm text-white/80 mt-1 max-w-2xl leading-relaxed">
+                  Your academic workspace with PyTorch question classification, grounded FAISS document retrieval, and autonomous multi-intent study tools.
                 </p>
               </div>
 
               {/* Status Badges */}
               <div class="flex flex-wrap gap-2 text-xs font-mono">
-                <div class="bg-slate-950/80 border border-slate-800 px-3 py-2 rounded-lg text-slate-300">
-                  <span class="text-slate-500 block text-[10px]">PyTorch Model</span>
-                  <span class="text-emerald-400 font-bold">96.15% Test Acc</span>
+                <div class="bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-2 rounded-xl text-white">
+                  <span class="text-white/60 block text-[10px]">PyTorch MLP</span>
+                  <span class="font-bold text-[#b7ecc2]">96.15% Test Acc</span>
                 </div>
-                <div class="bg-slate-950/80 border border-slate-800 px-3 py-2 rounded-lg text-slate-300">
-                  <span class="text-slate-500 block text-[10px]">Embeddings</span>
-                  <span class="text-indigo-400 font-bold">all-MiniLM-L6-v2</span>
+                <div class="bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-2 rounded-xl text-white">
+                  <span class="text-white/60 block text-[10px]">Vector Search</span>
+                  <span class="font-bold text-[#b8dbf9]">FAISS FlatIP 384-d</span>
                 </div>
               </div>
             </div>
 
-            {/* Quick Query Bar */}
+            {/* Quick Query Input on Hero */}
             <form onSubmit={handleQuickSubmit} class="relative z-10 mt-6 flex gap-2">
               <input
                 type="text"
                 value={quickQuery}
                 onChange={(e) => setQuickQuery(e.target.value)}
-                placeholder="Ask any question from your uploaded notes (e.g. 'What is the Global Interpreter Lock in Python?')..."
-                class="flex-1 bg-slate-950/90 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-indigo-500 font-sans shadow-inner"
+                placeholder="Ask any question from your lecture notes (e.g. 'What is the Global Interpreter Lock in Python?')..."
+                class="flex-1 bg-white text-[#111111] rounded-lg px-4 py-2.5 text-sm placeholder:text-[#a39e98] focus:outline-none focus:ring-2 focus:ring-[#0075de] font-sans shadow-sm"
               />
               <button
                 type="submit"
                 disabled={submitting || !quickQuery.trim()}
-                class="bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-600 text-white font-semibold px-5 py-3 rounded-xl text-xs uppercase tracking-wider transition font-mono flex items-center space-x-1"
+                class="btn-notion-primary px-6 py-2.5 text-xs font-semibold uppercase tracking-wider disabled:opacity-50 font-mono shadow-sm"
               >
                 {submitting ? "Searching..." : "Ask Notes"}
               </button>
             </form>
 
-            {/* Quick Answer Output */}
+            {/* Quick Answer Output Card */}
             {quickAnswer && (
-              <div class="relative z-10 mt-4 p-4 rounded-xl bg-slate-950/90 border border-indigo-500/40 text-sm space-y-2">
-                <div class="flex items-center justify-between text-xs font-mono">
-                  <span class="text-indigo-400 font-semibold">[Grounded Answer Preview]</span>
-                  <button onClick={() => onNavigate("chat")} class="text-slate-400 hover:text-white underline text-[11px]">
+              <div class="relative z-10 mt-4 p-5 rounded-xl bg-white text-[#111111] text-sm space-y-2 shadow-lg">
+                <div class="flex items-center justify-between text-xs font-mono pb-2 border-b border-[#e6e6e6]">
+                  <span class="text-[#0075de] font-semibold">[Grounded Answer Preview]</span>
+                  <button onClick={() => onNavigate("chat")} class="text-[#615d59] hover:text-[#0075de] underline text-[11px]">
                     Open in Full AI Chat
                   </button>
                 </div>
-                <div class="mt-2 text-slate-200 leading-relaxed">
+                <div class="mt-2 text-[#31302e] leading-relaxed">
                   <FormattedTutorResponse text={quickAnswer.answer} />
                 </div>
                 {quickAnswer.citations && quickAnswer.citations.length > 0 && (
-                  <div class="text-[11px] font-mono text-slate-400 pt-2 border-t border-slate-800">
-                    Source: {quickAnswer.citations[0].document_name} (Page {quickAnswer.citations[0].page_number}, Score: {quickAnswer.citations[0].relevance_score})
+                  <div class="text-[11px] font-mono text-[#615d59] pt-2 border-t border-[#e6e6e6]">
+                    Source Citation: <strong class="text-[#111111]">{quickAnswer.citations[0].document_name}</strong> (Page {quickAnswer.citations[0].page_number}, Score: {quickAnswer.citations[0].relevance_score})
                   </div>
                 )}
               </div>
             )}
           </div>
 
-          {/* KPI Metrics Cards */}
+          {/* 4 KPI Metric Cards (White Cards, Hairline Borders) */}
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Card 1 */}
-            <div class="bg-slate-900/90 border border-slate-800 hover:border-slate-700 p-5 rounded-xl transition shadow-md">
+            <div class="notion-card p-4 space-y-2">
               <div class="flex items-center justify-between">
-                <span class="text-xs uppercase font-mono tracking-wider text-slate-400">Indexed Notes</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-950 text-indigo-400 border border-indigo-800">FAISS</span>
+                <span class="text-[11px] uppercase font-mono tracking-wider text-[#615d59]">Indexed Notes</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">FAISS</span>
               </div>
-              <div class="text-3xl font-extrabold text-white mt-2 font-mono">{metrics.total_documents}</div>
-              <div class="text-xs text-slate-400 mt-1 flex items-center justify-between">
+              <div class="text-3xl font-extrabold text-[#111111] font-mono notion-headline">{metrics.total_documents}</div>
+              <div class="text-xs text-[#615d59] flex items-center justify-between pt-1 border-t border-[#e6e6e6]">
                 <span>Total Chunks:</span>
-                <span class="text-indigo-400 font-semibold">{metrics.total_chunks_indexed || 13}</span>
-              </div>
-              <div class="mt-3 w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-indigo-500 h-full rounded-full" style={{ width: '100%' }}></div>
+                <span class="text-[#0075de] font-semibold">{metrics.total_chunks_indexed || 13}</span>
               </div>
             </div>
 
             {/* Card 2 */}
-            <div class="bg-slate-900/90 border border-slate-800 hover:border-slate-700 p-5 rounded-xl transition shadow-md">
+            <div class="notion-card p-4 space-y-2">
               <div class="flex items-center justify-between">
-                <span class="text-xs uppercase font-mono tracking-wider text-slate-400">Questions Asked</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">RAG Q&A</span>
+                <span class="text-[11px] uppercase font-mono tracking-wider text-[#615d59]">Questions Asked</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#edf8f7] text-[#156360] border border-[#a8e2e0]">RAG Q&A</span>
               </div>
-              <div class="text-3xl font-extrabold text-white mt-2 font-mono">{metrics.total_questions_asked}</div>
-              <div class="text-xs text-slate-400 mt-1 flex items-center justify-between">
-                <span>Guardrail Threshold:</span>
-                <span class="text-emerald-400 font-semibold">0.35 Cosine</span>
-              </div>
-              <div class="mt-3 w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-emerald-500 h-full rounded-full" style={{ width: `${Math.min(100, (metrics.total_questions_asked + 1) * 20)}%` }}></div>
+              <div class="text-3xl font-extrabold text-[#111111] font-mono notion-headline">{metrics.total_questions_asked}</div>
+              <div class="text-xs text-[#615d59] flex items-center justify-between pt-1 border-t border-[#e6e6e6]">
+                <span>Guardrail Min:</span>
+                <span class="text-[#0f6d23] font-semibold">0.35 Cosine</span>
               </div>
             </div>
 
             {/* Card 3 */}
-            <div class="bg-slate-900/90 border border-slate-800 hover:border-slate-700 p-5 rounded-xl transition shadow-md">
+            <div class="notion-card p-4 space-y-2">
               <div class="flex items-center justify-between">
-                <span class="text-xs uppercase font-mono tracking-wider text-slate-400">Quizzes Taken</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800">Practice</span>
+                <span class="text-[11px] uppercase font-mono tracking-wider text-[#615d59]">Quizzes Taken</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#fff4ec] text-[#963800] border border-[#fed6b8]">MCQs</span>
               </div>
-              <div class="text-3xl font-extrabold text-white mt-2 font-mono">{metrics.total_quizzes_generated}</div>
-              <div class="text-xs text-slate-400 mt-1 flex items-center justify-between">
-                <span>MCQ Generation:</span>
-                <span class="text-amber-400 font-semibold">Automated</span>
-              </div>
-              <div class="mt-3 w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-amber-500 h-full rounded-full" style={{ width: `${Math.min(100, metrics.total_quizzes_generated * 25)}%` }}></div>
+              <div class="text-3xl font-extrabold text-[#111111] font-mono notion-headline">{metrics.total_quizzes_generated}</div>
+              <div class="text-xs text-[#615d59] flex items-center justify-between pt-1 border-t border-[#e6e6e6]">
+                <span>Generation:</span>
+                <span class="text-[#963800] font-semibold">Automated</span>
               </div>
             </div>
 
             {/* Card 4 */}
-            <div class="bg-slate-900/90 border border-slate-800 hover:border-slate-700 p-5 rounded-xl transition shadow-md">
+            <div class="notion-card p-4 space-y-2">
               <div class="flex items-center justify-between">
-                <span class="text-xs uppercase font-mono tracking-wider text-slate-400">Average Score</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-950 text-sky-400 border border-sky-800">Retention</span>
+                <span class="text-[11px] uppercase font-mono tracking-wider text-[#615d59]">Average Score</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef9f0] text-[#0f6d23] border border-[#b7ecc2]">Retention</span>
               </div>
-              <div class="text-3xl font-extrabold text-white mt-2 font-mono">
+              <div class="text-3xl font-extrabold text-[#111111] font-mono notion-headline">
                 {metrics.average_quiz_score > 0 ? `${metrics.average_quiz_score}%` : "100%"}
               </div>
-              <div class="text-xs text-slate-400 mt-1 flex items-center justify-between">
-                <span>Status:</span>
-                <span class="text-sky-400 font-semibold">Active Learner</span>
-              </div>
-              <div class="mt-3 w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-sky-500 h-full rounded-full" style={{ width: `${metrics.average_quiz_score > 0 ? metrics.average_quiz_score : 100}%` }}></div>
+              <div class="text-xs text-[#615d59] flex items-center justify-between pt-1 border-t border-[#e6e6e6]">
+                <span>Learner Status:</span>
+                <span class="text-[#0075de] font-semibold">Active</span>
               </div>
             </div>
           </div>
 
-          {/* Five Curriculum Milestones (Modules 1 - 5) */}
-          <div class="bg-gradient-to-br from-slate-900 to-indigo-950/20 border border-slate-800 rounded-2xl p-6 shadow-xl">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
+          {/* 5 Curriculum Milestones Grid */}
+          <div class="notion-card p-6 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#e6e6e6]">
               <div>
                 <div class="flex items-center space-x-2">
-                  <span class="text-xs uppercase font-mono font-bold tracking-wider text-indigo-400">Curriculum & Project Milestones</span>
-                  <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">5/5 Verified</span>
+                  <span class="text-xs uppercase font-mono font-bold tracking-wider text-[#111111]">Curriculum Milestones</span>
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef9f0] text-[#0f6d23] border border-[#b7ecc2]">5/5 Verified</span>
                 </div>
-                <p class="text-xs text-slate-400 mt-1">All 5 academic modules requested by the instructor are fully integrated and live.</p>
+                <p class="text-xs text-[#615d59] mt-0.5">All 5 academic curriculum modules are live and validated.</p>
               </div>
-              <span class="text-[11px] font-mono text-slate-500">FastAPI • PyTorch • FAISS • SQLite</span>
+              <span class="text-[11px] font-mono text-[#a39e98]">FastAPI • PyTorch • FAISS • SQLite</span>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mt-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
               {/* Module 1 */}
               <div
                 onClick={() => onNavigate("classify")}
-                class="bg-slate-950/80 hover:bg-slate-800/80 border border-slate-800 hover:border-indigo-500/50 p-4 rounded-xl cursor-pointer transition group space-y-1.5"
+                class="p-3.5 rounded-xl border border-[#e6e6e6] hover:border-[#0075de] bg-[#ffffff] hover:bg-[#fbfbfa] cursor-pointer transition space-y-1.5"
               >
                 <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="text-indigo-400 font-bold">MODULE 1</span>
-                  <span class="text-emerald-400">[PASS]</span>
+                  <span class="text-[#5c2596] font-bold">MODULE 1</span>
+                  <span class="text-[#0f6d23] font-bold">[PASS]</span>
                 </div>
-                <h4 class="text-xs font-bold text-white group-hover:text-indigo-300 transition">Neural Classifier</h4>
-                <p class="text-[11px] text-slate-400 leading-tight">
-                  PyTorch MLP (96.15% acc) classifies questions into Python, AI, or ML.
+                <h4 class="text-xs font-bold text-[#111111]">Neural Classifier</h4>
+                <p class="text-[11px] text-[#615d59] leading-tight">
+                  PyTorch MLP model (96.15% acc) for Python, AI, ML queries.
                 </p>
               </div>
 
               {/* Module 2 */}
               <div
                 onClick={() => onNavigate("chat")}
-                class="bg-slate-950/80 hover:bg-slate-800/80 border border-slate-800 hover:border-indigo-500/50 p-4 rounded-xl cursor-pointer transition group space-y-1.5"
+                class="p-3.5 rounded-xl border border-[#e6e6e6] hover:border-[#0075de] bg-[#ffffff] hover:bg-[#fbfbfa] cursor-pointer transition space-y-1.5"
               >
                 <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="text-indigo-400 font-bold">MODULE 2</span>
-                  <span class="text-emerald-400">[PASS]</span>
+                  <span class="text-[#0c5ea8] font-bold">MODULE 2</span>
+                  <span class="text-[#0f6d23] font-bold">[PASS]</span>
                 </div>
-                <h4 class="text-xs font-bold text-white group-hover:text-indigo-300 transition">NLP & Transformers</h4>
-                <p class="text-[11px] text-slate-400 leading-tight">
-                  Tokenization, lemmatization, 384-d dense embeddings, and scaled dot-product attention.
+                <h4 class="text-xs font-bold text-[#111111]">NLP & Transformers</h4>
+                <p class="text-[11px] text-[#615d59] leading-tight">
+                  Tokenization, 384-d embeddings, and scaled dot-product attention.
                 </p>
               </div>
 
               {/* Module 3 */}
               <div
                 onClick={() => onNavigate("chat")}
-                class="bg-slate-950/80 hover:bg-slate-800/80 border border-slate-800 hover:border-indigo-500/50 p-4 rounded-xl cursor-pointer transition group space-y-1.5"
+                class="p-3.5 rounded-xl border border-[#e6e6e6] hover:border-[#0075de] bg-[#ffffff] hover:bg-[#fbfbfa] cursor-pointer transition space-y-1.5"
               >
                 <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="text-indigo-400 font-bold">MODULE 3</span>
-                  <span class="text-emerald-400">[PASS]</span>
+                  <span class="text-[#156360] font-bold">MODULE 3</span>
+                  <span class="text-[#0f6d23] font-bold">[PASS]</span>
                 </div>
-                <h4 class="text-xs font-bold text-white group-hover:text-indigo-300 transition">Generative AI & RAG</h4>
-                <p class="text-[11px] text-slate-400 leading-tight">
-                  Grounded Q&A from uploaded study notes (PDF/TXT) with FAISS and exact citations.
+                <h4 class="text-xs font-bold text-[#111111]">Generative AI & RAG</h4>
+                <p class="text-[11px] text-[#615d59] leading-tight">
+                  Grounded Q&A from study notes with FAISS and exact citations.
                 </p>
               </div>
 
               {/* Module 4 */}
               <div
                 onClick={() => onNavigate("agent")}
-                class="bg-slate-950/80 hover:bg-slate-800/80 border border-slate-800 hover:border-emerald-500/50 p-4 rounded-xl cursor-pointer transition group space-y-1.5"
+                class="p-3.5 rounded-xl border border-[#e6e6e6] hover:border-[#0075de] bg-[#ffffff] hover:bg-[#fbfbfa] cursor-pointer transition space-y-1.5"
               >
                 <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="text-emerald-400 font-bold">MODULE 4</span>
-                  <span class="text-emerald-400">[PASS]</span>
+                  <span class="text-[#963800] font-bold">MODULE 4</span>
+                  <span class="text-[#0f6d23] font-bold">[PASS]</span>
                 </div>
-                <h4 class="text-xs font-bold text-white group-hover:text-emerald-300 transition">Autonomous Agent</h4>
-                <p class="text-[11px] text-slate-400 leading-tight">
-                  Auto intent routing between Q&A, Summarizer, and Quiz tools with execution trace.
+                <h4 class="text-xs font-bold text-[#111111]">Autonomous Agent</h4>
+                <p class="text-[11px] text-[#615d59] leading-tight">
+                  Multi-intent routing between Q&A, Summary, and Quiz tools.
                 </p>
               </div>
 
               {/* Module 5 */}
               <div
                 onClick={() => onNavigate("settings")}
-                class="bg-slate-950/80 hover:bg-slate-800/80 border border-slate-800 hover:border-amber-500/50 p-4 rounded-xl cursor-pointer transition group space-y-1.5"
+                class="p-3.5 rounded-xl border border-[#e6e6e6] hover:border-[#0075de] bg-[#ffffff] hover:bg-[#fbfbfa] cursor-pointer transition space-y-1.5"
               >
                 <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="text-amber-400 font-bold">MODULE 5</span>
-                  <span class="text-emerald-400">[PASS]</span>
+                  <span class="text-[#a8177a] font-bold">MODULE 5</span>
+                  <span class="text-[#0f6d23] font-bold">[PASS]</span>
                 </div>
-                <h4 class="text-xs font-bold text-white group-hover:text-amber-300 transition">Security Guardrails</h4>
-                <p class="text-[11px] text-slate-400 leading-tight">
-                  FastAPI endpoint, PII masking, prompt injection defense, rate limiter, and SQLite logs.
+                <h4 class="text-xs font-bold text-[#111111]">Guardrails</h4>
+                <p class="text-[11px] text-[#615d59] leading-tight">
+                  FastAPI endpoints, PII filter, prompt injection defense, rate limiter.
                 </p>
               </div>
             </div>
@@ -569,16 +643,16 @@
 
           {/* Two-Column Analytics & Activity Section */}
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left 2 Cols: Recent Activity & Subject Mastery */}
+            {/* Left 2 Cols: Recent Activity */}
             <div class="lg:col-span-2 space-y-6">
               {/* Recent Q&A Log */}
-              <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
-                <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div class="notion-card p-5">
+                <div class="flex items-center justify-between pb-3 border-b border-[#e6e6e6]">
                   <div class="flex items-center space-x-2">
-                    <span class="text-xs uppercase font-mono tracking-wider text-slate-400">Recent Question Activity</span>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">SQLite Log</span>
+                    <span class="text-xs uppercase font-mono tracking-wider text-[#615d59]">Recent Question Activity</span>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#f6f5f4] text-[#615d59] border border-[#e6e6e6]">SQLite Log</span>
                   </div>
-                  <button onClick={() => onNavigate("chat")} class="text-xs text-indigo-400 hover:text-indigo-300 font-mono">
+                  <button onClick={() => onNavigate("chat")} class="text-xs text-[#0075de] hover:underline font-mono">
                     View Full Chat →
                   </button>
                 </div>
@@ -586,31 +660,31 @@
                 <div class="mt-4 space-y-3">
                   {data?.recent_conversations && data.recent_conversations.length > 0 ? (
                     data.recent_conversations.map((item, idx) => (
-                      <div key={idx} class="p-3.5 bg-slate-950 rounded-lg border border-slate-800 space-y-1.5">
+                      <div key={idx} class="p-3.5 bg-[#fbfbfa] rounded-lg border border-[#e6e6e6] space-y-1.5">
                         <div class="flex items-center justify-between text-xs">
-                          <span class="font-semibold text-slate-200">Q: {item.query}</span>
-                          <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800">
+                          <span class="font-semibold text-[#111111]">Q: {item.query}</span>
+                          <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">
                             {item.category || item.tool_used || "RAG"}
                           </span>
                         </div>
-                        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                        <p class="text-xs text-[#615d59] line-clamp-2 leading-relaxed">
                           A: {item.answer}
                         </p>
-                        <div class="flex items-center justify-between text-[10px] font-mono text-slate-500 pt-1">
+                        <div class="flex items-center justify-between text-[10px] font-mono text-[#a39e98] pt-1">
                           <span>Confidence: {item.confidence || 0.95}</span>
                           <span>{item.timestamp ? new Date(item.timestamp).toLocaleTimeString() : "Recent"}</span>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <div class="p-6 text-center text-xs font-mono text-slate-500 bg-slate-950 rounded-lg border border-slate-800/80 space-y-2">
+                    <div class="p-6 text-center text-xs font-mono text-[#a39e98] bg-[#fbfbfa] rounded-lg border border-[#e6e6e6] space-y-2">
                       <p>No questions logged in this session yet.</p>
                       <button
                         onClick={() => {
                           setQuickQuery("What is the Global Interpreter Lock in Python?");
                           handleQuickSubmit({ preventDefault: () => {} });
                         }}
-                        class="text-indigo-400 hover:text-indigo-300 underline font-semibold text-xs"
+                        class="text-[#0075de] hover:underline font-semibold text-xs"
                       >
                         Try Sample: "What is the Global Interpreter Lock in Python?"
                       </button>
@@ -619,39 +693,39 @@
                 </div>
               </div>
 
-              {/* Subject Breakdown & Curriculum Balance */}
-              <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
-                <div class="text-xs uppercase font-mono tracking-wider text-slate-400 mb-3">
-                  Technical Coverage Curriculum
+              {/* Technical Coverage Curriculum */}
+              <div class="notion-card p-5">
+                <div class="text-xs uppercase font-mono tracking-wider text-[#615d59] mb-3">
+                  Curriculum Technical Balance
                 </div>
                 <div class="space-y-3">
                   <div>
                     <div class="flex justify-between text-xs font-mono mb-1">
-                      <span class="text-slate-300">Python Programming & Internals</span>
-                      <span class="text-indigo-400 font-bold">CPython / GIL / Generators</span>
+                      <span class="text-[#31302e]">Python Programming & Memory Internals</span>
+                      <span class="text-[#0075de] font-semibold">GIL / Garbage Collection / Yield</span>
                     </div>
-                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                      <div class="bg-indigo-500 h-full rounded-full" style={{ width: '90%' }}></div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div class="flex justify-between text-xs font-mono mb-1">
-                      <span class="text-slate-300">Machine Learning Core Concepts</span>
-                      <span class="text-emerald-400 font-bold">L1/L2 Regularization / Overfitting</span>
-                    </div>
-                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                      <div class="bg-emerald-500 h-full rounded-full" style={{ width: '85%' }}></div>
+                    <div class="w-full bg-[#f6f5f4] h-2 rounded-full overflow-hidden border border-[#e6e6e6]">
+                      <div class="bg-[#0075de] h-full rounded-full" style={{ width: '90%' }}></div>
                     </div>
                   </div>
 
                   <div>
                     <div class="flex justify-between text-xs font-mono mb-1">
-                      <span class="text-slate-300">Artificial Intelligence & Search</span>
-                      <span class="text-amber-400 font-bold">A* Heuristic / Minimax / CSP</span>
+                      <span class="text-[#31302e]">Machine Learning Regularization & Loss</span>
+                      <span class="text-[#156360] font-semibold">L1 Lasso / L2 Ridge / Gradient Descent</span>
                     </div>
-                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                      <div class="bg-amber-500 h-full rounded-full" style={{ width: '80%' }}></div>
+                    <div class="w-full bg-[#f6f5f4] h-2 rounded-full overflow-hidden border border-[#e6e6e6]">
+                      <div class="bg-[#2a9d99] h-full rounded-full" style={{ width: '85%' }}></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between text-xs font-mono mb-1">
+                      <span class="text-[#31302e]">Artificial Intelligence & Search</span>
+                      <span class="text-[#963800] font-semibold">A* Heuristic Search / Minimax</span>
+                    </div>
+                    <div class="w-full bg-[#f6f5f4] h-2 rounded-full overflow-hidden border border-[#e6e6e6]">
+                      <div class="bg-[#dd5b00] h-full rounded-full" style={{ width: '80%' }}></div>
                     </div>
                   </div>
                 </div>
@@ -661,31 +735,31 @@
             {/* Right 1 Col: Documents & Recent Quizzes */}
             <div class="space-y-6">
               {/* Registered Documents */}
-              <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
-                <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-                  <span class="text-xs uppercase font-mono tracking-wider text-slate-400">Indexed Study Notes</span>
-                  <button onClick={() => onNavigate("documents")} class="text-xs text-indigo-400 hover:text-indigo-300 font-mono">
+              <div class="notion-card p-5">
+                <div class="flex items-center justify-between pb-3 border-b border-[#e6e6e6]">
+                  <span class="text-xs uppercase font-mono tracking-wider text-[#615d59]">Indexed Notes</span>
+                  <button onClick={() => onNavigate("documents")} class="text-xs text-[#0075de] hover:underline font-mono">
                     Upload +
                   </button>
                 </div>
 
-                <div class="mt-3 divide-y divide-slate-800">
+                <div class="mt-3 divide-y divide-[#e6e6e6]">
                   {data?.documents && data.documents.length > 0 ? (
                     data.documents.map((doc, idx) => (
                       <div key={idx} class="py-2.5 flex items-center justify-between text-xs">
                         <div>
-                          <div class="font-semibold text-white truncate max-w-[170px]">{doc.filename}</div>
-                          <div class="text-[10px] font-mono text-slate-400">
+                          <div class="font-semibold text-[#111111] truncate max-w-[170px]">{doc.filename}</div>
+                          <div class="text-[10px] font-mono text-[#615d59]">
                             {doc.file_type} • {doc.chunks_count} Chunks
                           </div>
                         </div>
-                        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef9f0] text-[#0f6d23] border border-[#b7ecc2]">
                           Active
                         </span>
                       </div>
                     ))
                   ) : (
-                    <div class="text-xs text-slate-500 font-mono py-4 text-center">
+                    <div class="text-xs text-[#a39e98] font-mono py-4 text-center">
                       No documents found.
                     </div>
                   )}
@@ -693,10 +767,10 @@
               </div>
 
               {/* Recent Quiz Scores */}
-              <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
-                <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-                  <span class="text-xs uppercase font-mono tracking-wider text-slate-400">Recent Quiz Scores</span>
-                  <button onClick={() => onNavigate("quiz")} class="text-xs text-amber-400 hover:text-amber-300 font-mono">
+              <div class="notion-card p-5">
+                <div class="flex items-center justify-between pb-3 border-b border-[#e6e6e6]">
+                  <span class="text-xs uppercase font-mono tracking-wider text-[#615d59]">Recent Quizzes</span>
+                  <button onClick={() => onNavigate("quiz")} class="text-xs text-[#0075de] hover:underline font-mono">
                     New Quiz →
                   </button>
                 </div>
@@ -704,28 +778,26 @@
                 <div class="mt-3 space-y-2">
                   {data?.recent_quizzes && data.recent_quizzes.length > 0 ? (
                     data.recent_quizzes.map((q, idx) => (
-                      <div key={idx} class="p-2.5 bg-slate-950 rounded-lg border border-slate-800 flex items-center justify-between text-xs">
+                      <div key={idx} class="p-2.5 bg-[#fbfbfa] rounded-lg border border-[#e6e6e6] flex items-center justify-between text-xs">
                         <div>
-                          <div class="font-semibold text-white">{q.topic}</div>
-                          <div class="text-[10px] font-mono text-slate-400">
-                            {q.score} / {q.total_questions} Questions Correct
+                          <div class="font-semibold text-[#111111]">{q.topic}</div>
+                          <div class="text-[10px] font-mono text-[#615d59]">
+                            {q.score} / {q.total_questions} Correct
                           </div>
                         </div>
-                        <span class={`font-mono font-bold text-xs px-2 py-1 rounded ${
-                          q.percentage >= 80 ? "bg-emerald-950 text-emerald-400 border border-emerald-800" : "bg-amber-950 text-amber-400 border border-amber-800"
-                        }`}>
+                        <span class="font-mono font-bold text-xs px-2 py-1 rounded-full bg-[#eef9f0] text-[#0f6d23] border border-[#b7ecc2]">
                           {q.percentage}%
                         </span>
                       </div>
                     ))
                   ) : (
-                    <div class="p-4 bg-slate-950 rounded-lg border border-slate-800 text-center text-xs font-mono text-slate-500">
+                    <div class="p-4 bg-[#fbfbfa] rounded-lg border border-[#e6e6e6] text-center text-xs font-mono text-[#a39e98]">
                       <p>No practice quizzes submitted yet.</p>
                       <button
                         onClick={() => onNavigate("quiz")}
-                        class="text-amber-400 hover:text-amber-300 underline mt-1.5 block text-xs"
+                        class="text-[#0075de] hover:underline mt-1.5 block text-xs"
                       >
-                        Start your first 3-question quiz
+                        Start 3-question quiz
                       </button>
                     </div>
                   )}
@@ -733,23 +805,23 @@
               </div>
 
               {/* Technical System Specs Card */}
-              <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 text-xs font-mono space-y-2 text-slate-400">
-                <div class="text-slate-300 font-semibold uppercase text-[11px] mb-1">Architecture Specs</div>
+              <div class="bg-[#ffffff] border border-[#e6e6e6] rounded-xl p-4 text-xs font-mono space-y-2 text-[#615d59]">
+                <div class="text-[#111111] font-semibold uppercase text-[11px] mb-1">Architecture Specs</div>
                 <div class="flex justify-between">
                   <span>Backend:</span>
-                  <span class="text-slate-200">FastAPI 0.115 / Starlette</span>
+                  <span class="text-[#111111]">FastAPI 0.115</span>
                 </div>
                 <div class="flex justify-between">
                   <span>Inference:</span>
-                  <span class="text-slate-200">PyTorch 2.x & SentenceTransformers</span>
+                  <span class="text-[#111111]">PyTorch 2.x</span>
                 </div>
                 <div class="flex justify-between">
                   <span>Vector Index:</span>
-                  <span class="text-slate-200">FAISS IndexFlatIP (Cosine)</span>
+                  <span class="text-[#111111]">FAISS IndexFlatIP</span>
                 </div>
                 <div class="flex justify-between">
                   <span>Security:</span>
-                  <span class="text-emerald-400">Injection Guard + PII Filter</span>
+                  <span class="text-[#0f6d23]">Injection Guard + PII</span>
                 </div>
               </div>
             </div>
@@ -759,7 +831,7 @@
     }
 
     // ==========================================
-    // 2. UPGRADED AI CHAT VIEW (RAG Grounded Q&A)
+    // 2. NOTION AI CHAT VIEW (RAG Grounded Q&A)
     // ==========================================
     function AIChatView({ onRefreshMetrics }) {
       const [messages, setMessages] = useState([]);
@@ -776,7 +848,6 @@
         "In A* heuristic search, what does h(n) represent?"
       ];
 
-      // Load persistent conversation history from SQLite
       const loadHistory = async () => {
         try {
           const res = await fetch(`${API_BASE}/history?limit=30`);
@@ -784,7 +855,6 @@
             const raw = await res.json();
             if (raw && raw.length > 0) {
               const formatted = [];
-              // SQLite returns in DESC order, reverse for chronological chat flow
               const sorted = [...raw].reverse();
               sorted.forEach(item => {
                 formatted.push({
@@ -898,19 +968,19 @@
 
       return (
         <div class="max-w-4xl mx-auto flex flex-col h-[calc(100vh-6rem)] space-y-4">
-          {/* Header & Context Bar */}
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+          {/* Header Bar */}
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e6e6e6]">
             <div>
-              <h2 class="text-2xl font-bold text-white tracking-tight">Chat With Your Study Notes</h2>
-              <p class="text-xs text-slate-400 mt-0.5">Retrieval-Augmented Generation (RAG) with anti-hallucination guardrail (0.35 min threshold).</p>
+              <h2 class="text-2xl font-bold text-[#111111] notion-headline">Study Notes Chat</h2>
+              <p class="text-xs text-[#615d59] mt-0.5">Retrieval-Augmented Generation (RAG) with anti-hallucination guardrail (0.35 min threshold).</p>
             </div>
             <div class="flex items-center space-x-2 text-xs font-mono">
-              <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
+              <span class="px-2.5 py-1 rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">
                 FAISS FlatIP • 384-d
               </span>
               <button
                 onClick={handleClearHistory}
-                class="px-2.5 py-1 rounded-lg bg-red-950/40 hover:bg-red-900/60 border border-red-900/50 text-red-300 transition text-xs font-mono"
+                class="btn-notion-utility px-2.5 py-1 text-xs font-mono text-[#a8177a] hover:bg-[#fff0f9]"
               >
                 Clear History
               </button>
@@ -918,14 +988,14 @@
           </div>
 
           {/* Starter Chips Bar */}
-          <div class="flex items-center space-x-2 overflow-x-auto pb-1 text-xs font-mono text-slate-400 select-none">
-            <span class="text-slate-500 shrink-0">Sample Questions:</span>
+          <div class="flex items-center space-x-2 overflow-x-auto pb-1 text-xs font-mono text-[#615d59] select-none">
+            <span class="text-[#a39e98] shrink-0">Sample Questions:</span>
             {starterQuestions.map((q, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSend(q)}
                 disabled={loading}
-                class="shrink-0 px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-indigo-500/50 text-slate-300 hover:text-white transition text-[11px]"
+                class="shrink-0 px-3 py-1 rounded-full bg-white hover:bg-[#f6f5f4] border border-[#e6e6e6] text-[#31302e] hover:text-[#111111] transition text-[11px] shadow-sm"
               >
                 {q}
               </button>
@@ -933,9 +1003,9 @@
           </div>
 
           {/* Message Stream */}
-          <div class="flex-1 bg-slate-900 border border-slate-800 rounded-xl p-5 overflow-y-auto space-y-5 shadow-inner">
+          <div class="flex-1 bg-[#ffffff] border border-[#e6e6e6] rounded-xl p-5 overflow-y-auto space-y-5 shadow-sm">
             {loadingHistory ? (
-              <div class="p-8 text-center text-xs font-mono text-indigo-400">
+              <div class="p-8 text-center text-xs font-mono text-[#0075de]">
                 Loading persistent study conversations from SQLite...
               </div>
             ) : (
@@ -943,40 +1013,42 @@
                 <div key={idx} class={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}>
                   <div class={`max-w-2xl p-4 rounded-xl text-sm ${
                     m.role === "user"
-                      ? "bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-br-none shadow-md shadow-indigo-950"
-                      : "bg-slate-950 text-slate-200 border border-slate-800 rounded-bl-none shadow-md shadow-slate-950"
+                      ? "bg-[#213183] text-white rounded-br-none shadow-sm"
+                      : "bg-[#fbfbfa] text-[#111111] border border-[#e6e6e6] rounded-bl-none shadow-sm"
                   }`}>
                     {/* Role Header */}
-                    <div class="flex items-center justify-between text-[11px] font-mono mb-2 pb-1.5 border-b border-white/10 text-slate-400">
-                      <span class="font-bold uppercase tracking-wider text-slate-300">
+                    <div class="flex items-center justify-between text-[11px] font-mono mb-2 pb-1.5 border-b border-black/5 text-[#615d59]">
+                      <span class={`font-bold uppercase tracking-wider ${m.role === "user" ? "text-white/80" : "text-[#111111]"}`}>
                         {m.role === "user" ? "You (Student)" : "AI Study Tutor"}
                       </span>
                       {m.timestamp && (
-                        <span>{new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                        <span class={m.role === "user" ? "text-white/60" : "text-[#a39e98]"}>
+                          {new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
                       )}
                     </div>
 
-                    <div class="leading-relaxed font-sans text-sm">
+                    <div class={`leading-relaxed font-sans text-sm ${m.role === "user" ? "text-white" : "text-[#31302e]"}`}>
                       <FormattedTutorResponse text={m.text} />
                     </div>
 
                     {/* Citations Box */}
                     {m.citations && m.citations.length > 0 && (
-                      <div class="mt-3.5 pt-3 border-t border-slate-800 text-xs font-mono space-y-2">
-                        <div class="text-indigo-400 font-bold uppercase tracking-wider text-[11px] flex items-center justify-between">
-                          <span>Grounding Citations & Verified References:</span>
-                          <span class="text-slate-500 text-[10px]">{m.citations.length} Sources</span>
+                      <div class="mt-3.5 pt-3 border-t border-[#e6e6e6] text-xs font-mono space-y-2">
+                        <div class="text-[#0075de] font-bold uppercase tracking-wider text-[11px] flex items-center justify-between">
+                          <span>Grounding Citations & Sources:</span>
+                          <span class="text-[#615d59] text-[10px]">{m.citations.length} Sources</span>
                         </div>
                         {m.citations.map((c, cIdx) => (
-                          <div key={cIdx} class="p-3 bg-slate-900/90 rounded-lg border border-slate-800 text-slate-300 space-y-1">
+                          <div key={cIdx} class="p-3 bg-white rounded-lg border border-[#e6e6e6] text-[#31302e] space-y-1">
                             <div class="flex items-center justify-between">
-                              <span class="font-bold text-indigo-300">{c.document_name}</span>
-                              <span class="text-emerald-400 font-mono text-[10px] bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-800/60">
+                              <span class="font-bold text-[#111111]">{c.document_name}</span>
+                              <span class="text-[#0f6d23] font-mono text-[10px] bg-[#eef9f0] px-2 py-0.5 rounded-full border border-[#b7ecc2]">
                                 Relevance: {(c.relevance_score * 100).toFixed(1)}%
                               </span>
                             </div>
-                            <div class="text-slate-400 text-[11px]">Page: {c.page_number}</div>
-                            <div class="text-slate-300 text-[11px] italic mt-1 bg-slate-950 p-2 rounded border border-slate-800/80 font-sans">
+                            <div class="text-[#615d59] text-[11px]">Page: {c.page_number}</div>
+                            <div class="text-[#31302e] text-[11px] italic mt-1 bg-[#f6f5f4] p-2 rounded border border-[#e6e6e6] font-sans">
                               "{c.snippet}"
                             </div>
                           </div>
@@ -986,16 +1058,16 @@
 
                     {/* Grounding & Confidence Badges */}
                     {m.found_in_notes !== undefined && (
-                      <div class="mt-3 pt-2 border-t border-slate-800/80 text-[11px] font-mono flex items-center justify-between flex-wrap gap-2">
+                      <div class="mt-3 pt-2 border-t border-[#e6e6e6] text-[11px] font-mono flex items-center justify-between flex-wrap gap-2">
                         <div class="flex items-center space-x-2">
-                          <span class={`px-2 py-0.5 rounded font-bold ${
+                          <span class={`px-2 py-0.5 rounded-full font-bold ${
                             m.found_in_notes
-                              ? "bg-emerald-950 text-emerald-300 border border-emerald-800"
-                              : "bg-amber-950 text-amber-300 border border-amber-800"
+                              ? "bg-[#eef9f0] text-[#0f6d23] border border-[#b7ecc2]"
+                              : "bg-[#fff4ec] text-[#963800] border border-[#fed6b8]"
                           }`}>
                             {m.found_in_notes ? "[Grounded in Notes]" : "[Out of Notes Scope]"}
                           </span>
-                          <span class="text-slate-400">
+                          <span class="text-[#615d59]">
                             Confidence: {m.confidence !== undefined ? `${(m.confidence * 100).toFixed(1)}%` : "N/A"}
                           </span>
                         </div>
@@ -1003,7 +1075,7 @@
                         {m.role === "assistant" && (
                           <button
                             onClick={() => handleCopy(m.text, idx)}
-                            class="text-[10px] font-mono text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-800 transition"
+                            class="btn-notion-utility text-[10px] font-mono px-2 py-0.5 text-[#615d59]"
                           >
                             {copiedIdx === idx ? "Copied!" : "Copy Answer"}
                           </button>
@@ -1016,13 +1088,13 @@
             )}
 
             {loading && (
-              <div class="p-3 bg-slate-950 rounded-xl border border-indigo-500/30 text-xs font-mono text-indigo-400 flex items-center space-x-2 animate-pulse">
+              <div class="p-3 bg-[#fbfbfa] rounded-xl border border-[#b8dbf9] text-xs font-mono text-[#0075de] flex items-center space-x-2 animate-pulse">
                 <span>[Retrieving relevant chunks from FAISS vector store & synthesizing grounded answer...]</span>
               </div>
             )}
           </div>
 
-          {/* Input Form with Char Counter */}
+          {/* Input Form */}
           <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} class="space-y-1">
             <div class="flex gap-2">
               <input
@@ -1031,17 +1103,17 @@
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask any conceptual or technical question grounded in your notes..."
                 maxLength="1000"
-                class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-indigo-500 font-sans shadow-inner"
+                class="flex-1 bg-white border border-[#e6e6e6] rounded-lg px-4 py-3 text-sm text-[#111111] placeholder:text-[#a39e98] focus:outline-none focus:ring-2 focus:ring-[#0075de] font-sans shadow-sm"
               />
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                class="bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-600 px-6 py-3 rounded-xl text-xs font-mono uppercase font-bold tracking-wider transition"
+                class="btn-notion-primary px-6 py-3 text-xs font-mono uppercase font-bold tracking-wider disabled:opacity-50 shadow-sm"
               >
                 {loading ? "Searching..." : "Ask Notes"}
               </button>
             </div>
-            <div class="flex justify-between items-center text-[10px] font-mono text-slate-500 px-1">
+            <div class="flex justify-between items-center text-[10px] font-mono text-[#a39e98] px-1">
               <span>Press Enter to send</span>
               <span>{input.length} / 1000 characters</span>
             </div>
@@ -1051,7 +1123,7 @@
     }
 
     // ==========================================
-    // 3. QUESTION CLASSIFIER VIEW (PyTorch MLP)
+    // 3. NOTION QUESTION CLASSIFIER VIEW
     // ==========================================
     function ClassifierView() {
       const [question, setQuestion] = useState("");
@@ -1091,86 +1163,86 @@
       return (
         <div class="max-w-3xl mx-auto space-y-6">
           <div>
-            <h2 class="text-2xl font-bold text-white tracking-tight">Question Subject Classifier</h2>
-            <p class="text-xs text-slate-400 mt-1">Classify student queries into Python, AI, or ML using our trained PyTorch MLP neural network.</p>
+            <h2 class="text-2xl font-bold text-[#111111] notion-headline">Question Subject Classifier</h2>
+            <p class="text-xs text-[#615d59] mt-1">Classify questions into Python, AI, or ML using the PyTorch MLP neural model.</p>
           </div>
 
           {/* Preset Test Questions */}
           <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
-            <span class="text-slate-500">Quick Test Samples:</span>
+            <span class="text-[#a39e98]">Quick Samples:</span>
             <button
               type="button"
               onClick={() => { setQuestion("What is the Global Interpreter Lock in Python and how does it manage thread execution?"); }}
-              class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-indigo-300 border border-slate-800 hover:border-indigo-500 transition text-[11px]"
+              class="px-3 py-1 rounded-full bg-[#f7f1fe] text-[#5c2596] border border-[#e3cffc] hover:bg-[#eedcfd] transition text-[11px]"
             >
               Python (GIL)
             </button>
             <button
               type="button"
               onClick={() => { setQuestion("How does backpropagation compute gradient descent to minimize loss in neural networks?"); }}
-              class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-slate-800 hover:border-emerald-500 transition text-[11px]"
+              class="px-3 py-1 rounded-full bg-[#edf8f7] text-[#156360] border border-[#a8e2e0] hover:bg-[#d8f2f0] transition text-[11px]"
             >
-              ML (Backpropagation)
+              ML (Backprop)
             </button>
             <button
               type="button"
               onClick={() => { setQuestion("How does the A* search algorithm evaluate paths using admissible heuristics?"); }}
-              class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-300 border border-slate-800 hover:border-amber-500 transition text-[11px]"
+              class="px-3 py-1 rounded-full bg-[#fff4ec] text-[#963800] border border-[#fed6b8] hover:bg-[#fee7d3] transition text-[11px]"
             >
-              AI (A* Heuristics)
+              AI (A* Search)
             </button>
           </div>
 
           <form onSubmit={handleClassify} class="space-y-4">
             <div>
-              <label class="block text-xs font-mono uppercase text-slate-400 mb-2">Student Question:</label>
+              <label class="block text-xs font-mono uppercase text-[#615d59] mb-2">Student Question:</label>
               <textarea
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 placeholder="e.g. How does backpropagation update weights in a neural network?"
                 rows="3"
-                class="w-full bg-slate-900 border border-slate-800 rounded-lg p-3 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-sans"
+                class="w-full bg-white border border-[#e6e6e6] rounded-lg p-3 text-sm text-[#111111] focus:outline-none focus:ring-2 focus:ring-[#0075de] font-sans shadow-sm"
               />
             </div>
             <button
               type="submit"
               disabled={loading || !question.trim()}
-              class="bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-600 px-6 py-2.5 rounded-lg text-xs font-mono uppercase font-bold tracking-wider transition"
+              class="btn-notion-primary px-6 py-2.5 text-xs font-mono uppercase font-bold tracking-wider disabled:opacity-50 shadow-sm"
             >
               {loading ? "Classifying..." : "Classify Question"}
             </button>
           </form>
 
           {error && (
-            <div class="p-4 bg-red-950/50 border border-red-800 rounded-lg text-sm text-red-300">
+            <div class="p-4 bg-[#fff0f9] border border-[#ffc2ea] rounded-xl text-sm text-[#a8177a]">
               {error}
             </div>
           )}
 
           {result && (
-            <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4">
-              <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div class="notion-card p-6 space-y-4">
+              <div class="flex items-center justify-between border-b border-[#e6e6e6] pb-4">
                 <div>
-                  <div class="text-xs font-mono text-slate-400">Predicted Subject</div>
-                  <div class="text-2xl font-bold text-indigo-400 mt-1">{result.category}</div>
+                  <div class="text-xs font-mono text-[#615d59]">Predicted Subject</div>
+                  <div class="text-2xl font-bold text-[#0075de] mt-1 notion-headline">{result.category}</div>
                 </div>
                 <div class="text-right">
-                  <div class="text-xs font-mono text-slate-400">Confidence Score</div>
-                  <div class="text-2xl font-bold text-emerald-400 mt-1">{(result.confidence * 100).toFixed(1)}%</div>
+                  <div class="text-xs font-mono text-[#615d59]">Confidence Score</div>
+                  <div class="text-2xl font-bold text-[#0f6d23] mt-1 font-mono">{(result.confidence * 100).toFixed(1)}%</div>
                 </div>
               </div>
 
               <div>
-                <div class="text-xs font-mono uppercase text-slate-400 mb-2">Class Probability Distribution:</div>
+                <div class="text-xs font-mono uppercase text-[#615d59] mb-2">Class Probability Distribution:</div>
                 <div class="space-y-2">
                   {Object.entries(result.probabilities).map(([cat, prob]) => (
                     <div key={cat} class="space-y-1">
-                      <div class="flex justify-between text-xs font-mono text-slate-300">
+                      <div class="flex justify-between text-xs font-mono text-[#31302e]">
                         <span>{cat}</span>
                         <span>{(prob * 100).toFixed(1)}%</span>
                       </div>
-                      <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                        <div class="bg-indigo-500 h-full rounded-full transition-all" style={{ width: `${prob * 100}%` }}></div>
+                      <div class="w-full bg-[#f6f5f4] h-2 rounded-full overflow-hidden border border-[#e6e6e6]">
+                        <div class="bg-[#0075de] h-full rounded-full transition-all" style={{ width: `${prob * 100}%` }}></div>
                       </div>
                     </div>
                   ))}
@@ -1183,7 +1255,7 @@
     }
 
     // ==========================================
-    // 4. UPGRADED DOCUMENTS & VECTOR STORE VIEW
+    // 4. NOTION DOCUMENTS VIEW (FAISS Knowledge Base)
     // ==========================================
     function DocumentsView({ onUploaded }) {
       const [documents, setDocuments] = useState([]);
@@ -1348,22 +1420,22 @@
       return (
         <div class="max-w-5xl mx-auto space-y-6">
           {/* Header & Stats Bar */}
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#e6e6e6]">
             <div>
-              <h2 class="text-2xl font-bold text-white tracking-tight">Study Documents & Vector Knowledge Base</h2>
-              <p class="text-xs text-slate-400 mt-1">Upload, chunk, embed, and inspect technical lecture notes in FAISS vector store.</p>
+              <h2 class="text-2xl font-bold text-[#111111] notion-headline">Study Documents & FAISS Store</h2>
+              <p class="text-xs text-[#615d59] mt-0.5">Upload, chunk, embed, and inspect technical lecture notes.</p>
             </div>
             <div class="flex items-center space-x-2 text-xs font-mono">
-              <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
-                Docs: <strong class="text-white">{documents.length}</strong>
+              <span class="px-3 py-1.5 rounded-lg bg-white border border-[#e6e6e6] text-[#615d59] shadow-sm">
+                Docs: <strong class="text-[#111111]">{documents.length}</strong>
               </span>
-              <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
-                Total Chunks: <strong class="text-indigo-400">{totalChunksAcrossAll}</strong>
+              <span class="px-3 py-1.5 rounded-lg bg-white border border-[#e6e6e6] text-[#615d59] shadow-sm">
+                Total Chunks: <strong class="text-[#0075de]">{totalChunksAcrossAll}</strong>
               </span>
               <button
                 onClick={handleLoadSample}
                 disabled={uploading}
-                class="px-3 py-1.5 rounded-lg bg-indigo-950/80 hover:bg-indigo-900 border border-indigo-700/60 text-indigo-300 hover:text-white transition font-mono font-medium text-xs disabled:opacity-50"
+                class="btn-notion-utility px-3 py-1.5 text-xs font-mono text-[#0075de] disabled:opacity-50"
               >
                 Reload Sample Notes
               </button>
@@ -1375,10 +1447,10 @@
             onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
-            class={`border-2 border-dashed rounded-2xl p-8 text-center transition select-none ${
+            class={`border-2 border-dashed rounded-xl p-8 text-center transition select-none bg-white ${
               isDragging
-                ? "border-indigo-500 bg-indigo-950/20 shadow-lg shadow-indigo-500/10"
-                : "border-slate-800 hover:border-slate-700 bg-slate-900/60"
+                ? "border-[#0075de] bg-[#eef6fc]"
+                : "border-[#e6e6e6] hover:border-[#b8dbf9]"
             }`}
           >
             <input
@@ -1395,38 +1467,38 @@
             />
 
             <label for="filePicker" class="cursor-pointer block space-y-3">
-              <div class="inline-flex p-3 rounded-xl bg-indigo-600/10 text-indigo-400 border border-indigo-500/20">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+              <div class="inline-flex p-3 rounded-full bg-[#f6f5f4] text-[#0075de] border border-[#e6e6e6]">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
               </div>
               <div>
-                <span class="text-sm font-bold text-white tracking-wide block">
+                <span class="text-sm font-bold text-[#111111] tracking-tight block">
                   {uploading ? "Processing Document..." : "Drag and drop PDF or TXT lecture notes here"}
                 </span>
-                <span class="text-xs text-slate-400 mt-1 block">
-                  or <span class="text-indigo-400 underline font-semibold">browse computer files</span> (Max 15MB)
+                <span class="text-xs text-[#615d59] mt-1 block">
+                  or <span class="text-[#0075de] underline font-medium">browse local files</span> (Max 15MB)
                 </span>
               </div>
-              <div class="flex items-center justify-center space-x-3 text-[11px] font-mono text-slate-500">
+              <div class="flex items-center justify-center space-x-3 text-[11px] font-mono text-[#a39e98]">
                 <span>PDF (PyPDF extracted)</span>
                 <span>•</span>
                 <span>TXT (UTF-8)</span>
                 <span>•</span>
-                <span>Sentence Boundary Chunking</span>
+                <span>400-char Chunking</span>
               </div>
             </label>
 
-            {/* Real-Time Upload Progress Tracker */}
+            {/* Ingestion Pipeline Tracker */}
             {uploading && (
-              <div class="mt-4 max-w-md mx-auto p-3.5 bg-slate-950 rounded-xl border border-indigo-500/40 space-y-2">
-                <div class="flex items-center justify-between text-xs font-mono text-indigo-400">
+              <div class="mt-4 max-w-md mx-auto p-3.5 bg-[#fbfbfa] rounded-xl border border-[#b8dbf9] space-y-2">
+                <div class="flex items-center justify-between text-xs font-mono text-[#0075de]">
                   <span class="font-bold">Vector Ingestion Pipeline</span>
-                  <span class="animate-pulse">Running</span>
+                  <span class="animate-pulse">Active</span>
                 </div>
-                <div class="text-xs font-mono text-slate-300 text-left bg-slate-900 p-2 rounded border border-slate-800">
+                <div class="text-xs font-mono text-[#31302e] text-left bg-white p-2 rounded border border-[#e6e6e6]">
                   {uploadStage}
                 </div>
-                <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                  <div class="bg-indigo-500 h-full rounded-full animate-pulse" style={{ width: '80%' }}></div>
+                <div class="w-full bg-[#e6e6e6] h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-[#0075de] h-full rounded-full animate-pulse" style={{ width: '80%' }}></div>
                 </div>
               </div>
             )}
@@ -1436,23 +1508,23 @@
           {statusMsg && (
             <div class={`p-4 rounded-xl text-xs font-mono flex items-center justify-between ${
               statusMsg.type === 'success'
-                ? "bg-emerald-950/60 border border-emerald-800 text-emerald-300"
+                ? "bg-[#eef9f0] border border-[#b7ecc2] text-[#0f6d23]"
                 : statusMsg.type === 'error'
-                ? "bg-red-950/60 border border-red-800 text-red-300"
-                : "bg-indigo-950/60 border border-indigo-800 text-indigo-300"
+                ? "bg-[#fff0f9] border border-[#ffc2ea] text-[#a8177a]"
+                : "bg-[#eef6fc] border border-[#b8dbf9] text-[#0c5ea8]"
             }`}>
               <span>{statusMsg.text}</span>
-              <button onClick={() => setStatusMsg(null)} class="text-slate-400 hover:text-white font-bold ml-4">✕</button>
+              <button onClick={() => setStatusMsg(null)} class="text-[#615d59] hover:text-[#111111] font-bold ml-4">✕</button>
             </div>
           )}
 
           {/* Document Inventory Table */}
-          <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-lg shadow-slate-950">
-            <div class="p-4 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/80">
+          <div class="notion-card overflow-hidden">
+            <div class="p-4 border-b border-[#e6e6e6] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#fbfbfa]">
               <div class="flex items-center space-x-2">
-                <span class="text-xs font-mono uppercase tracking-wider text-slate-400">Registered Documents</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">
-                  {documents.length} Files in Knowledge Base
+                <span class="text-xs font-mono uppercase tracking-wider text-[#615d59]">Registered Documents</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white text-[#615d59] border border-[#e6e6e6]">
+                  {documents.length} Files
                 </span>
               </div>
               <div>
@@ -1460,46 +1532,46 @@
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Filter documents by name or format..."
-                  class="bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-indigo-500 font-sans w-64"
+                  placeholder="Filter documents..."
+                  class="bg-white border border-[#e6e6e6] rounded-lg px-3 py-1.5 text-xs text-[#111111] placeholder:text-[#a39e98] focus:outline-none focus:ring-1 focus:ring-[#0075de] font-sans w-60"
                 />
               </div>
             </div>
 
             {filteredDocs.length === 0 ? (
               <div class="p-10 text-center space-y-2">
-                <div class="text-xs font-mono text-slate-500">
+                <div class="text-xs font-mono text-[#a39e98]">
                   {documents.length === 0
                     ? "No study notes indexed yet. Drag and drop a file above or click 'Reload Sample Notes'."
                     : "No documents matching search filter."}
                 </div>
               </div>
             ) : (
-              <div class="divide-y divide-slate-800/80">
+              <div class="divide-y divide-[#e6e6e6]">
                 {filteredDocs.map(doc => {
                   const isPdf = doc.file_type.toLowerCase() === "pdf";
                   const isBeingInspected = inspectDoc === doc.filename;
 
                   return (
-                    <div key={doc.id} class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:bg-slate-800/30 transition">
+                    <div key={doc.id} class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:bg-[#fbfbfa] transition">
                       <div class="flex items-start space-x-3.5">
-                        <div class={`p-2.5 rounded-lg border text-xs font-mono font-bold uppercase mt-0.5 ${
+                        <div class={`p-2 rounded-lg border text-xs font-mono font-bold uppercase mt-0.5 ${
                           isPdf
-                            ? "bg-rose-950/60 border-rose-800/70 text-rose-300"
-                            : "bg-sky-950/60 border-sky-800/70 text-sky-300"
+                            ? "bg-[#fff0f9] border-[#ffc2ea] text-[#a8177a]"
+                            : "bg-[#eef6fc] border-[#b8dbf9] text-[#0c5ea8]"
                         }`}>
                           {doc.file_type}
                         </div>
                         <div>
-                          <div class="text-sm font-bold text-white tracking-wide">{doc.filename}</div>
-                          <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono text-slate-400 mt-1">
-                            <span>Chunks: <strong class="text-indigo-400">{doc.chunks_count}</strong></span>
+                          <div class="text-sm font-bold text-[#111111] tracking-tight">{doc.filename}</div>
+                          <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono text-[#615d59] mt-1">
+                            <span>Chunks: <strong class="text-[#0075de]">{doc.chunks_count}</strong></span>
                             <span>•</span>
                             <span>Size: {(doc.file_size_bytes / 1024).toFixed(1)} KB</span>
                             <span>•</span>
                             <span>Indexed: {doc.uploaded_at ? new Date(doc.uploaded_at).toLocaleDateString() : "Active"}</span>
                             <span>•</span>
-                            <span class="text-emerald-400 font-semibold">[FAISS FlatIP]</span>
+                            <span class="text-[#0f6d23] font-semibold">[FAISS FlatIP]</span>
                           </div>
                         </div>
                       </div>
@@ -1507,22 +1579,20 @@
                       <div class="flex items-center space-x-2 self-end md:self-auto">
                         <button
                           onClick={() => handleInspect(doc.filename)}
-                          class={`text-xs font-mono px-3 py-1.5 rounded-lg border transition flex items-center space-x-1.5 ${
+                          class={`text-xs font-mono px-3 py-1.5 rounded-lg border transition ${
                             isBeingInspected
-                              ? "bg-indigo-600 text-white border-indigo-500"
-                              : "bg-slate-950 hover:bg-slate-800 border-slate-700 text-slate-300 hover:text-white"
+                              ? "bg-[#0075de] text-white border-[#0075de]"
+                              : "btn-notion-utility text-[#31302e]"
                           }`}
                         >
-                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                          <span>{isBeingInspected ? "Inspecting" : "Inspect Chunks"}</span>
+                          {isBeingInspected ? "Inspecting" : "Inspect Chunks"}
                         </button>
 
                         <button
                           onClick={() => handleDelete(doc.filename)}
-                          class="text-xs font-mono text-red-400 hover:text-red-200 px-3 py-1.5 rounded-lg bg-red-950/40 hover:bg-red-900/60 border border-red-900/50 transition flex items-center space-x-1"
+                          class="text-xs font-mono text-[#a8177a] hover:bg-[#fff0f9] px-3 py-1.5 rounded-lg border border-[#ffc2ea] transition"
                         >
-                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                          <span>Delete</span>
+                          Delete
                         </button>
                       </div>
                     </div>
@@ -1534,19 +1604,19 @@
 
           {/* Interactive Chunk Inspector Panel */}
           {inspectDoc && (
-            <div class="bg-slate-900 border border-indigo-500/40 rounded-xl p-6 space-y-4 shadow-xl shadow-slate-950">
-              <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+            <div class="notion-card-elevated p-6 space-y-4">
+              <div class="flex items-center justify-between pb-3 border-b border-[#e6e6e6]">
                 <div>
-                  <div class="text-xs font-mono text-indigo-400 uppercase tracking-wider">Chunk Inspector</div>
-                  <h3 class="text-lg font-bold text-white mt-0.5">{inspectDoc}</h3>
+                  <div class="text-xs font-mono text-[#0075de] uppercase tracking-wider">Chunk Inspector</div>
+                  <h3 class="text-lg font-bold text-[#111111] notion-headline mt-0.5">{inspectDoc}</h3>
                 </div>
                 <div class="flex items-center space-x-3">
-                  <span class="text-xs font-mono text-slate-400">
+                  <span class="text-xs font-mono text-[#615d59]">
                     {docChunks.length} Chunks Loaded
                   </span>
                   <button
                     onClick={() => setInspectDoc(null)}
-                    class="text-xs font-mono px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300"
+                    class="btn-notion-utility text-xs font-mono px-2.5 py-1"
                   >
                     Close
                   </button>
@@ -1554,26 +1624,26 @@
               </div>
 
               {loadingChunks ? (
-                <div class="p-8 text-center text-xs font-mono text-indigo-400">
+                <div class="p-8 text-center text-xs font-mono text-[#0075de]">
                   Retrieving chunk embeddings from FAISS metadata...
                 </div>
               ) : docChunks.length === 0 ? (
-                <div class="p-6 text-center text-xs font-mono text-slate-500">
+                <div class="p-6 text-center text-xs font-mono text-[#a39e98]">
                   No chunk records found for this document in active index.
                 </div>
               ) : (
                 <div class="space-y-3 max-h-96 overflow-y-auto pr-2">
                   {docChunks.map((chunk, cIdx) => (
-                    <div key={cIdx} class="p-4 bg-slate-950 rounded-lg border border-slate-800 space-y-2">
+                    <div key={cIdx} class="p-4 bg-[#fbfbfa] rounded-lg border border-[#e6e6e6] space-y-2">
                       <div class="flex items-center justify-between text-xs font-mono">
-                        <span class="text-indigo-400 font-bold">Chunk #{chunk.chunk_id + 1}</span>
-                        <div class="flex items-center space-x-2 text-slate-400">
+                        <span class="text-[#0075de] font-bold">Chunk #{chunk.chunk_id + 1}</span>
+                        <div class="flex items-center space-x-2 text-[#615d59]">
                           <span>Page {chunk.page_number}</span>
                           <span>•</span>
                           <span>{chunk.char_length} Characters</span>
                         </div>
                       </div>
-                      <p class="text-xs text-slate-300 leading-relaxed font-sans bg-slate-900/60 p-3 rounded border border-slate-800/80">
+                      <p class="text-xs text-[#31302e] leading-relaxed font-sans bg-white p-3 rounded border border-[#e6e6e6]">
                         {chunk.text}
                       </p>
                     </div>
@@ -1587,7 +1657,7 @@
     }
 
     // ==========================================
-    // 5. SUMMARIZER TOOL VIEW
+    // 5. NOTION SUMMARIZER TOOL VIEW
     // ==========================================
     function SummarizerView() {
       const [maxPoints, setMaxPoints] = useState(5);
@@ -1638,18 +1708,18 @@
       return (
         <div class="max-w-3xl mx-auto space-y-6">
           <div>
-            <h2 class="text-2xl font-bold text-white tracking-tight">Notes Summarizer Tool</h2>
-            <p class="text-xs text-slate-400 mt-1">Distill lengthy study material into structured executive overviews and core takeaways.</p>
+            <h2 class="text-2xl font-bold text-[#111111] notion-headline">Notes Summarizer Tool</h2>
+            <p class="text-xs text-[#615d59] mt-1">Distill lengthy study material into executive summaries and core takeaways.</p>
           </div>
 
-          <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl space-y-4">
+          <div class="notion-card p-6 space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-mono uppercase text-slate-400 mb-2">Document to Summarize:</label>
+                <label class="block text-xs font-mono uppercase text-[#615d59] mb-2">Document to Summarize:</label>
                 <select
                   value={selectedDoc}
                   onChange={(e) => setSelectedDoc(e.target.value)}
-                  class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-sans"
+                  class="w-full bg-[#fbfbfa] border border-[#e6e6e6] rounded-lg p-2.5 text-sm text-[#111111] focus:outline-none focus:ring-2 focus:ring-[#0075de] font-sans"
                 >
                   <option value="">All Uploaded Notes</option>
                   {docList.map(d => (
@@ -1658,52 +1728,52 @@
                 </select>
               </div>
               <div>
-                <label class="block text-xs font-mono uppercase text-slate-400 mb-2">Max Takeaway Points: {maxPoints}</label>
+                <label class="block text-xs font-mono uppercase text-[#615d59] mb-2">Max Takeaway Points: {maxPoints}</label>
                 <input
                   type="range"
                   min="3"
                   max="10"
                   value={maxPoints}
                   onChange={(e) => setMaxPoints(parseInt(e.target.value))}
-                  class="w-full accent-indigo-500 cursor-pointer mt-2"
+                  class="w-full accent-[#0075de] cursor-pointer mt-2"
                 />
               </div>
             </div>
             <button
               onClick={handleSummarize}
               disabled={loading}
-              class="bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-600 px-6 py-2.5 rounded-lg text-xs font-mono uppercase font-bold tracking-wider transition"
+              class="btn-notion-primary px-6 py-2.5 text-xs font-mono uppercase font-bold tracking-wider disabled:opacity-50 shadow-sm"
             >
               {loading ? "Analyzing Notes..." : "Generate Summary"}
             </button>
           </div>
 
           {error && (
-            <div class="p-4 bg-red-950/50 border border-red-800 rounded-lg text-sm text-red-300">
+            <div class="p-4 bg-[#fff0f9] border border-[#ffc2ea] rounded-xl text-sm text-[#a8177a]">
               {error}
             </div>
           )}
 
           {summary && (
-            <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-5">
+            <div class="notion-card p-6 space-y-5">
               <div>
-                <div class="text-xs font-mono text-indigo-400 uppercase">Document Analyzed</div>
-                <div class="text-lg font-bold text-white mt-1">{summary.document_name}</div>
+                <div class="text-xs font-mono text-[#0075de] uppercase">Document Analyzed</div>
+                <div class="text-lg font-bold text-[#111111] notion-headline mt-1">{summary.document_name}</div>
               </div>
 
               <div>
-                <div class="text-xs font-mono uppercase text-slate-400 mb-2">Executive Summary:</div>
-                <p class="text-sm text-slate-300 leading-relaxed bg-slate-950 p-4 rounded-lg border border-slate-800">
+                <div class="text-xs font-mono uppercase text-[#615d59] mb-2">Executive Summary:</div>
+                <p class="text-sm text-[#31302e] leading-relaxed bg-[#fbfbfa] p-4 rounded-lg border border-[#e6e6e6]">
                   {summary.executive_summary}
                 </p>
               </div>
 
               <div>
-                <div class="text-xs font-mono uppercase text-slate-400 mb-2">Key Core Takeaways:</div>
+                <div class="text-xs font-mono uppercase text-[#615d59] mb-2">Key Core Takeaways:</div>
                 <ul class="space-y-2">
                   {summary.key_takeaways.map((pt, idx) => (
-                    <li key={idx} class="text-sm text-slate-200 flex items-start space-x-2">
-                      <span class="text-indigo-400 font-mono text-xs mt-0.5">•</span>
+                    <li key={idx} class="text-sm text-[#31302e] flex items-start space-x-2">
+                      <span class="text-[#0075de] font-mono text-xs mt-0.5">•</span>
                       <span>{pt}</span>
                     </li>
                   ))}
@@ -1716,7 +1786,7 @@
     }
 
     // ==========================================
-    // 6. PRACTICE QUIZ GENERATOR VIEW
+    // 6. NOTION PRACTICE QUIZ GENERATOR VIEW
     // ==========================================
     function QuizView({ onRefreshMetrics }) {
       const [topic, setTopic] = useState("Python");
@@ -1788,18 +1858,18 @@
       return (
         <div class="max-w-3xl mx-auto space-y-6">
           <div>
-            <h2 class="text-2xl font-bold text-white tracking-tight">Interactive MCQ Quiz Generator</h2>
-            <p class="text-xs text-slate-400 mt-1">Generate multiple-choice practice tests grounded in your study notes with explanations.</p>
+            <h2 class="text-2xl font-bold text-[#111111] notion-headline">Practice Quiz Generator</h2>
+            <p class="text-xs text-[#615d59] mt-1">Generate multiple-choice practice tests grounded in your study notes.</p>
           </div>
 
-          <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl space-y-4">
+          <div class="notion-card p-6 space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-mono uppercase text-slate-400 mb-2">Subject / Topic:</label>
+                <label class="block text-xs font-mono uppercase text-[#615d59] mb-2">Subject / Topic:</label>
                 <select
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
-                  class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-sans"
+                  class="w-full bg-[#fbfbfa] border border-[#e6e6e6] rounded-lg p-2.5 text-sm text-[#111111] focus:outline-none focus:ring-2 focus:ring-[#0075de] font-sans"
                 >
                   <option value="Python">Python Internals</option>
                   <option value="Machine Learning">Machine Learning & Regularization</option>
@@ -1808,21 +1878,21 @@
                 </select>
               </div>
               <div>
-                <label class="block text-xs font-mono uppercase text-slate-400 mb-2">Number of Questions: {numQuestions}</label>
+                <label class="block text-xs font-mono uppercase text-[#615d59] mb-2">Number of Questions: {numQuestions}</label>
                 <input
                   type="range"
                   min="1"
                   max="5"
                   value={numQuestions}
                   onChange={(e) => setNumQuestions(parseInt(e.target.value))}
-                  class="w-full accent-indigo-500 cursor-pointer mt-2"
+                  class="w-full accent-[#0075de] cursor-pointer mt-2"
                 />
               </div>
             </div>
             <button
               onClick={handleGenerate}
               disabled={loading}
-              class="bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-600 px-6 py-2.5 rounded-lg text-xs font-mono uppercase font-bold tracking-wider transition"
+              class="btn-notion-primary px-6 py-2.5 text-xs font-mono uppercase font-bold tracking-wider disabled:opacity-50 shadow-sm"
             >
               {loading ? "Generating Quiz..." : "Generate Practice Quiz"}
             </button>
@@ -1831,9 +1901,9 @@
           {quizData && quizData.questions && (
             <div class="space-y-6">
               {quizData.questions.map((q, qIndex) => (
-                <div key={q.id} class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-3">
-                  <div class="text-sm font-semibold text-white">
-                    <span class="text-indigo-400 font-mono mr-2">Q{qIndex + 1}.</span>
+                <div key={q.id} class="notion-card p-6 space-y-3">
+                  <div class="text-sm font-semibold text-[#111111]">
+                    <span class="text-[#0075de] font-mono mr-2">Q{qIndex + 1}.</span>
                     {q.question}
                   </div>
 
@@ -1843,15 +1913,15 @@
                       const isSelected = userAnswers[q.id] === letter;
                       const isCorrect = q.correct_option === letter;
 
-                      let btnStyle = "bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-800";
+                      let btnStyle = "bg-[#ffffff] border-[#e6e6e6] text-[#31302e] hover:bg-[#f6f5f4]";
                       if (submitted) {
                         if (isCorrect) {
-                          btnStyle = "bg-emerald-950 border-emerald-600 text-emerald-200";
+                          btnStyle = "bg-[#eef9f0] border-[#b7ecc2] text-[#0f6d23] font-semibold";
                         } else if (isSelected && !isCorrect) {
-                          btnStyle = "bg-red-950 border-red-600 text-red-200";
+                          btnStyle = "bg-[#fff0f9] border-[#ffc2ea] text-[#a8177a]";
                         }
                       } else if (isSelected) {
-                        btnStyle = "bg-indigo-600/30 border-indigo-500 text-indigo-300";
+                        btnStyle = "bg-[#eef6fc] border-[#0075de] text-[#0075de] font-semibold";
                       }
 
                       return (
@@ -1867,9 +1937,9 @@
                   </div>
 
                   {submitted && (
-                    <div class="mt-3 p-3 bg-slate-950 rounded border border-slate-800 text-xs font-mono">
-                      <div class="text-emerald-400 font-bold">Correct Option: {q.correct_option}</div>
-                      <div class="text-slate-400 mt-1">{q.explanation}</div>
+                    <div class="mt-3 p-3 bg-[#fbfbfa] rounded-lg border border-[#e6e6e6] text-xs font-mono">
+                      <div class="text-[#0f6d23] font-bold">Correct Option: {q.correct_option}</div>
+                      <div class="text-[#615d59] mt-1">{q.explanation}</div>
                     </div>
                   )}
                 </div>
@@ -1878,15 +1948,15 @@
               {!submitted ? (
                 <button
                   onClick={handleSubmitQuiz}
-                  class="w-full bg-emerald-600 hover:bg-emerald-500 py-3 rounded-xl font-bold text-xs uppercase tracking-wider font-mono transition"
+                  class="btn-notion-primary w-full py-3 font-bold text-xs uppercase tracking-wider font-mono shadow-sm"
                 >
                   Submit Quiz Answers
                 </button>
               ) : (
-                <div class="bg-slate-900 border border-emerald-500/50 p-6 rounded-xl text-center space-y-2">
-                  <div class="text-xs uppercase font-mono text-emerald-400">Final Quiz Scorecard</div>
-                  <div class="text-3xl font-bold text-white font-mono">{score} / {quizData.questions.length}</div>
-                  <p class="text-xs text-slate-400">Score percentage: {((score / quizData.questions.length) * 100).toFixed(0)}% recorded to SQLite database.</p>
+                <div class="notion-card-elevated p-6 text-center space-y-2">
+                  <div class="text-xs uppercase font-mono text-[#0f6d23]">Final Quiz Scorecard</div>
+                  <div class="text-3xl font-bold text-[#111111] font-mono notion-headline">{score} / {quizData.questions.length}</div>
+                  <p class="text-xs text-[#615d59]">Score percentage: {((score / quizData.questions.length) * 100).toFixed(0)}% recorded to SQLite database.</p>
                 </div>
               )}
             </div>
@@ -1896,7 +1966,7 @@
     }
 
     // ==========================================
-    // 7. AUTONOMOUS AI AGENT VIEW
+    // 7. NOTION AUTONOMOUS AI AGENT VIEW
     // ==========================================
     function AgentView({ onRefreshMetrics }) {
       const [prompt, setPrompt] = useState("");
@@ -1937,8 +2007,8 @@
       return (
         <div class="max-w-4xl mx-auto space-y-6">
           <div>
-            <h2 class="text-2xl font-bold text-white tracking-tight">Autonomous AI Agent</h2>
-            <p class="text-xs text-slate-400 mt-1">Natural language prompt routing. The agent automatically detects intent and executes Answer, Summary, or Quiz tool.</p>
+            <h2 class="text-2xl font-bold text-[#111111] notion-headline">Autonomous AI Agent</h2>
+            <p class="text-xs text-[#615d59] mt-1">Natural language prompt routing. Automatically detects intent and executes Answer, Summary, or Quiz tool.</p>
           </div>
 
           <form onSubmit={handleRunAgent} class="space-y-3">
@@ -1948,43 +2018,43 @@
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="e.g. 'Summarize my notes', 'Create 3 MCQs on Python', or 'Explain the GIL'"
-                class="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-sans"
+                class="flex-1 bg-white border border-[#e6e6e6] rounded-lg px-4 py-3 text-sm text-[#111111] placeholder:text-[#a39e98] focus:outline-none focus:ring-2 focus:ring-[#0075de] font-sans shadow-sm"
               />
               <button
                 type="submit"
                 disabled={loading || !prompt.trim()}
-                class="bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-600 px-6 py-3 rounded-lg text-xs font-mono uppercase tracking-wider font-bold transition"
+                class="btn-notion-primary px-6 py-3 text-xs font-mono uppercase tracking-wider font-bold disabled:opacity-50 shadow-sm"
               >
                 {loading ? "Agent Running..." : "Execute"}
               </button>
             </div>
-            <div class="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-400">
-              <span class="text-slate-500">Suggested Prompts:</span>
+            <div class="flex flex-wrap items-center gap-2 text-xs font-mono text-[#615d59]">
+              <span class="text-[#a39e98]">Suggested Prompts:</span>
               <button
                 type="button"
                 onClick={() => setPrompt("Explain Python memory management and the GIL")}
-                class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-indigo-900/40 text-indigo-300 hover:text-white transition text-[11px]"
+                class="px-3 py-1 rounded-full bg-[#fbfbfa] hover:bg-[#f6f5f4] border border-[#e6e6e6] text-[#0075de] transition text-[11px]"
               >
                 [Q&A] "Explain GIL"
               </button>
               <button
                 type="button"
                 onClick={() => setPrompt("Summarize MongoDB Handbook.pdf")}
-                class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-sky-900/40 text-sky-300 hover:text-white transition text-[11px]"
+                class="px-3 py-1 rounded-full bg-[#fbfbfa] hover:bg-[#f6f5f4] border border-[#e6e6e6] text-[#0c5ea8] transition text-[11px]"
               >
                 [Summary] "Summarize MongoDB"
               </button>
               <button
                 type="button"
                 onClick={() => setPrompt("Create a 3 question practice quiz on MongoDB")}
-                class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-amber-900/40 text-amber-300 hover:text-white transition text-[11px]"
+                class="px-3 py-1 rounded-full bg-[#fbfbfa] hover:bg-[#f6f5f4] border border-[#e6e6e6] text-[#963800] transition text-[11px]"
               >
                 [Quiz] "MongoDB Quiz"
               </button>
               <button
                 type="button"
                 onClick={() => setPrompt("Create 3 MCQs on Machine Learning")}
-                class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-emerald-900/40 text-emerald-300 hover:text-white transition text-[11px]"
+                class="px-3 py-1 rounded-full bg-[#fbfbfa] hover:bg-[#f6f5f4] border border-[#e6e6e6] text-[#0f6d23] transition text-[11px]"
               >
                 [Quiz] "ML MCQs"
               </button>
@@ -1992,62 +2062,62 @@
           </form>
 
           {error && (
-            <div class="p-4 bg-red-950/50 border border-red-800 rounded-lg text-sm text-red-300">
+            <div class="p-4 bg-[#fff0f9] border border-[#ffc2ea] rounded-xl text-sm text-[#a8177a]">
               {error}
             </div>
           )}
 
           {agentResult && (
             <div class="space-y-6">
-              <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-b border-slate-800 pb-4">
+              <div class="notion-card p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-b border-[#e6e6e6] pb-4">
                   <div>
-                    <div class="text-xs font-mono text-slate-400">Detected Intent</div>
-                    <div class="text-xl font-bold text-indigo-400 mt-1 font-mono">{agentResult.intent}</div>
+                    <div class="text-xs font-mono text-[#615d59]">Detected Intent</div>
+                    <div class="text-xl font-bold text-[#0075de] mt-1 font-mono">{agentResult.intent}</div>
                   </div>
                   <div>
-                    <div class="text-xs font-mono text-slate-400">Confidence Score</div>
-                    <div class="text-xl font-bold text-emerald-400 mt-1 font-mono">{(agentResult.confidence * 100).toFixed(0)}%</div>
+                    <div class="text-xs font-mono text-[#615d59]">Confidence Score</div>
+                    <div class="text-xl font-bold text-[#0f6d23] mt-1 font-mono">{(agentResult.confidence * 100).toFixed(0)}%</div>
                   </div>
                   <div>
-                    <div class="text-xs font-mono text-slate-400">Routed Tool</div>
-                    <div class="text-xl font-bold text-amber-400 mt-1 font-mono">{agentResult.tool_used}</div>
+                    <div class="text-xs font-mono text-[#615d59]">Routed Tool</div>
+                    <div class="text-xl font-bold text-[#963800] mt-1 font-mono">{agentResult.tool_used}</div>
                   </div>
                 </div>
 
                 <div class="mt-4">
-                  <div class="text-xs font-mono uppercase text-slate-400 mb-2 flex items-center justify-between">
+                  <div class="text-xs font-mono uppercase text-[#615d59] mb-2 flex items-center justify-between">
                     <span>Autonomous State Machine Trace:</span>
-                    <span class="text-[10px] text-emerald-400 font-bold bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">
+                    <span class="text-[10px] text-[#0f6d23] font-bold bg-[#eef9f0] px-2.5 py-0.5 rounded-full border border-[#b7ecc2]">
                       {agentResult.execution_trace.length} States Resolved
                     </span>
                   </div>
-                  <div class="bg-slate-950 rounded-xl p-4 border border-slate-800 space-y-2 font-mono text-xs shadow-inner">
+                  <div class="bg-[#fbfbfa] rounded-xl p-4 border border-[#e6e6e6] space-y-2 font-mono text-xs shadow-inner">
                     {agentResult.execution_trace.map((step, idx) => {
-                      let tagColor = "bg-slate-800 text-slate-300 border-slate-700";
+                      let tagColor = "bg-[#f6f5f4] text-[#615d59] border-[#e6e6e6]";
                       let tagText = "STEP";
                       if (step.includes("[START]")) {
-                        tagColor = "bg-blue-950 text-blue-300 border-blue-800";
+                        tagColor = "bg-[#eef6fc] text-[#0c5ea8] border-[#b8dbf9]";
                         tagText = "START";
                       } else if (step.includes("[INTENT_DETECTION]")) {
-                        tagColor = "bg-indigo-950 text-indigo-300 border-indigo-800";
+                        tagColor = "bg-[#f7f1fe] text-[#5c2596] border-[#e3cffc]";
                         tagText = "INTENT";
                       } else if (step.includes("[TOOL_ROUTED]")) {
-                        tagColor = "bg-amber-950 text-amber-300 border-amber-800";
+                        tagColor = "bg-[#fff4ec] text-[#963800] border-[#fed6b8]";
                         tagText = "ROUTER";
                       } else if (step.includes("[EXECUTION_SUCCESS]")) {
-                        tagColor = "bg-emerald-950 text-emerald-300 border-emerald-800";
+                        tagColor = "bg-[#eef9f0] text-[#0f6d23] border-[#b7ecc2]";
                         tagText = "EXEC";
                       } else if (step.includes("[RESPONSE_SYNTHESIS]")) {
-                        tagColor = "bg-purple-950 text-purple-300 border-purple-800";
+                        tagColor = "bg-[#fff0f9] text-[#a8177a] border-[#ffc2ea]";
                         tagText = "SYNTH";
                       }
                       return (
-                        <div key={idx} class="flex items-start space-x-2.5 p-2 rounded-lg bg-slate-900/60 border border-slate-800/80">
-                          <span class={`px-1.5 py-0.5 text-[9px] font-bold rounded border uppercase shrink-0 ${tagColor}`}>
+                        <div key={idx} class="flex items-start space-x-2.5 p-2 rounded-lg bg-white border border-[#e6e6e6]">
+                          <span class={`px-2 py-0.5 text-[9px] font-bold rounded-full border uppercase shrink-0 ${tagColor}`}>
                             {tagText}
                           </span>
-                          <span class="text-slate-300 leading-relaxed font-mono text-[11px] flex-1">
+                          <span class="text-[#31302e] leading-relaxed font-mono text-[11px] flex-1">
                             {step.replace(/^\[[A-Z_]+\]\s*/, "")}
                           </span>
                         </div>
@@ -2057,9 +2127,9 @@
                 </div>
               </div>
 
-              <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-2">
-                <div class="text-xs font-mono uppercase text-slate-400">Synthesized Agent Response:</div>
-                <div class="bg-slate-950 p-5 rounded-lg border border-slate-800 text-sm text-slate-200 font-sans shadow-inner">
+              <div class="notion-card p-6 space-y-2">
+                <div class="text-xs font-mono uppercase text-[#615d59]">Synthesized Agent Response:</div>
+                <div class="bg-[#fbfbfa] p-5 rounded-lg border border-[#e6e6e6] text-sm text-[#31302e] font-sans">
                   <FormattedTutorResponse text={agentResult.agent_response} />
                 </div>
               </div>
@@ -2070,63 +2140,63 @@
     }
 
     // ==========================================
-    // 8. SYSTEM DIAGNOSTICS & SETTINGS VIEW
+    // 8. NOTION SYSTEM DIAGNOSTICS & SETTINGS VIEW
     // ==========================================
     function SettingsView({ status }) {
       return (
         <div class="max-w-3xl mx-auto space-y-6">
           <div>
-            <h2 class="text-2xl font-bold text-white tracking-tight">System Diagnostics & Security Settings</h2>
-            <p class="text-xs text-slate-400 mt-1">Runtime health, guardrail parameters, and active models.</p>
+            <h2 class="text-2xl font-bold text-[#111111] notion-headline">System Diagnostics & Security Settings</h2>
+            <p class="text-xs text-[#615d59] mt-1">Runtime health, guardrail parameters, and active models.</p>
           </div>
 
-          <div class="bg-slate-900 border border-slate-800 rounded-xl divide-y divide-slate-800">
+          <div class="notion-card divide-y divide-[#e6e6e6] overflow-hidden">
             <div class="p-4 flex justify-between items-center">
               <div>
-                <div class="text-sm font-semibold text-white">Backend Server Status</div>
-                <div class="text-xs text-slate-400">FastAPI ASGI Server at 127.0.0.1:8000</div>
+                <div class="text-sm font-semibold text-[#111111]">Backend Server Status</div>
+                <div class="text-xs text-[#615d59]">FastAPI ASGI Server at 127.0.0.1:8000</div>
               </div>
-              <span class="text-xs font-mono px-2 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold">
+              <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-[#eef9f0] text-[#0f6d23] border border-[#b7ecc2] font-bold">
                 {status}
               </span>
             </div>
 
             <div class="p-4 flex justify-between items-center">
               <div>
-                <div class="text-sm font-semibold text-white">Prompt Injection Guard</div>
-                <div class="text-xs text-slate-400">Blocks adversarial system prompt overrides and DAN jailbreaks</div>
+                <div class="text-sm font-semibold text-[#111111]">Prompt Injection Guard</div>
+                <div class="text-xs text-[#615d59]">Blocks adversarial system prompt overrides and DAN jailbreaks</div>
               </div>
-              <span class="text-xs font-mono px-2 py-1 rounded bg-indigo-950 text-indigo-400 border border-indigo-800">
+              <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">
                 ACTIVE
               </span>
             </div>
 
             <div class="p-4 flex justify-between items-center">
               <div>
-                <div class="text-sm font-semibold text-white">PII & Secret Sanitizer</div>
-                <div class="text-xs text-slate-400">Automatic masking for emails, phone numbers, and API tokens</div>
+                <div class="text-sm font-semibold text-[#111111]">PII & Secret Sanitizer</div>
+                <div class="text-xs text-[#615d59]">Automatic masking for emails, phone numbers, and API tokens</div>
               </div>
-              <span class="text-xs font-mono px-2 py-1 rounded bg-indigo-950 text-indigo-400 border border-indigo-800">
+              <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">
                 ACTIVE
               </span>
             </div>
 
             <div class="p-4 flex justify-between items-center">
               <div>
-                <div class="text-sm font-semibold text-white">Rate Limiter</div>
-                <div class="text-xs text-slate-400">In-memory sliding window (120 requests/minute per client IP)</div>
+                <div class="text-sm font-semibold text-[#111111]">Rate Limiter</div>
+                <div class="text-xs text-[#615d59]">In-memory sliding window (120 requests/minute per client IP)</div>
               </div>
-              <span class="text-xs font-mono px-2 py-1 rounded bg-indigo-950 text-indigo-400 border border-indigo-800">
+              <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-[#eef6fc] text-[#0c5ea8] border border-[#b8dbf9]">
                 ACTIVE
               </span>
             </div>
 
             <div class="p-4 flex justify-between items-center">
               <div>
-                <div class="text-sm font-semibold text-white">Anti-Hallucination Threshold</div>
-                <div class="text-xs text-slate-400">Strictly rejects queries below 0.35 semantic relevance</div>
+                <div class="text-sm font-semibold text-[#111111]">Anti-Hallucination Threshold</div>
+                <div class="text-xs text-[#615d59]">Strictly rejects queries below 0.35 semantic relevance</div>
               </div>
-              <span class="text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-300">
+              <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-[#f6f5f4] text-[#615d59] border border-[#e6e6e6]">
                 0.35 Min Score
               </span>
             </div>

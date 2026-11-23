@@ -1,0 +1,32 @@
+{
+  "input_dim": 800,
+  "classes": [
+    "AI",
+    "ML",
+    "Python"
+  ],
+  "test_accuracy": 0.9615384615384616,
+  "test_f1_weighted": 0.9616575375089307,
+  "test_f1_macro": 0.9628482972136223,
+  "test_loss": 0.12338414730933997,
+  "confusion_matrix": [
+    [
+      8,
+      0,
+      0
+    ],
+    [
+      0,
+      8,
+      0
+    ],
+    [
+      0,
+      1,
+      9
+    ]
+  ],
+  "epochs_trained": 35,
+  "hidden_dim1": 128,
+  "hidden_dim2": 64
+}

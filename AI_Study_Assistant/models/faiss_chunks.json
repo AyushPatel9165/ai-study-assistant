@@ -1,0 +1,317 @@
+[
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c0",
+    "text": "# AI Study Assistant - Sample Technical Study Notes # Course: Artificial Intelligence & Modern Machine Learning ## Chapter 1: Python Advanced Internals and Memory Management Python manages memory automatically using an internal private heap. The core mechanism is reference counting: every Python object tracks how many variables refer to it.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c1",
+    "text": "every Python object tracks how many variables refer to it. When an object's reference count drops to zero, its memory is immediately deallocated. However, reference counting alone cannot resolve cyclic references (where object A points to object B, and object B points to object A).",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c2",
+    "text": "ect A points to object B, and object B points to object A). To solve this, CPython includes a cyclic garbage collector that runs periodically in generations (Generation 0, 1, and 2). The Global Interpreter Lock (GIL) is a mutex in CPython that prevents multiple native threads from executing Python bytecodes simultaneously.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 2
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c3",
+    "text": "ive threads from executing Python bytecodes simultaneously. The GIL was implemented to ensure thread-safety for reference counting and memory management. Consequently, CPU-bound multithreaded programs do not achieve true parallelism in Python; developers must use multiprocessing or asynchronous I/O via the asyncio event loop for concurrent tasks.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 3
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c4",
+    "text": "ronous I/O via the asyncio event loop for concurrent tasks. Python generators are special functions that produce values lazily on-demand using the 'yield' keyword instead of 'return'. When yield executes, the function's execution state, local variables, and instruction pointer are paused and saved on the frame stack.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 4
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c5",
+    "text": "nstruction pointer are paused and saved on the frame stack. This makes generators memory-efficient because they do not build entire lists in memory at once. ## Chapter 2: Machine Learning Optimization and Regularization Supervised machine learning algorithms learn an approximation function mapping inputs to targets by minimizing an empirical loss function.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 5
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c6",
+    "text": "inputs to targets by minimizing an empirical loss function. Gradient descent is the primary first-order optimization algorithm. It iteratively calculates the partial derivatives (gradients) of the loss function with respect to model parameters and steps in the negative gradient direction scaled by the learning rate alpha.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 6
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c7",
+    "text": "ative gradient direction scaled by the learning rate alpha. Overfitting occurs when a machine learning model learns spurious noise and specific idiosyncrasies in the training data rather than underlying generalizable patterns. An overfitted model exhibits high variance and low bias, performing poorly on unseen validation sets.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 7
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c8",
+    "text": "and low bias, performing poorly on unseen validation sets. Regularization techniques penalize model complexity to prevent overfitting: 1. L1 Regularization (Lasso): Adds the sum of absolute parameter weights to the loss function. L1 encourages sparsity by driving unimportant weights strictly to zero, acting as an automatic feature selection mechanism. 2.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 8
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c9",
+    "text": "ero, acting as an automatic feature selection mechanism. 2. L2 Regularization (Ridge): Adds the squared magnitude of parameter weights to the loss function. L2 shrinks weights uniformly toward zero without setting them strictly to zero, making it effective when many correlated features contribute to the prediction.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 9
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c10",
+    "text": "when many correlated features contribute to the prediction. ## Chapter 3: Artificial Intelligence Search and Heuristics In Artificial Intelligence, problem-solving agents explore state spaces to find optimal paths from an initial state to a goal state. The A* search algorithm is an informed search strategy that evaluates nodes using the evaluation function: f(n) = g(n) + h(n).",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 10
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c11",
+    "text": "es nodes using the evaluation function: f(n) = g(n) + h(n). - g(n) is the exact cost incurred from the start state to node n. - h(n) is the estimated heuristic cost from node n to the goal state. A* is guaranteed to be complete and optimal if the heuristic function h(n) is admissible. An admissible heuristic never overestimates the true cost to reach the goal (it is optimistic).",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 11
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c12",
+    "text": "timates the true cost to reach the goal (it is optimistic). In graph search, h(n) must also be consistent (monotonic), satisfying the triangle inequality: h(n) <= c(n, a, n') + h(n').",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 12
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p2_c0",
+    "text": "MongoDB Handbook 1. Introduction In this MongoDB handbook, we\u2019ll cover everything you need to use MongoDB confidently as fast as possible. We\u2019ll use an e-commerce website as our primary example with three main collections: products : store products information orders : store order details contacts : messages from the contact form You\u2019ll learn all essential MongoDB operations using the latest",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 2,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p2_c1",
+    "text": "u\u2019ll learn all essential MongoDB operations using the latest MongoDB features. 2. MongoDB Basics What is MongoDB? MongoDB is a NoSQL document-oriented database. It stores data in JSON-like documents (actually BSON, a binary form of JSON). Key Components mongod \u2013 the main MongoDB server daemon. It handles connections, database storage, and queries. You must run this before using MongoDB locally.",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 2,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p2_c2",
+    "text": "nd queries. You must run this before using MongoDB locally. mongosh \u2013 the MongoDB Shell. It\u2019s the command-line interface for interacting with MongoDB. You use it to run commands, queries, and scripts. MongoDB Compass \u2013 a GUI tool for visualizing data, running queries, and analyzing performance. Perfect for beginners who prefer a graphical view. \u2022 \u2022 \u2022 \u2022 \u2022 \u2022",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 2,
+    "chunk_index": 2
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p3_c0",
+    "text": "3. Installing MongoDB Installing MongoDB can be easily done by visiting the official website. The community edition is free and suitable for most use cases. 4. Basic Mongo Shell Commands 5. Creating Collections and Inserting Data We\u2019ll create three collections: products orders contacts Insert Sample Products Let\u2019s populate our database using insertMany() .",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 3,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p3_c1",
+    "text": "e Products Let\u2019s populate our database using insertMany() . show dbs // List all databases use ecommerce // Create or switch to a database show collections // List all collections in the current DB db.dropDatabase() // Drop current database \u2022 \u2022 \u2022 use ecommerce db.products.insertMany([ { name: \"Wireless Mouse\", price: 799, category: \"Electronics\",",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 3,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p4_c0",
+    "text": "Insert Orders stock: 120, ratings: 4.5, tags: [\"computer\", \"accessory\", \"wireless\"], createdAt: new Date() }, { name: \"Mechanical Keyboard\", price: 2499, category: \"Electronics\", stock: 80, ratings: 4.8, tags: [\"keyboard\", \"mechanical\"], createdAt: new Date() }, { name: \"Gaming Laptop\", price: 85999, category: \"Computers\", stock: 30, ratings: 4.6, tags: [\"gaming\", \"laptop\"], createdAt: new Date()",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 4,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p4_c1",
+    "text": "ings: 4.6, tags: [\"gaming\", \"laptop\"], createdAt: new Date() } ]) db.orders.insertMany([ { orderId: \"ORD001\", user: \"John Doe\", products: [ { name: \"Wireless Mouse\", quantity: 1, price: 799 }, { name: \"Mechanical Keyboard\", quantity: 1, price: 2499 } ], total: 3298, status: \"Delivered\", createdAt: new Date() },",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 4,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p5_c0",
+    "text": "Insert Contact Messages 6. Reading Data (Find Queries) Find All Documents Pretty Print { orderId: \"ORD002\", user: \"Jane Smith\", products: [ { name: \"Gaming Laptop\", quantity: 1, price: 85999 } ], total: 85999, status: \"Pending\", createdAt: new Date() } ]) db.contacts.insertMany([ { name: \"Alice\", message: \"Loved your website!\", phone: \"9876543210\", createdAt: new Date() }, { name: \"Bob\", message:",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 5,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p5_c1",
+    "text": "876543210\", createdAt: new Date() }, { name: \"Bob\", message: \"Do you have discounts on laptops?\", phone: \"9123456789\", createdAt: new Date() }, { name: \"Carol\", message: \"I want to cancel my order.\", phone: \"9988776655\", createdAt: new Date() } ]) db.products.find() db.products.find().pretty()",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 5,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p6_c0",
+    "text": "Filter by Field Using Comparison Operators Logical Operators Projection (Select Specific Fields) Sorting and Limiting 7. Updating Documents Update One db.products.find({ category: \"Electronics\" }) db.products.find({ price: { $gt: 1000 } }) // greater than 1000 db.products.find({ price: { $gte: 1000, $lte: 50000 } }) db.products.find({ $or: [{ category: \"Electronics\" }, { stock: { $lt: 50 } }] })",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 6,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p6_c1",
+    "text": "or: [{ category: \"Electronics\" }, { stock: { $lt: 50 } }] }) db.products.find({}, { name: 1, price: 1, _id: 0 }) db.products.find().sort({ price: -1 }).limit(2) db.products.updateOne( { name: \"Wireless Mouse\" }, { $set: { price: 899 } } )",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 6,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p7_c0",
+    "text": "Update Many Using $push to Add to Arrays 8. Deleting Documents Delete One Delete Many 9. Indexing and Performance Create an Index db.products.updateMany( { category: \"Electronics\" }, { $inc: { stock: 10 } } ) db.products.updateOne( { name: \"Wireless Mouse\" }, { $push: { tags: \"new\" } } ) db.contacts.deleteOne({ name: \"Alice\" }) db.orders.deleteMany({ status: \"Delivered\" })",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 7,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p7_c1",
+    "text": "me: \"Alice\" }) db.orders.deleteMany({ status: \"Delivered\" }) db.products.createIndex({ name: 1 })",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 7,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p8_c0",
+    "text": "View All Indexes Explain Query Performance 10. Aggregation Framework Basic Example Total revenue from all orders: Group by Status Lookup (Join Orders with Products) db.products.getIndexes() db.products.find({ price: { $gt: 5000 } }).explain(\"executionStats\") db.orders.aggregate([ { $group: { _id: null, totalRevenue: { $sum: \"$total\" } } } ]) db.orders.aggregate([ { $group: { _id: \"$status\",",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 8,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p8_c1",
+    "text": "\" } } } ]) db.orders.aggregate([ { $group: { _id: \"$status\", totalOrders: { $sum: 1 } } } ]) db.orders.aggregate([ { $lookup: { from: \"products\", localField: \"products.name\", foreignField: \"name\", as: \"productDetails\"",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 8,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p9_c0",
+    "text": "11. MongoDB Atlas (Cloud) Steps to Use Atlas Go to https://cloud.mongodb.com Create a free cluster (Serverless recommended) Whitelist your IP and create a DB user Follow the connection string instructions to connect via mongosh or your application 12. Aggregation Pipeline Aggregation pipelines in MongoDB are used to analyze and transform data.",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 9,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p9_c1",
+    "text": "ipelines in MongoDB are used to analyze and transform data. They work in stages: each stage performs an operation, and the output of one stage becomes the input of the next. Create a sample collection Let\u2019s start with a sales collection. } } ]) 1. 2. 3. 4.",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 9,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p9_c2",
+    "text": "ion Let\u2019s start with a sales collection. } } ]) 1. 2. 3. 4. use ecommerce; db.sales.insertMany([ { _id: 1, item: \"Apple\", price: 10, quantity: 5, category: \"Fruit\" }, { _id: 2, item: \"Banana\", price: 5, quantity: 10, category: \"Fruit\" }, { _id: 3, item: \"Carrot\", price: 8, quantity: 6, category: \"Vegetable\" }, { _id: 4, item: \"Tomato\", price: 6, quantity: 8, category: \"Vegetable\" },",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 9,
+    "chunk_index": 2
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p10_c0",
+    "text": "This collection has 5 documents. Each document represents a product with its price, quantity, and category. What is an aggregation pipeline? Think of it like a factory line: Each stage takes input (your data) Performs some operation (like filtering, sorting, grouping) Sends the result to the next stage Example structure: Aggregation Pipeline Example 1: $match : Filter documents Let\u2019s get only the",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 10,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p10_c1",
+    "text": "line Example 1: $match : Filter documents Let\u2019s get only the sales where category is \"Fruit\" : Output: { _id: 5, item: \"Mango\", price: 15, quantity: 3, category: \"Fruit\" } ]); \u2022 \u2022 \u2022 db.sales.aggregate([ { /* stage 1 */ }, { /* stage 2 */ }, { /* stage 3 */ } ]); db.sales.aggregate([ { $match: { category: \"Fruit\" } } ]);",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 10,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p11_c0",
+    "text": "Aggregation Pipeline Example 2: $project : Select specific fields Let\u2019s display only item and price , and hide _id : Output: Aggregation Pipeline Example 3: $group : Group and calculate totals Let\u2019s calculate total sales (price \u00d7 quantity) for each category: { _id: 1, item: \"Apple\", price: 10, quantity: 5, category: \"Fruit\" } { _id: 2, item: \"Banana\", price: 5, quantity: 10, category: \"Fruit\" } {",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 11,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p11_c1",
+    "text": "tem: \"Banana\", price: 5, quantity: 10, category: \"Fruit\" } { _id: 5, item: \"Mango\", price: 15, quantity: 3, category: \"Fruit\" } db.sales.aggregate([ { $project: { _id: 0, item: 1, price: 1 } } ]); { item: \"Apple\", price: 10 } { item: \"Banana\", price: 5 } { item: \"Carrot\", price: 8 } { item: \"Tomato\", price: 6 } { item: \"Mango\", price: 15 } db.sales.aggregate([ { $group: { _id: \"$category\",",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 11,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p11_c2",
+    "text": "ice: 15 } db.sales.aggregate([ { $group: { _id: \"$category\", totalSales: { $sum: { $multiply: [\"$price\", \"$quantity\"] } } }",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 11,
+    "chunk_index": 2
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p12_c0",
+    "text": "Output: How this works: $group groups all documents by category $sum adds up the result of price \u00d7 quantity for each document Aggregation Pipeline Example 4: $sort : Sort results Sort the total sales in descending order: Output: } ]); { _id: \"Fruit\", totalSales: 145 } { _id: \"Vegetable\", totalSales: 96 } \u2022 \u2022 db.sales.aggregate([ { $group: { _id: \"$category\", totalSales: { $sum: { $multiply:",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 12,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p12_c1",
+    "text": "$group: { _id: \"$category\", totalSales: { $sum: { $multiply: [\"$price\", \"$quantity\"] } } } }, { $sort: { totalSales: -1 } } ]); { _id: \"Fruit\", totalSales: 145 } { _id: \"Vegetable\", totalSales: 96 }",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 12,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p13_c0",
+    "text": "Aggregation Pipeline Example 5: Combine $match + $group Find total sales for only Fruits: Output: Aggregation Pipeline Summary table Stage Description Example Use $match Filter documents { category: \"Fruit\" } $project Show/hide fields or create new ones item , price $group Group data and calculate sums, averages total sales per category $sort Sort results Sort by total sales $limit Limit number",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 13,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p13_c1",
+    "text": "y $sort Sort results Sort by total sales $limit Limit number of results Top 3 items The stages you\u2019ve learned ($match, $project, $group, $sort, $limit) are just the most common and beginner-friendly ones: often called the core stages.",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 13,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p13_c2",
+    "text": "n and beginner-friendly ones: often called the core stages. db.sales.aggregate([ { $match: { category: \"Fruit\" } }, { $group: { _id: null, totalFruitSales: { $sum: { $multiply: [\"$price\", \"$quantity\"] } } } } ]); { totalFruitSales: 145 }",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 13,
+    "chunk_index": 2
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p14_c0",
+    "text": "But MongoDB actually supports dozens of stages (over 25). 13. MongoDB Indexes Indexes in MongoDB are special data structures that improve the speed of read operations on a collection. They work similarly to indexes in books, allowing the database to quickly locate and access the data without scanning every document. Create Index View Indexes Should you always create indexes?",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 14,
+    "chunk_index": 0
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p14_c1",
+    "text": "Create Index View Indexes Should you always create indexes? While indexes improve read performance, they can slow down write operations (inserts, updates, deletes) because the index must also be updated. Therefore, it\u2019s essential to create indexes thoughtfully based on your application\u2019s query patterns. 14.",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 14,
+    "chunk_index": 1
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p14_c2",
+    "text": "houghtfully based on your application\u2019s query patterns. 14. Useful Admin Commands db.products.createIndex({ name: 1 }) // Ascending index on 'name' field db.products.getIndexes() // List all indexes on 'products' collection db.stats() // Show DB stats db.serverStatus() // Server info db.products.countDocuments() // Count documents db.products.renameCollection(\"items\") // Rename collection",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 14,
+    "chunk_index": 2
+  },
+  {
+    "chunk_id": "MongoDB Handbook.pdf_p14_c3",
+    "text": "s db.products.renameCollection(\"items\") // Rename collection db.products.drop() // Drop collection",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 14,
+    "chunk_index": 3
+  }
+]

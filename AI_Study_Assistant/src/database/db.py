@@ -1,12 +1,14 @@
 import sqlite3
+import json
 from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 
 class DatabaseManager:
     """
-    SQLite Database Manager for AI Study Assistant.
-    Persists document metadata, conversation history, and quiz scores.
+    Database Manager for AI Study Assistant.
+    Persists document metadata, conversation history, and quiz scores in SQLite (study_assistant.db)
+    and synchronizes conversation memory to data/chat_memory.json (matching the RAG architecture diagram).
     """
 
     def __init__(self, db_path: Optional[str] = None):
@@ -15,10 +17,13 @@ class DatabaseManager:
             data_dir = base_dir / "data"
             data_dir.mkdir(parents=True, exist_ok=True)
             self.db_path = str(data_dir / "study_assistant.db")
+            self.memory_json_path = str(data_dir / "chat_memory.json")
         else:
             self.db_path = db_path
+            self.memory_json_path = str(Path(db_path).parent / "chat_memory.json")
 
         self._init_tables()
+        self._sync_chat_memory_file()
 
     def _get_connection(self) -> sqlite3.Connection:
         conn = sqlite3.connect(self.db_path)
@@ -95,6 +100,15 @@ class DatabaseManager:
             conn.commit()
             return cursor.rowcount > 0
 
+    def _sync_chat_memory_file(self):
+        """Synchronizes SQLite conversations to data/chat_memory.json to match diagram."""
+        try:
+            convs = self.get_conversations(limit=100)
+            with open(self.memory_json_path, "w", encoding="utf-8") as f:
+                json.dump(convs, f, indent=2)
+        except Exception:
+            pass
+
     # --- Conversation Operations ---
     def add_conversation(
         self,
@@ -114,7 +128,11 @@ class DatabaseManager:
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """, (session_id, role, query, category, answer, confidence, tool_used, now))
             conn.commit()
-            return cursor.lastrowid
+            last_id = cursor.lastrowid
+
+        # Keep data/chat_memory.json in sync with SQLite
+        self._sync_chat_memory_file()
+        return last_id
 
     def get_conversations(self, session_id: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
         with self._get_connection() as conn:
@@ -142,7 +160,9 @@ class DatabaseManager:
             else:
                 cursor.execute("DELETE FROM conversations")
             conn.commit()
-            return True
+
+        self._sync_chat_memory_file()
+        return True
 
     # --- Quiz Operations ---
     def save_quiz_result(self, topic: str, score: int, total_questions: int) -> int:

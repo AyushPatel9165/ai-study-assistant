@@ -120,7 +120,7 @@ AI_Study_Assistant/
 cd AI_Study_Assistant
 venv\Scripts\pytest tests -v
 ```
-All 43 unit and integration tests will execute and pass.
+All unit and integration tests will execute and pass.
 
 ### 2. Start the FastAPI Backend & Dashboard
 ```powershell

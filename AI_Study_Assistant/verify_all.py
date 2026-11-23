@@ -167,7 +167,7 @@ def run_audit():
         import pytest
         ret_code = pytest.main([str(base_dir / "tests"), "-q", "--tb=no"])
         if ret_code == 0:
-            print("[OK] Check 8/8 - Automated Pytest Suite: All 43 tests PASSED without any errors.")
+            print("[OK] Check 8/8 - Automated Pytest Suite: All tests PASSED without any errors.")
             passed_count += 1
         else:
             print(f"[FAIL] Check 8/8 - Pytest returned code: {ret_code}")

@@ -72,6 +72,12 @@ def test_ask_endpoint_greeting():
     assert resp.confidence == 1.0
     assert "AI Study Tutor" in resp.answer
 
+def test_ask_rejects_whitespace_input():
+    with pytest.raises(HTTPException) as exc:
+        ask_notes(AskRequest(query=" "))
+
+    assert exc.value.status_code == 400
+
 def test_ask_endpoint_with_rag():
     # Module 3 RAG endpoint queries the indexed study notes
     req = AskRequest(query="What is the Global Interpreter Lock in Python?")
@@ -80,6 +86,49 @@ def test_ask_endpoint_with_rag():
     assert resp.found_in_notes is True
     assert "study notes" in resp.answer.lower()
     assert len(resp.citations) > 0
+
+def test_ask_response_validation_error_is_server_error(monkeypatch):
+    class FakeRagPipeline:
+        def query(self, query):
+            return {
+                "answer": "A test response.",
+                "found_in_notes": True,
+                "confidence": 1.0,
+                "citations": [{}],
+                "question": query,
+                "retrieved_count": 1,
+            }
+
+    class FakeDatabase:
+        def add_conversation(self, **kwargs):
+            return 1
+
+    monkeypatch.setattr("api.main.get_rag_pipeline", lambda: FakeRagPipeline())
+    monkeypatch.setattr("api.main.get_db", lambda: FakeDatabase())
+
+    with pytest.raises(HTTPException) as exc:
+        ask_notes(AskRequest(query="Tell me about a topic"))
+
+    assert exc.value.status_code == 500
+    assert "RAG query execution failed" in exc.value.detail
+
+def test_agent_response_validation_error_is_server_error(monkeypatch):
+    class FakeOrchestrator:
+        def run(self, prompt):
+            return {"success": True, "prompt": prompt}
+
+    class FakeDatabase:
+        def add_conversation(self, **kwargs):
+            return 1
+
+    monkeypatch.setattr("api.main.get_agent_orchestrator", lambda: FakeOrchestrator())
+    monkeypatch.setattr("api.main.get_db", lambda: FakeDatabase())
+
+    with pytest.raises(HTTPException) as exc:
+        run_agent(AgentRequest(prompt="Tell me about a topic"))
+
+    assert exc.value.status_code == 500
+    assert "Agent workflow encountered an error" in exc.value.detail
 
 def test_module4_agent_endpoints():
     # 1. Summarize Endpoint

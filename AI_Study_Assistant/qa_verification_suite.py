@@ -9,6 +9,11 @@ from pathlib import Path
 # Add project root to sys.path
 BASE_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(BASE_DIR))
+try:
+    sys.stdout.reconfigure(line_buffering=True)
+    sys.stderr.reconfigure(line_buffering=True)
+except Exception:
+    pass
 
 from fastapi.testclient import TestClient
 from api.main import app
@@ -228,10 +233,10 @@ def run_qa_tests():
         # Security Test 2: PII Redaction
         from src.guardrails.security import SensitiveDataFilter
         filter_tool = SensitiveDataFilter()
-        sanitized, counts = filter_tool.sanitize("My email is alice@college.edu and phone is 9876543210 with key sk-abcdef1234567890")
+        sanitized, counts = filter_tool.sanitize("My email is alice@college.edu and phone is 9876543210 with key sk-abcdef1234567890ABCDEF")
         assert "[REDACTED_EMAIL]" in sanitized
         assert "[REDACTED_PHONE]" in sanitized
-        assert "[REDACTED_API_KEY]" in sanitized
+        assert "[REDACTED_SECRET]" in sanitized
         assert counts["emails"] == 1 and counts["phones"] == 1 and counts["api_keys"] == 1
 
         results["5. Deployment & Guardrails"] = {

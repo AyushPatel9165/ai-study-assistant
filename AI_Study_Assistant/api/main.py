@@ -90,6 +90,13 @@ def get_agent_orchestrator() -> AgentOrchestrator:
 
 # Security Helper
 def verify_and_sanitize_input(text: str, client_ip: str = "127.0.0.1") -> str:
+    # 0. Empty / Whitespace Validation (Must return 400, not 500)
+    if not text or not text.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Input query or prompt cannot be empty or whitespace only."
+        )
+
     # 1. Rate Limiting Check
     allowed, _ = rate_limiter.is_allowed(client_ip)
     if not allowed:

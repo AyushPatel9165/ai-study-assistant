@@ -273,14 +273,14 @@
       }, []);
 
       const navItems = [
-        { id: "dashboard", label: "Dashboard", icon: Icons.Dashboard, badge: "Overview", badgeColor: "bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de]" },
-        { id: "chat", label: "AI Chat & RAG", icon: Icons.Chat, badge: "NLP", badgeColor: "bg-[#ecf8f7] dark:bg-[#2a9d99]/15 text-[#2a9d99]" },
-        { id: "classify", label: "Subject Classifier", icon: Icons.Classifier, badge: "PyTorch", badgeColor: "bg-[#f8f2fd] dark:bg-[#d6b6f6]/15 text-[#391c57] dark:text-[#d6b6f6]" },
-        { id: "documents", label: "My Documents", icon: Icons.Documents, badge: "FAISS", badgeColor: "bg-[#fff0f9] dark:bg-[#ff64c8]/15 text-[#ff64c8]" },
-        { id: "summarizer", label: "Summarizer Tool", icon: Icons.Summarizer, badge: "Notes", badgeColor: "bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00]" },
-        { id: "quiz", label: "Quiz Generator", icon: Icons.Quiz, badge: "MCQs", badgeColor: "bg-[#eef9f1] dark:bg-[#1aae39]/15 text-[#1aae39]" },
+        { id: "dashboard", label: "Dashboard", icon: Icons.Dashboard, badge: "Home", badgeColor: "bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de]" },
+        { id: "chat", label: "Study Chat", icon: Icons.Chat, badge: "Chat", badgeColor: "bg-[#ecf8f7] dark:bg-[#2a9d99]/15 text-[#2a9d99]" },
+        { id: "classify", label: "Subject Classifier", icon: Icons.Classifier, badge: "Topics", badgeColor: "bg-[#f8f2fd] dark:bg-[#d6b6f6]/15 text-[#391c57] dark:text-[#d6b6f6]" },
+        { id: "documents", label: "My Study Notes", icon: Icons.Documents, badge: "Notes", badgeColor: "bg-[#fff0f9] dark:bg-[#ff64c8]/15 text-[#ff64c8]" },
+        { id: "summarizer", label: "Chapter Summarizer", icon: Icons.Summarizer, badge: "Summary", badgeColor: "bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00]" },
+        { id: "quiz", label: "Practice Quiz", icon: Icons.Quiz, badge: "Quiz", badgeColor: "bg-[#eef9f1] dark:bg-[#1aae39]/15 text-[#1aae39]" },
         { id: "flashcards", label: "3D Flashcards", icon: Icons.Flashcards, badge: "Recall", badgeColor: "bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00]" },
-        { id: "agent", label: "Autonomous Agent", icon: Icons.Agent, badge: "Router", badgeColor: "bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de]" },
+        { id: "agent", label: "Smart Assistant", icon: Icons.Agent, badge: "Agent", badgeColor: "bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de]" },
         { id: "settings", label: "System Health", icon: Icons.Settings, badge: "Status", badgeColor: "bg-[#f6f5f4] dark:bg-[#2a2a2a] text-[#615d59] dark:text-[#a39e98]" }
       ];
 
@@ -443,19 +443,19 @@
                   Welcome to Your Study Assistant
                 </h2>
                 <p className="text-sm text-white/80 mt-1 max-w-2xl leading-relaxed">
-                  Personal AI Tutor with PyTorch Neural Question Classification, Grounded RAG with Document Citations, and Autonomous Tool Routing for Python, AI, and Machine Learning.
+                  Personal AI Tutor with intelligent question classification, grounded study note citations, and external Gemini AI search for Python, AI, and Machine Learning.
                 </p>
               </div>
 
               {/* Decorative Sticker Specs Badges */}
               <div className="flex flex-wrap gap-2 text-xs font-mono">
                 <div className="bg-white/10 border border-white/15 px-3 py-2 rounded-xl text-white">
-                  <span className="text-white/60 block text-[10px]">PyTorch Model</span>
+                  <span className="text-white/60 block text-[10px]">Topic Classifier</span>
                   <span className="text-[#62aef0] font-bold">96.15% Test Acc</span>
                 </div>
                 <div className="bg-white/10 border border-white/15 px-3 py-2 rounded-xl text-white">
-                  <span className="text-white/60 block text-[10px]">Embeddings</span>
-                  <span className="text-white font-bold">all-MiniLM-L6-v2</span>
+                  <span className="text-white/60 block text-[10px]">Smart Search</span>
+                  <span className="text-white font-bold">Active</span>
                 </div>
               </div>
             </div>
@@ -549,7 +549,7 @@
             <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-5 rounded-xl notion-shadow-sm space-y-1 transition-colors">
               <div className="flex items-center justify-between">
                 <span className="text-xs uppercase font-mono tracking-wider text-[#615d59] dark:text-[#888888]">Indexed Notes</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30 font-semibold">FAISS</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30 font-semibold">Notes Library</span>
               </div>
               <div className="text-3xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-1">{metrics.total_documents}</div>
               <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-1">
@@ -565,7 +565,7 @@
             <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-5 rounded-xl notion-shadow-sm space-y-1 transition-colors">
               <div className="flex items-center justify-between">
                 <span className="text-xs uppercase font-mono tracking-wider text-[#615d59] dark:text-[#888888]">Questions Asked</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#ecf8f7] dark:bg-[#2a9d99]/15 text-[#2a9d99] border border-[#bdedeb] dark:border-[#2a9d99]/30 font-semibold">RAG Q&A</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#ecf8f7] dark:bg-[#2a9d99]/15 text-[#2a9d99] border border-[#bdedeb] dark:border-[#2a9d99]/30 font-semibold">Study Q&A</span>
               </div>
               <div className="text-3xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-1">{metrics.total_questions_asked}</div>
               <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-1">
@@ -1210,7 +1210,7 @@
             </div>
             <div className="flex items-center space-x-2 text-xs font-mono">
               <span className="px-3 py-1 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 border border-[#c5e1fb] dark:border-[#0075de]/30 text-[#0075de] font-semibold">
-                FAISS FlatIP • 384-d
+                Smart Notes Search
               </span>
               <button
                 onClick={handleExportNotes}
@@ -1414,7 +1414,7 @@
 
             {loading && (
               <div className="p-3 bg-[#f6f5f4] dark:bg-[#191919] rounded-lg border border-[#c5e1fb] dark:border-[#0075de]/30 text-xs font-mono text-[#0075de] flex items-center space-x-2 animate-pulse">
-                <span>[Retrieving relevant chunks from FAISS vector store & synthesizing grounded answer...]</span>
+                <span>[Searching your study notes and preparing clear answer...]</span>
               </div>
             )}
           </div>
@@ -1507,7 +1507,7 @@
         <div className="max-w-3xl mx-auto space-y-6">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Question Subject Classifier</h2>
-            <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Classify student queries into Python, AI, or ML using our trained PyTorch MLP neural network.</p>
+            <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Classify student queries into Python, AI, or Machine Learning topics instantly.</p>
           </div>
 
           {/* Preset Test Questions */}
@@ -1687,7 +1687,7 @@
 
         setTimeout(() => setUploadStage("2/4: Extracting text & sliding-window chunking (400 chars, 60 overlap)..."), 700);
         setTimeout(() => setUploadStage("3/4: Generating 384-d dense embeddings (all-MiniLM-L6-v2)..."), 1800);
-        setTimeout(() => setUploadStage("4/4: Indexing vectors into FAISS & SQLite..."), 2900);
+        setTimeout(() => setUploadStage("4/4: Indexing notes into search library..."), 2900);
 
         const formData = new FormData();
         formData.append("file", file);
@@ -1806,8 +1806,8 @@
           {/* Header & Stats Bar */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
             <div>
-              <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Study Documents & Vector Knowledge Base</h2>
-              <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Upload, chunk, embed, and inspect technical lecture notes in FAISS vector store.</p>
+              <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Study Documents & Notes Library</h2>
+              <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Upload, organize, and inspect your lecture notes and PDF study material.</p>
             </div>
             <div className="flex items-center space-x-2 text-xs font-mono">
               <span className="px-3 py-1.5 rounded-md bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] text-[#31302e] dark:text-[#d4d4d4]">
@@ -1954,7 +1954,7 @@
                             <span>•</span>
                             <span>Indexed: {doc.uploaded_at ? new Date(doc.uploaded_at).toLocaleDateString() : "Active"}</span>
                             <span>•</span>
-                            <span className="text-[#1aae39] font-semibold">[FAISS FlatIP]</span>
+                            <span className="text-[#1aae39] font-semibold">[Indexed Chunk]</span>
                           </div>
                         </div>
                       </div>
@@ -2008,7 +2008,7 @@
 
               {loadingChunks ? (
                 <div className="p-8 text-center text-xs font-mono text-[#0075de]">
-                  Retrieving chunk embeddings from FAISS metadata...
+                  Loading notes snippets from library...
                 </div>
               ) : docChunks.length === 0 ? (
                 <div className="p-6 text-center text-xs font-mono text-[#a39e98] dark:text-[#666666]">

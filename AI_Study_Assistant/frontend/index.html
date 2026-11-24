@@ -290,7 +290,7 @@
           <aside className="w-64 bg-[#ffffff] dark:bg-[#202020] border-r border-[#e6e6e6] dark:border-[#2f2f2f] flex flex-col justify-between select-none shrink-0 shadow-sm z-20 transition-colors duration-200">
             <div className="flex-1 flex flex-col min-h-0">
               {/* App Brand & Dark Mode Button */}
-              <div className="p-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f] flex items-center justify-between shrink-0">
+              <div className="p-3 sm:p-3.5 border-b border-[#e6e6e6] dark:border-[#2f2f2f] flex items-center justify-between shrink-0">
                 <div className="flex items-center space-x-3">
                   <div className="h-8 w-8 rounded-lg bg-[#0075de] flex items-center justify-center font-bold text-white text-xs tracking-wider shadow-sm">
                     AI
@@ -312,7 +312,7 @@
               </div>
 
               {/* Navigation Menu */}
-              <nav className="p-2.5 space-y-1 overflow-y-auto flex-1">
+              <nav className="p-2 space-y-0.5 overflow-y-auto flex-1">
                 {navItems.map(item => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.id;
@@ -320,7 +320,7 @@
                     <button
                       key={item.id}
                       onClick={() => setActiveTab(item.id)}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition ${
+                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium transition ${
                         isActive
                           ? "bg-[#f6f5f4] dark:bg-[#2a2a2a] text-[#0075de] dark:text-[#62aef0] font-semibold shadow-sm border border-[#e6e6e6] dark:border-[#383838]"
                           : "text-[#31302e] dark:text-[#d4d4d4] hover:bg-[#f6f5f4] dark:hover:bg-[#262626] hover:text-[#000000] dark:hover:text-[#ffffff]"
@@ -344,7 +344,7 @@
             </div>
 
             {/* Sidebar Footer with Live API Pill */}
-            <div className="p-3.5 border-t border-[#e6e6e6] dark:border-[#2f2f2f] bg-[#fdfdfd] dark:bg-[#1d1d1d] text-xs shrink-0">
+            <div className="p-2.5 sm:p-3 border-t border-[#e6e6e6] dark:border-[#2f2f2f] bg-[#fdfdfd] dark:bg-[#1d1d1d] text-xs shrink-0">
               <div className="flex items-center justify-between font-mono text-[11px]">
                 <span className="text-[#615d59] dark:text-[#888888]">Backend API:</span>
                 <span className="inline-flex items-center space-x-1.5 font-semibold text-[#1aae39]">
@@ -362,7 +362,7 @@
           </aside>
 
           {/* Main Content Area */}
-          <main className={`flex-1 ${activeTab === 'chat' ? 'overflow-hidden p-3 sm:p-4 md:p-6 flex flex-col' : 'overflow-y-auto p-4 sm:p-6 md:p-8'} bg-[#f6f5f4] dark:bg-[#191919] transition-colors duration-200`}>
+          <main className={`flex-1 ${activeTab === 'chat' ? 'overflow-hidden p-2.5 sm:p-3 md:p-4 flex flex-col' : 'overflow-y-auto p-3 sm:p-4 md:p-6'} bg-[#f6f5f4] dark:bg-[#191919] transition-colors duration-200`}>
             {activeTab === "dashboard" && (
               <DashboardView
                 data={dashboardData}
@@ -428,32 +428,32 @@
       };
 
       return (
-        <div className="max-w-5xl mx-auto space-y-6 pb-8">
+        <div className="max-w-5xl mx-auto space-y-4 pb-6">
           {/* Signature Inverted Hero Night Band (Deep Indigo) */}
-          <div className="bg-[#213183] text-white rounded-2xl p-6 md:p-8 relative overflow-hidden shadow-lg">
-            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="bg-[#213183] text-white rounded-2xl p-4 sm:p-5 md:p-6 relative overflow-hidden shadow-lg">
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-3">
               <div>
-                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-mono text-white/90 mb-3">
+                <div className="inline-flex items-center space-x-2 px-3 py-0.5 rounded-full bg-white/10 border border-white/15 text-xs font-mono text-white/90 mb-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#62aef0] animate-pulse"></span>
                   <span>AI Study Assistant Active</span>
                   <span className="text-white/40">•</span>
                   <span className="text-[#62aef0]">v0.2.0</span>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-extrabold text-white tracking-display">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-display">
                   Welcome to Your Study Assistant
                 </h2>
-                <p className="text-sm text-white/80 mt-1 max-w-2xl leading-relaxed">
+                <p className="text-xs sm:text-sm text-white/80 mt-1 max-w-2xl leading-relaxed">
                   Personal AI Tutor with intelligent question classification, grounded study note citations, and external Gemini AI search for Python, AI, and Machine Learning.
                 </p>
               </div>
 
               {/* Decorative Sticker Specs Badges */}
               <div className="flex flex-wrap gap-2 text-xs font-mono">
-                <div className="bg-white/10 border border-white/15 px-3 py-2 rounded-xl text-white">
+                <div className="bg-white/10 border border-white/15 px-2.5 py-1.5 rounded-xl text-white">
                   <span className="text-white/60 block text-[10px]">Topic Classifier</span>
                   <span className="text-[#62aef0] font-bold">96.15% Test Acc</span>
                 </div>
-                <div className="bg-white/10 border border-white/15 px-3 py-2 rounded-xl text-white">
+                <div className="bg-white/10 border border-white/15 px-2.5 py-1.5 rounded-xl text-white">
                   <span className="text-white/60 block text-[10px]">Smart Search</span>
                   <span className="text-white font-bold">Active</span>
                 </div>
@@ -461,7 +461,7 @@
             </div>
 
             {/* Quick Query Bar */}
-            <form onSubmit={handleQuickSubmit} className="relative z-10 mt-6 flex gap-2">
+            <form onSubmit={handleQuickSubmit} className="relative z-10 mt-4 flex gap-2">
               <input
                 type="text"
                 value={quickQuery}
@@ -544,77 +544,77 @@
           )}
 
           {/* 4 KPI Metric Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {/* Card 1 */}
-            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-5 rounded-xl notion-shadow-sm space-y-1 transition-colors">
+            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-3.5 sm:p-4 rounded-xl notion-shadow-sm space-y-1 transition-colors">
               <div className="flex items-center justify-between">
                 <span className="text-xs uppercase font-mono tracking-wider text-[#615d59] dark:text-[#888888]">Indexed Notes</span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30 font-semibold">Notes Library</span>
               </div>
-              <div className="text-3xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-1">{metrics.total_documents}</div>
-              <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-1">
+              <div className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-0.5">{metrics.total_documents}</div>
+              <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-0.5">
                 <span>Total Chunks:</span>
                 <span className="font-semibold text-[#0075de] font-mono">{metrics.total_chunks_indexed || 13}</span>
               </div>
-              <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden mt-2">
+              <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden mt-1.5">
                 <div className="bg-[#0075de] h-full rounded-full" style={{ width: '100%' }}></div>
               </div>
             </div>
 
             {/* Card 2 */}
-            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-5 rounded-xl notion-shadow-sm space-y-1 transition-colors">
+            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-3.5 sm:p-4 rounded-xl notion-shadow-sm space-y-1 transition-colors">
               <div className="flex items-center justify-between">
                 <span className="text-xs uppercase font-mono tracking-wider text-[#615d59] dark:text-[#888888]">Questions Asked</span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#ecf8f7] dark:bg-[#2a9d99]/15 text-[#2a9d99] border border-[#bdedeb] dark:border-[#2a9d99]/30 font-semibold">Study Q&A</span>
               </div>
-              <div className="text-3xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-1">{metrics.total_questions_asked}</div>
-              <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-1">
+              <div className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-0.5">{metrics.total_questions_asked}</div>
+              <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-0.5">
                 <span>Guardrail Threshold:</span>
                 <span className="font-semibold text-[#2a9d99] font-mono">0.40 Cosine</span>
               </div>
-              <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden mt-2">
+              <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden mt-1.5">
                 <div className="bg-[#2a9d99] h-full rounded-full" style={{ width: `${Math.min(100, (metrics.total_questions_asked + 1) * 20)}%` }}></div>
               </div>
             </div>
 
             {/* Card 3 */}
-            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-5 rounded-xl notion-shadow-sm space-y-1 transition-colors">
+            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-3.5 sm:p-4 rounded-xl notion-shadow-sm space-y-1 transition-colors">
               <div className="flex items-center justify-between">
                 <span className="text-xs uppercase font-mono tracking-wider text-[#615d59] dark:text-[#888888]">Quizzes Taken</span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00] border border-[#fcdcc4] dark:border-[#dd5b00]/30 font-semibold">Practice</span>
               </div>
-              <div className="text-3xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-1">{metrics.total_quizzes_generated}</div>
-              <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-1">
+              <div className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-0.5">{metrics.total_quizzes_generated}</div>
+              <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-0.5">
                 <span>MCQ Generation:</span>
                 <span className="font-semibold text-[#dd5b00]">Automated</span>
               </div>
-              <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden mt-2">
+              <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden mt-1.5">
                 <div className="bg-[#dd5b00] h-full rounded-full" style={{ width: `${Math.min(100, metrics.total_quizzes_generated * 25)}%` }}></div>
               </div>
             </div>
 
             {/* Card 4 */}
-            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-5 rounded-xl notion-shadow-sm space-y-1 transition-colors">
+            <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-3.5 sm:p-4 rounded-xl notion-shadow-sm space-y-1 transition-colors">
               <div className="flex items-center justify-between">
                 <span className="text-xs uppercase font-mono tracking-wider text-[#615d59] dark:text-[#888888]">Average Score</span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#eef9f1] dark:bg-[#1aae39]/15 text-[#1aae39] border border-[#c6eed0] dark:border-[#1aae39]/30 font-semibold">Retention</span>
               </div>
-              <div className="text-3xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-1">
+              <div className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] font-mono pt-0.5">
                 {metrics.average_quiz_score > 0 ? `${metrics.average_quiz_score}%` : "100%"}
               </div>
-              <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-1">
+              <div className="text-xs text-[#615d59] dark:text-[#888888] flex items-center justify-between pt-0.5">
                 <span>Status:</span>
                 <span className="font-semibold text-[#1aae39]">Active Learner</span>
               </div>
-              <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden mt-2">
+              <div className="w-full bg-[#f6f5f4] dark:bg-[#2a2a2a] h-1.5 rounded-full overflow-hidden mt-1.5">
                 <div className="bg-[#1aae39] h-full rounded-full" style={{ width: `${metrics.average_quiz_score > 0 ? metrics.average_quiz_score : 100}%` }}></div>
               </div>
             </div>
           </div>
 
           {/* Five Curriculum Milestones */}
-          <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-5 md:p-6 notion-shadow-sm transition-colors">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
+          <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-4 sm:p-5 notion-shadow-sm transition-colors">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
               <div>
                 <div className="flex items-center space-x-2">
                   <span className="text-xs uppercase font-mono font-bold tracking-wider text-[#0075de]">Curriculum Milestones</span>
@@ -1201,11 +1201,11 @@
       };
 
       return (
-        <div className="max-w-4xl w-full mx-auto flex flex-col flex-1 min-h-0 space-y-3">
+        <div className="max-w-5xl w-full mx-auto flex flex-col flex-1 min-h-0 space-y-2.5">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-[#e6e6e6] dark:border-[#2f2f2f] shrink-0">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[#e6e6e6] dark:border-[#2f2f2f] shrink-0">
             <div>
-              <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Chat With Your Study Notes</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Chat With Your Study Notes</h2>
               <p className="text-xs text-[#615d59] dark:text-[#888888] mt-0.5">Retrieval-Augmented Generation (RAG) with anti-hallucination guardrail (0.40 threshold).</p>
             </div>
             <div className="flex items-center space-x-2 text-xs font-mono">
@@ -1245,7 +1245,7 @@
           </div>
 
           {/* Message Stream */}
-          <div className="flex-1 min-h-0 bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-4 sm:p-5 overflow-y-auto space-y-4 notion-shadow-sm transition-colors">
+          <div className="flex-1 min-h-0 bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-3 sm:p-4 overflow-y-auto space-y-3 notion-shadow-sm transition-colors">
             {loadingHistory ? (
               <div className="p-8 text-center text-xs font-mono text-[#0075de]">
                 Loading persistent study conversations from SQLite...
@@ -1253,7 +1253,7 @@
             ) : (
               messages.map((m, idx) => (
                 <div key={idx} className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}>
-                  <div className={`max-w-2xl p-4 rounded-xl text-xs ${
+                  <div className={`max-w-3xl sm:max-w-3xl lg:max-w-4xl p-3 sm:p-3.5 rounded-xl text-xs ${
                     m.role === "user"
                       ? "bg-[#0075de] text-white rounded-br-none shadow-sm"
                       : "bg-[#f6f5f4] dark:bg-[#191919] text-[#000000] dark:text-[#ffffff] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-bl-none shadow-sm"
@@ -1306,7 +1306,7 @@
 
                     {/* Out of Notes Action Card: Continue to Web / Ask AI */}
                     {m.role === "assistant" && !m.found_in_notes && !m.is_web && (
-                      <div className="mt-3.5 p-3 bg-[#eef6fc] dark:bg-[#0075de]/10 border border-[#c5e1fb] dark:border-[#0075de]/30 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 font-sans">
+                      <div className="mt-2.5 p-2.5 bg-[#eef6fc] dark:bg-[#0075de]/10 border border-[#c5e1fb] dark:border-[#0075de]/30 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-sans">
                         <div>
                           <div className="font-semibold text-[#0075de] text-xs">Topic not found in your study notes</div>
                           <div className="text-[11px] text-[#615d59] dark:text-[#888888]">Would you like to search via Web & External AI?</div>
@@ -1315,7 +1315,7 @@
                           type="button"
                           onClick={() => handleAskWeb(m.question || lastQuery)}
                           disabled={loading}
-                          className="px-3.5 py-1.5 bg-[#0075de] hover:bg-[#005fb2] text-white text-xs font-semibold rounded-md shadow-sm transition whitespace-nowrap cursor-pointer"
+                          className="px-3 py-1 bg-[#0075de] hover:bg-[#005fb2] text-white text-xs font-semibold rounded-md shadow-sm transition whitespace-nowrap cursor-pointer"
                         >
                           Continue to Web / Ask AI
                         </button>
@@ -1324,7 +1324,7 @@
 
                     {/* In-Notes Deeper Explanation Action Card */}
                     {m.role === "assistant" && m.found_in_notes && !m.is_web && (
-                      <div className="mt-3.5 p-3 bg-[#f6f5f4] dark:bg-[#191919] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 font-sans">
+                      <div className="mt-2.5 p-2.5 bg-[#f6f5f4] dark:bg-[#191919] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-sans">
                         <div>
                           <div className="font-semibold text-[#0075de] dark:text-[#62aef0] text-xs">Need a simpler or deeper explanation?</div>
                           <div className="text-[11px] text-[#615d59] dark:text-[#888888]">Ask Gemini AI for beginner analogies, practical code, and step-by-step breakdown.</div>
@@ -1333,7 +1333,7 @@
                           type="button"
                           onClick={() => handleAskWeb(m.question || lastQuery)}
                           disabled={loading}
-                          className="px-3.5 py-1.5 bg-[#ffffff] dark:bg-[#202020] hover:bg-[#0075de] hover:text-white dark:hover:bg-[#0075de] text-[#0075de] dark:text-[#62aef0] border border-[#c5e1fb] dark:border-[#0075de]/40 text-xs font-semibold rounded-md shadow-sm transition whitespace-nowrap cursor-pointer flex items-center justify-center space-x-1"
+                          className="px-3 py-1 bg-[#ffffff] dark:bg-[#202020] hover:bg-[#0075de] hover:text-white dark:hover:bg-[#0075de] text-[#0075de] dark:text-[#62aef0] border border-[#c5e1fb] dark:border-[#0075de]/40 text-xs font-semibold rounded-md shadow-sm transition whitespace-nowrap cursor-pointer flex items-center justify-center space-x-1"
                         >
                           <span>Ask Web AI / Gemini</span>
                         </button>
@@ -1342,13 +1342,13 @@
 
                     {/* Citations Box */}
                     {m.citations && m.citations.length > 0 && (
-                      <div className="mt-3.5 pt-3 border-t border-[#e6e6e6] dark:border-[#2f2f2f] text-xs font-mono space-y-2">
+                      <div className="mt-2.5 pt-2 border-t border-[#e6e6e6] dark:border-[#2f2f2f] text-xs font-mono space-y-1.5">
                         <div className="text-[#0075de] font-bold uppercase tracking-wider text-[11px] flex items-center justify-between">
                           <span>Grounding Citations & Verified References:</span>
                           <span className="text-[#615d59] dark:text-[#888888] text-[10px]">{m.citations.length} Sources</span>
                         </div>
                         {m.citations.map((c, cIdx) => (
-                          <div key={cIdx} className="p-3 bg-[#ffffff] dark:bg-[#202020] rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] text-[#31302e] dark:text-[#d4d4d4] space-y-1">
+                          <div key={cIdx} className="p-2.5 bg-[#ffffff] dark:bg-[#202020] rounded-lg border border-[#e6e6e6] dark:border-[#2f2f2f] text-[#31302e] dark:text-[#d4d4d4] space-y-1">
                             <div className="flex items-center justify-between">
                               <span className="font-bold text-[#0075de] font-sans text-xs">{c.document_name}</span>
                               <span className="text-[#1aae39] font-mono text-[10px] bg-[#eef9f1] dark:bg-[#1aae39]/15 px-2 py-0.5 rounded-full border border-[#c6eed0] dark:border-[#1aae39]/30 font-semibold">
@@ -1504,7 +1504,7 @@
       };
 
       return (
-        <div className="max-w-3xl mx-auto space-y-6 pb-8">
+        <div className="max-w-4xl mx-auto space-y-4 pb-6">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Question Subject Classifier</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Classify student queries into Python, AI, or Machine Learning topics instantly.</p>
@@ -1802,7 +1802,7 @@
       const totalChunksAcrossAll = documents.reduce((acc, d) => acc + (d.chunks_count || 0), 0);
 
       return (
-        <div className="max-w-5xl mx-auto space-y-6 pb-8">
+        <div className="max-w-5xl mx-auto space-y-4 pb-6">
           {/* Header & Stats Bar */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
             <div>
@@ -2089,13 +2089,13 @@
       };
 
       return (
-        <div className="max-w-3xl mx-auto space-y-6 pb-8">
+        <div className="max-w-4xl mx-auto space-y-4 pb-6">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Notes Summarizer Tool</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Distill lengthy study material into structured executive overviews and core takeaways.</p>
           </div>
 
-          <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-6 rounded-xl space-y-4 notion-shadow-sm transition-colors">
+          <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-4 sm:p-5 rounded-xl space-y-4 notion-shadow-sm transition-colors">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888] mb-2">Document to Summarize:</label>
@@ -2239,13 +2239,13 @@
       };
 
       return (
-        <div className="max-w-3xl mx-auto space-y-6 pb-8">
+        <div className="max-w-4xl mx-auto space-y-4 pb-6">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Interactive MCQ Quiz Generator</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Generate multiple-choice practice tests grounded in your study notes with explanations.</p>
           </div>
 
-          <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-6 rounded-xl space-y-4 notion-shadow-sm transition-colors">
+          <div className="bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] p-4 sm:p-5 rounded-xl space-y-4 notion-shadow-sm transition-colors">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-mono uppercase font-bold text-[#615d59] dark:text-[#888888] mb-2">Subject / Topic:</label>
@@ -2430,7 +2430,7 @@
       };
 
       return (
-        <div className="max-w-4xl mx-auto space-y-6 pb-8">
+        <div className="max-w-4xl mx-auto space-y-4 pb-6">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Autonomous AI Agent</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Natural language prompt routing. The agent automatically detects intent and executes Answer, Summary, or Quiz tool.</p>
@@ -2670,7 +2670,7 @@
       };
 
       return (
-        <div className="max-w-2xl mx-auto space-y-6 select-none">
+        <div className="max-w-4xl mx-auto space-y-3.5 pb-6 select-none">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
             <div>
@@ -2856,7 +2856,7 @@
     // ==========================================
     function SettingsView({ status, darkMode, onToggleTheme }) {
       return (
-        <div className="max-w-3xl mx-auto space-y-6 pb-8">
+        <div className="max-w-4xl mx-auto space-y-4 pb-6">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">System Diagnostics & Security Settings</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Runtime health, guardrail parameters, and active models.</p>

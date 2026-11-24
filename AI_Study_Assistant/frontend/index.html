@@ -56,7 +56,7 @@
 
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
-    const API_BASE = "";
+    const API_BASE = (window.location.protocol === "http:" || window.location.protocol === "https:") ? "" : "http://127.0.0.1:8000";
 
     // Error Formatter
     function formatErrorDetail(err, fallback = "Request failed") {
@@ -949,7 +949,7 @@
       };
 
       const handleAskWeb = async (queryText) => {
-        const queryToAsk = queryText || lastQuery;
+        const queryToAsk = (queryText || lastQuery || "").trim();
         if (!queryToAsk || loading) return;
         setLoading(true);
         try {
@@ -973,11 +973,24 @@
             }]);
             onRefreshMetrics();
           } else {
-            alert("External AI / Web search failed.");
+            const errData = await res.json().catch(() => ({}));
+            setMessages(prev => [...prev, {
+              role: "assistant",
+              question: queryToAsk,
+              text: `External AI request could not be completed: ${errData.detail || "Server error"}. You can ask again or check server connection.`,
+              found_in_notes: false,
+              timestamp: new Date().toISOString()
+            }]);
           }
         } catch (err) {
           console.error("Web search failed", err);
-          alert("Error connecting to web knowledge fallback: " + err.message);
+          setMessages(prev => [...prev, {
+            role: "assistant",
+            question: queryToAsk,
+            text: `Connection to Web Knowledge was interrupted: ${err.message}. Please verify the backend server is active at http://127.0.0.1:8000 and try again.`,
+            found_in_notes: false,
+            timestamp: new Date().toISOString()
+          }]);
         } finally {
           setLoading(false);
         }
@@ -1299,7 +1312,7 @@
                         </div>
                         <button
                           type="button"
-                          onClick={() => handleAskWeb(lastQuery)}
+                          onClick={() => handleAskWeb(m.question || lastQuery)}
                           disabled={loading}
                           className="px-3.5 py-1.5 bg-[#0075de] hover:bg-[#005fb2] text-white text-xs font-semibold rounded-md shadow-sm transition whitespace-nowrap cursor-pointer"
                         >

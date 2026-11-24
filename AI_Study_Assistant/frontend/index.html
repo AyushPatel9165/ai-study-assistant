@@ -428,7 +428,7 @@
       };
 
       return (
-        <div className="max-w-5xl mx-auto space-y-4 pb-6">
+        <div className="w-full max-w-[1600px] mx-auto space-y-4 pb-6">
           {/* Signature Inverted Hero Night Band (Deep Indigo) */}
           <div className="bg-[#213183] text-white rounded-2xl p-4 sm:p-5 md:p-6 relative overflow-hidden shadow-lg">
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -442,7 +442,7 @@
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-display">
                   Welcome to Your Study Assistant
                 </h2>
-                <p className="text-xs sm:text-sm text-white/80 mt-1 max-w-2xl leading-relaxed">
+                <p className="text-xs sm:text-sm text-white/80 mt-1 max-w-4xl leading-relaxed">
                   Personal AI Tutor with intelligent question classification, grounded study note citations, and external Gemini AI search for Python, AI, and Machine Learning.
                 </p>
               </div>
@@ -521,7 +521,7 @@
                   <h3 className="text-sm font-bold text-[#000000] dark:text-[#ffffff] tracking-tight">
                     {data.recommendations.has_data ? "Personalized Study Recommendation" : "Adaptive Learning Initializing"}
                   </h3>
-                  <p className="text-xs text-[#615d59] dark:text-[#888888] leading-relaxed max-w-2xl">
+                  <p className="text-xs text-[#615d59] dark:text-[#888888] leading-relaxed max-w-4xl">
                     {data.recommendations.recommendation_message || data.recommendations.recommended_action}
                   </p>
                 </div>
@@ -1201,7 +1201,7 @@
       };
 
       return (
-        <div className="max-w-5xl w-full mx-auto flex flex-col flex-1 min-h-0 space-y-2.5">
+        <div className="w-full max-w-[1550px] mx-auto flex flex-col flex-1 min-h-0 space-y-2.5">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[#e6e6e6] dark:border-[#2f2f2f] shrink-0">
             <div>
@@ -1504,7 +1504,7 @@
       };
 
       return (
-        <div className="max-w-4xl mx-auto space-y-4 pb-6">
+        <div className="w-full max-w-[1500px] mx-auto space-y-4 pb-6">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Question Subject Classifier</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Classify student queries into Python, AI, or Machine Learning topics instantly.</p>
@@ -1802,7 +1802,7 @@
       const totalChunksAcrossAll = documents.reduce((acc, d) => acc + (d.chunks_count || 0), 0);
 
       return (
-        <div className="max-w-5xl mx-auto space-y-4 pb-6">
+        <div className="w-full max-w-[1600px] mx-auto space-y-4 pb-6">
           {/* Header & Stats Bar */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
             <div>
@@ -2089,7 +2089,7 @@
       };
 
       return (
-        <div className="max-w-4xl mx-auto space-y-4 pb-6">
+        <div className="w-full max-w-[1500px] mx-auto space-y-4 pb-6">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Notes Summarizer Tool</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Distill lengthy study material into structured executive overviews and core takeaways.</p>
@@ -2239,7 +2239,7 @@
       };
 
       return (
-        <div className="max-w-4xl mx-auto space-y-4 pb-6">
+        <div className="w-full max-w-[1500px] mx-auto space-y-4 pb-6">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Interactive MCQ Quiz Generator</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Generate multiple-choice practice tests grounded in your study notes with explanations.</p>
@@ -2430,7 +2430,7 @@
       };
 
       return (
-        <div className="max-w-4xl mx-auto space-y-4 pb-6">
+        <div className="w-full max-w-[1500px] mx-auto space-y-4 pb-6">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Autonomous AI Agent</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Natural language prompt routing. The agent automatically detects intent and executes Answer, Summary, or Quiz tool.</p>
@@ -2670,7 +2670,7 @@
       };
 
       return (
-        <div className="max-w-4xl mx-auto space-y-3.5 pb-6 select-none">
+        <div className="w-full max-w-[1500px] mx-auto space-y-3.5 pb-6 select-none">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
             <div>
@@ -2856,7 +2856,7 @@
     // ==========================================
     function SettingsView({ status, darkMode, onToggleTheme }) {
       return (
-        <div className="max-w-4xl mx-auto space-y-4 pb-6">
+        <div className="w-full max-w-[1500px] mx-auto space-y-4 pb-6">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">System Diagnostics & Security Settings</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Runtime health, guardrail parameters, and active models.</p>

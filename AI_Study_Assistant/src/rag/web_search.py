@@ -36,28 +36,30 @@ class WebSearchFallback:
     @classmethod
     def query_gemini_api(cls, query: str, api_key: str) -> Optional[str]:
         """Calls Google Gemini API via standard urllib."""
-        try:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
-            prompt_text = (
-                f"You are an expert academic tutor. Answer the student's question concisely, clearly, "
-                f"and with pedagogical depth. Format with clear Markdown headings and bullet points.\n\n"
-                f"Question: {query}"
-            )
-            payload = json.dumps({
-                "contents": [{"parts": [{"text": prompt_text}]}],
-                "generationConfig": {"temperature": 0.3, "maxOutputTokens": 800}
-            }).encode("utf-8")
+        gemini_models = ["gemini-flash-lite-latest", "gemini-3.8-flash", "gemini-flash-latest"]
+        prompt_text = (
+            f"You are an expert academic tutor for computer science. Answer the student's question clearly, accurately, "
+            f"and pedagogically using structured Markdown headings, bullet points, and code snippets where appropriate.\n\n"
+            f"Question: {query}"
+        )
+        payload = json.dumps({
+            "contents": [{"parts": [{"text": prompt_text}]}],
+            "generationConfig": {"temperature": 0.3, "maxOutputTokens": 800}
+        }).encode("utf-8")
 
-            req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-                candidates = data.get("candidates", [])
-                if candidates:
-                    parts = candidates[0].get("content", {}).get("parts", [])
-                    if parts:
-                        return parts[0].get("text", "").strip()
-        except Exception as e:
-            print(f"[WebSearchFallback] Gemini API call failed: {e}")
+        for m in gemini_models:
+            try:
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent?key={api_key}"
+                req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
+                with urllib.request.urlopen(req, timeout=12) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    candidates = data.get("candidates", [])
+                    if candidates:
+                        parts = candidates[0].get("content", {}).get("parts", [])
+                        if parts:
+                            return parts[0].get("text", "").strip()
+            except Exception as e:
+                print(f"[WebSearchFallback] Gemini ({m}) call failed: {e}")
         return None
 
     @classmethod
@@ -148,24 +150,24 @@ class WebSearchFallback:
                 gemini_key = openai_key
             openai_key = None
 
-        # 1. Try OpenAI API if key available
+        # 1. Try Gemini API if key available (Primary preferred)
+        if gemini_key:
+            res = cls.query_gemini_api(query, gemini_key)
+            if res:
+                return {
+                    "answer": res,
+                    "provider": "Google Gemini API (Gemini Flash)",
+                    "found_in_notes": False,
+                    "is_web": True
+                }
+
+        # 2. Try OpenAI API if key available
         if openai_key:
             res = cls.query_openai_api(query, openai_key)
             if res:
                 return {
                     "answer": res,
                     "provider": "OpenAI ChatGPT API (gpt-4o-mini)",
-                    "found_in_notes": False,
-                    "is_web": True
-                }
-
-        # 2. Try Gemini API if key available
-        if gemini_key:
-            res = cls.query_gemini_api(query, gemini_key)
-            if res:
-                return {
-                    "answer": res,
-                    "provider": "Google Gemini API (gemini-1.5-flash)",
                     "found_in_notes": False,
                     "is_web": True
                 }

@@ -1,5 +1,60 @@
 [
   {
+    "id": 82,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "what is react",
+    "category": null,
+    "answer": "### What is React?\n\n**React** (also known as React.js or ReactJS) ek popular open-source **JavaScript library** hai, jise **Meta (Facebook)** ne develop kiya hai. Iska use primarily **User Interfaces (UIs)** banane ke liye kiya jata hai, especially for **Single Page Applications (SPAs)** jahan aapko fast, dynamic, aur interactive web pages chahiye hote hain.\n\nSimple shabdon mein kahein toh: *React aapko HTML, CSS, aur JavaScript ko combine karke reusable UI components banane ki freedom deta hai.*\n\n---\n\n### Key Features of React (Kyun Use Karein?)\n\n*   **Component-Based Architecture:** React mein poori website ko chhote-chhote independent tukdo mein divide kiya jata hai, jise **Components** kehte hain (jaise Navbar, Sidebar, Button, Footer). In components ko aap baar-baar reuse kar sakte hain.\n*   **Virtual DOM (Document Object Model):** Yeh React ki sabse powerful feature hai. \n    *   Jab bhi user data change karta hai, React real DOM ko update karne ke bajaye ek lightweight copy (Virtual DOM) mein changes karta hai.\n    *   Fir React compare karta hai ki kya change hua, aur sirf utne hi part ko Real DOM mein update karta hai. Isse app **bahut fast** ho jati hai.\n*   **JSX (JavaScript XML):** React mein aap JavaScript ke andar hi HTML likh sakte hain. Is syntax ko JSX kehte hain. Yeh code ko padhna aur likhna bahut aasan bana deta hai.\n*   **Unidirectional Data Flow (One-Way Data Binding):** React mein data hamesha ek hi direction mein flow karta hai (Parent component se Child component ki taraf). Isse debugging aasan ho jati hai kyunki aapko pata hota hai ki data kahan se aa raha hai.\n\n---\n\n### How a React Component Looks (Code Example)\n\nEk simple React component ka code kuch aisa dikhta hai:\n\n```jsx\nimport React from 'react';\n\n// Yeh ek Functional Component hai\nfunction WelcomeButton() {\n  const handleClick = () => {\n    alert('Button clicked!');\n  };\n\n  return (\n    <div>\n      <h1>Hello, Student!</h1>\n      <button onClick={handleClick}>\n        Click Me\n      </button>\n    </div>\n  );\n}\n\nexport default WelcomeButton;\n```\n\n---\n\n### Summary: React vs Angular\n\n*   **React** ek **Library** hai (sirf UI/View layer par focus karti hai). Routing ya state management ke liye isme humko third-party libraries (jaise React Router, Redux) use karni padti hain.\n*   Wahin, **Angular** ek full-fledged **Framework** hai jo sab kuch (routing, forms, HTTP client) built-in deta hai.\n\n### Conclusion\nAgar aap modern web development (Frontend) sikhna chahte hain, toh React aaj ke time mein industry standard hai. Yeh sikhne mein aasan hai aur iski job market mein demand bahut zyada hai.",
+    "confidence": 1.0,
+    "tool_used": "Web Fallback (Google Gemini API (Gemini Flash))",
+    "timestamp": "2026-11-24T07:51:36.381625"
+  },
+  {
+    "id": 81,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "what is react",
+    "category": null,
+    "answer": "Unable to find relevant information in your uploaded study notes regarding: 'what is react'.\n\nCurrently indexed topics include:\n\u2022 Python Programming Language & Internals (Memory Management, Garbage Collection, GIL, Generators)\n\u2022 Machine Learning (Optimization, Gradient Descent, Overfitting, L1/L2 Regularization)\n\u2022 Artificial Intelligence (Search Spaces, A* Algorithm, Heuristics)\n\u2022 MongoDB NoSQL (Architecture, BSON Documents, mongod, mongosh)\n\nTip: You can click 'Ask Web / External AI' below to get a comprehensive answer from global AI knowledge, or upload additional PDF/TXT notes in 'My Documents'!",
+    "confidence": 0.0,
+    "tool_used": "RAG Q&A",
+    "timestamp": "2026-11-24T07:51:20.155611"
+  },
+  {
+    "id": 80,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "tensor flow Kya Hota Hai",
+    "category": null,
+    "answer": "### **TensorFlow Kya Hota Hai? (Introduction to TensorFlow)**\n\nHello! Chaliye bilkul saral bhasha mein samajhte hain ki **TensorFlow** kya hota hai. \n\n**TensorFlow** ek bohot hi popular aur powerful open-source library hai, jise **Google** ne develop kiya hai. Iska use \u09ae\u09c2\u09b2\u09a4 **Machine Learning (ML)** aur **Deep Learning (DL)** ke models banane aur train karne ke liye kiya jata hai. \n\nAgar aapko AI (Artificial Intelligence) ya data science ki duniya mein kuch bada banana hai\u2014jaise ki image pehchanna (Image Recognition), voice assistant banana, ya language translation\u2014toh TensorFlow aapka sabse bada dost ban sakta hai.\n\n---\n\n### **Key Concepts: TensorFlow Naam Mein Hi",
+    "confidence": 1.0,
+    "tool_used": "Web Fallback (Google Gemini API (Gemini Flash))",
+    "timestamp": "2026-11-24T07:39:02.776692"
+  },
+  {
+    "id": 79,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "tensor flow Kya Hota Hai",
+    "category": null,
+    "answer": "Unable to find relevant information in your uploaded study notes regarding: 'tensor flow Kya Hota Hai'.\n\nCurrently indexed topics include:\n\u2022 Python Programming Language & Internals (Memory Management, Garbage Collection, GIL, Generators)\n\u2022 Machine Learning (Optimization, Gradient Descent, Overfitting, L1/L2 Regularization)\n\u2022 Artificial Intelligence (Search Spaces, A* Algorithm, Heuristics)\n\u2022 MongoDB NoSQL (Architecture, BSON Documents, mongod, mongosh)\n\nTip: You can click 'Ask Web / External AI' below to get a comprehensive answer from global AI knowledge, or upload additional PDF/TXT notes in 'My Documents'!",
+    "confidence": 0.0,
+    "tool_used": "RAG Q&A",
+    "timestamp": "2026-11-24T07:38:54.498273"
+  },
+  {
+    "id": 78,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "flow Kya Hota Hai danger flow",
+    "category": null,
+    "answer": "Unable to find relevant information in your uploaded study notes regarding: 'flow Kya Hota Hai danger flow'.\n\nCurrently indexed topics include:\n\u2022 Python Programming Language & Internals (Memory Management, Garbage Collection, GIL, Generators)\n\u2022 Machine Learning (Optimization, Gradient Descent, Overfitting, L1/L2 Regularization)\n\u2022 Artificial Intelligence (Search Spaces, A* Algorithm, Heuristics)\n\u2022 MongoDB NoSQL (Architecture, BSON Documents, mongod, mongosh)\n\nTip: You can click 'Ask Web / External AI' below to get a comprehensive answer from global AI knowledge, or upload additional PDF/TXT notes in 'My Documents'!",
+    "confidence": 0.0,
+    "tool_used": "RAG Q&A",
+    "timestamp": "2026-11-24T07:38:15.213842"
+  },
+  {
     "id": 77,
     "session_id": "default_session",
     "role": "student",

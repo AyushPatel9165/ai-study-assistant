@@ -112,6 +112,11 @@
       ),
       Download: () => (
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+      ),
+      Heart: ({ filled }) => (
+        <svg className={`w-3.5 h-3.5 transition ${filled ? "text-red-500 fill-current" : "text-gray-400 hover:text-red-500"}`} viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
       )
     };
 
@@ -875,7 +880,73 @@
       const [loadingHistory, setLoadingHistory] = useState(true);
       const [isListening, setIsListening] = useState(false);
       const [lastQuery, setLastQuery] = useState("");
+      const [savedCards, setSavedCards] = useState([]);
       const recognitionRef = useRef(null);
+
+      const loadSavedCards = async () => {
+        try {
+          const res = await fetch(`${API_BASE}/flashcards?topic=Saved`);
+          if (res.ok) {
+            const data = await res.json();
+            setSavedCards(data || []);
+          }
+        } catch (e) {
+          console.error("Failed to load saved recall cards", e);
+        }
+      };
+
+      useEffect(() => {
+        loadSavedCards();
+      }, []);
+
+      const isFavorite = (m) => {
+        const q = (m.question || lastQuery || "").trim().toLowerCase();
+        return savedCards.some(sc => (sc.front || "").trim().toLowerCase() === q || sc.back === m.text);
+      };
+
+      const handleToggleFavorite = async (m) => {
+        const q = (m.question || lastQuery || "").trim();
+        if (!q) return;
+
+        const existing = savedCards.find(sc => (sc.front || "").trim().toLowerCase() === q.toLowerCase() || sc.back === m.text);
+
+        if (existing) {
+          try {
+            const res = await fetch(`${API_BASE}/flashcards/saved/${existing.id}`, { method: "DELETE" });
+            if (res.ok) {
+              setSavedCards(prev => prev.filter(sc => sc.id !== existing.id));
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        } else {
+          try {
+            const res = await fetch(`${API_BASE}/flashcards/saved`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                front: q,
+                back: m.text,
+                topic: m.is_web ? "Web Knowledge" : "Study Notes",
+                source: m.is_web ? (m.provider || "Gemini Web") : "Uploaded Notes"
+              })
+            });
+            if (res.ok) {
+              const data = await res.json();
+              setSavedCards(prev => [...prev, {
+                id: data.id,
+                front: q,
+                back: m.text,
+                topic: m.is_web ? "Web Knowledge" : "Study Notes",
+                source: m.is_web ? (m.provider || "Gemini Web") : "Uploaded Notes",
+                is_saved: true
+              }]);
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      };
 
       const handleAskWeb = async (queryText) => {
         const queryToAsk = queryText || lastQuery;
@@ -891,6 +962,7 @@
             const data = await res.json();
             setMessages(prev => [...prev, {
               role: "assistant",
+              question: queryToAsk,
               text: data.answer,
               citations: data.citations,
               found_in_notes: false,
@@ -1069,6 +1141,7 @@
             const data = await res.json();
             setMessages(prev => [...prev, {
               role: "assistant",
+              question: userMsg,
               text: data.answer,
               citations: data.citations,
               found_in_notes: data.found_in_notes,
@@ -1276,12 +1349,29 @@
                         </div>
 
                         {m.role === "assistant" && (
-                          <button
-                            onClick={() => handleCopy(m.text, idx)}
-                            className="text-[10px] font-mono text-[#615d59] dark:text-[#888888] hover:text-[#000000] dark:hover:text-[#ffffff] px-2 py-0.5 rounded bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] border border-[#e6e6e6] dark:border-[#2f2f2f] transition"
-                          >
-                            {copiedIdx === idx ? "Copied!" : "Copy Answer"}
-                          </button>
+                          <div className="flex items-center space-x-2">
+                            <button
+                              type="button"
+                              onClick={() => handleToggleFavorite(m)}
+                              className={`text-[10px] font-mono px-2 py-0.5 rounded border transition flex items-center space-x-1 cursor-pointer ${
+                                isFavorite(m)
+                                  ? "bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border-red-200 dark:border-red-900 font-semibold"
+                                  : "bg-[#ffffff] dark:bg-[#202020] text-[#615d59] dark:text-[#888888] hover:text-red-500 border-[#e6e6e6] dark:border-[#2f2f2f]"
+                              }`}
+                              title={isFavorite(m) ? "Saved in 3D Flashcards Recall (Click to remove)" : "Save this question to 3D Flashcards for Recall"}
+                            >
+                              <Icons.Heart filled={isFavorite(m)} />
+                              <span>{isFavorite(m) ? "In Recall" : "Save Recall"}</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleCopy(m.text, idx)}
+                              className="text-[10px] font-mono text-[#615d59] dark:text-[#888888] hover:text-[#000000] dark:hover:text-[#ffffff] px-2 py-0.5 rounded bg-[#ffffff] dark:bg-[#202020] hover:bg-[#f6f5f4] dark:hover:bg-[#2a2a2a] border border-[#e6e6e6] dark:border-[#2f2f2f] transition"
+                            >
+                              {copiedIdx === idx ? "Copied!" : "Copy Answer"}
+                            </button>
+                          </div>
                         )}
                       </div>
                     )}
@@ -2474,10 +2564,10 @@
       const loadCards = async () => {
         setLoading(true);
         try {
-          const res = await fetch(`${API_BASE}/flashcards?count=20`);
+          const res = await fetch(`${API_BASE}/flashcards?count=30`);
           if (res.ok) {
             const data = await res.json();
-            setCards(data);
+            setCards(data || []);
             setCurrentIndex(0);
             setIsFlipped(false);
           }
@@ -2492,13 +2582,35 @@
         loadCards();
       }, []);
 
-      const availableTopics = ["All", ...Array.from(new Set(cards.map(c => c.topic))).filter(Boolean)];
+      const savedCount = cards.filter(c => c.is_saved || (c.topic || "").toLowerCase().includes("saved")).length;
+      const otherTopics = Array.from(new Set(cards.map(c => c.topic))).filter(t => t && !t.toLowerCase().includes("saved"));
+      const availableTopics = [
+        "All",
+        ...(savedCount > 0 ? [`Saved Recall (${savedCount})`] : []),
+        ...otherTopics
+      ];
 
       const filteredCards = filterTopic === "All"
         ? cards
-        : cards.filter(c => (c.topic || "").toLowerCase() === filterTopic.toLowerCase());
+        : filterTopic.startsWith("Saved Recall")
+          ? cards.filter(c => c.is_saved || (c.topic || "").toLowerCase().includes("saved"))
+          : cards.filter(c => (c.topic || "").toLowerCase() === filterTopic.toLowerCase());
 
       const currentCard = filteredCards[currentIndex];
+
+      const handleDeleteCard = async (e, cardId) => {
+        e.stopPropagation();
+        if (!confirm("Remove this question from Saved Recall?")) return;
+        try {
+          const res = await fetch(`${API_BASE}/flashcards/saved/${cardId}`, { method: "DELETE" });
+          if (res.ok) {
+            setCards(prev => prev.filter(c => c.id !== cardId));
+            if (currentIndex > 0) setCurrentIndex(prev => prev - 1);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      };
 
       const handleNext = () => {
         if (currentIndex < filteredCards.length - 1) {
@@ -2531,7 +2643,7 @@
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
             <div>
               <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Interactive 3D Flashcards</h2>
-              <p className="text-xs text-[#615d59] dark:text-[#888888] mt-0.5">Active recall and spaced repetition flashcards extracted directly from your study notes.</p>
+              <p className="text-xs text-[#615d59] dark:text-[#888888] mt-0.5">Active recall flashcards from study notes and your favorite bookmarked chat questions.</p>
             </div>
             <div className="flex items-center space-x-2 text-xs font-mono">
               <span className="px-3 py-1 rounded-full bg-[#fef4ec] dark:bg-[#dd5b00]/15 text-[#dd5b00] border border-[#fcdcc4] dark:border-[#dd5b00]/30 font-semibold">
@@ -2542,19 +2654,22 @@
 
           {/* Filter Bar & Progress */}
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
-            <div className="flex items-center space-x-2">
-              <span className="text-[#a39e98] dark:text-[#666666]">Topic:</span>
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-[#a39e98] dark:text-[#666666]">Deck:</span>
               {availableTopics.map(t => (
                 <button
                   key={t}
                   onClick={() => { setFilterTopic(t); setCurrentIndex(0); setIsFlipped(false); }}
-                  className={`px-2.5 py-1 rounded-full border transition ${
+                  className={`px-2.5 py-1 rounded-full border transition flex items-center space-x-1 ${
                     filterTopic === t
-                      ? "bg-[#0075de] text-white border-[#0075de]"
-                      : "bg-[#ffffff] dark:bg-[#202020] text-[#615d59] dark:text-[#888888] border-[#e6e6e6] dark:border-[#2f2f2f] hover:text-[#0075de] dark:hover:text-[#62aef0]"
+                      ? "bg-[#0075de] text-white border-[#0075de] font-semibold"
+                      : t.startsWith("Saved Recall")
+                        ? "bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 border-red-200 dark:border-red-900 font-semibold"
+                        : "bg-[#ffffff] dark:bg-[#202020] text-[#615d59] dark:text-[#888888] border-[#e6e6e6] dark:border-[#2f2f2f] hover:text-[#0075de] dark:hover:text-[#62aef0]"
                   }`}
                 >
-                  {t}
+                  {t.startsWith("Saved Recall") && <Icons.Heart filled={true} />}
+                  <span>{t}</span>
                 </button>
               ))}
             </div>
@@ -2566,38 +2681,59 @@
 
           {loading ? (
             <div className="p-8 text-center text-xs font-mono text-[#0075de] animate-pulse">
-              [Extracting conceptual flashcards from notes...]
+              [Loading active recall flashcards...]
             </div>
           ) : filteredCards.length === 0 ? (
-            <div className="p-8 text-center bg-[#ffffff] dark:bg-[#202020] rounded-xl border border-[#e6e6e6] dark:border-[#2f2f2f] text-xs text-[#615d59] dark:text-[#888888]">
-              No flashcards found for this topic.
+            <div className="p-8 text-center bg-[#ffffff] dark:bg-[#202020] rounded-xl border border-[#e6e6e6] dark:border-[#2f2f2f] text-xs text-[#615d59] dark:text-[#888888] space-y-2">
+              <p>No flashcards found for this topic.</p>
+              <p className="text-[11px] text-[#a39e98]">Tip: In AI Chat, tap the heart icon on any answer to save it into your Recall deck!</p>
             </div>
           ) : (
             <div className="space-y-4">
               {/* 3D Flip Card Container */}
               <div
                 onClick={() => setIsFlipped(!isFlipped)}
-                className="perspective-1000 cursor-pointer w-full h-80"
+                className="perspective-1000 cursor-pointer w-full min-h-[22rem] h-auto"
               >
                 <div
-                  className={`relative w-full h-full duration-500 transform-style-3d transition-transform ${
+                  className={`relative w-full min-h-[22rem] duration-500 transform-style-3d transition-transform ${
                     isFlipped ? "rotate-y-180" : ""
                   }`}
                 >
                   {/* Card Front (Question / Concept) */}
-                  <div className="absolute w-full h-full backface-hidden bg-[#ffffff] dark:bg-[#202020] border-2 border-[#e6e6e6] dark:border-[#2f2f2f] rounded-2xl p-8 flex flex-col justify-between shadow-md hover:border-[#0075de] transition-colors">
+                  <div className="absolute w-full h-full backface-hidden bg-[#ffffff] dark:bg-[#202020] border-2 border-[#e6e6e6] dark:border-[#2f2f2f] rounded-2xl p-6 flex flex-col justify-between shadow-md hover:border-[#0075de] transition-colors">
                     <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="px-2.5 py-0.5 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30 font-semibold">
-                        {currentCard.topic}
-                      </span>
-                      <span className="text-[#a39e98] dark:text-[#666666]">
-                        Card {currentIndex + 1} of {filteredCards.length}
-                      </span>
+                      <div className="flex items-center space-x-1.5">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#eef6fc] dark:bg-[#0075de]/15 text-[#0075de] border border-[#c5e1fb] dark:border-[#0075de]/30 font-semibold">
+                          {currentCard.topic}
+                        </span>
+                        {currentCard.is_saved && (
+                          <span className="px-2 py-0.5 rounded-full bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 text-[10px] font-semibold flex items-center space-x-1">
+                            <Icons.Heart filled={true} />
+                            <span>Saved from {currentCard.source || "Chat"}</span>
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        {currentCard.is_saved && (
+                          <button
+                            type="button"
+                            onClick={(e) => handleDeleteCard(e, currentCard.id)}
+                            className="text-[10px] text-red-500 hover:text-red-700 underline font-mono cursor-pointer"
+                            title="Remove from saved recall"
+                          >
+                            Remove
+                          </button>
+                        )}
+                        <span className="text-[#a39e98] dark:text-[#666666]">
+                          Card {currentIndex + 1} of {filteredCards.length}
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="text-center my-auto px-4">
-                      <span className="text-[11px] font-mono text-[#a39e98] dark:text-[#666666] uppercase tracking-wider block mb-2">Question / Concept</span>
-                      <h3 className="text-xl md:text-2xl font-bold text-[#000000] dark:text-[#ffffff] leading-snug">
+                    <div className="text-center my-auto px-4 py-6">
+                      <span className="text-[11px] font-mono text-[#a39e98] dark:text-[#666666] uppercase tracking-wider block mb-2">Question / Recall Prompt</span>
+                      <h3 className="text-lg md:text-xl font-bold text-[#000000] dark:text-[#ffffff] leading-snug">
                         {currentCard.front}
                       </h3>
                     </div>
@@ -2608,23 +2744,30 @@
                   </div>
 
                   {/* Card Back (Answer / Key Takeaway) */}
-                  <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#0075de] text-white rounded-2xl p-8 flex flex-col justify-between shadow-md">
+                  <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-[#0075de] text-white rounded-2xl p-6 flex flex-col justify-between shadow-md overflow-hidden">
                     <div className="flex items-center justify-between text-xs font-mono text-white/80">
-                      <span className="px-2.5 py-0.5 rounded-full bg-white/20 text-white font-semibold">
-                        {currentCard.topic} - Answer
-                      </span>
+                      <div className="flex items-center space-x-1.5">
+                        <span className="px-2.5 py-0.5 rounded-full bg-white/20 text-white font-semibold">
+                          {currentCard.topic} - Answer
+                        </span>
+                        {currentCard.is_saved && (
+                          <span className="px-2 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-semibold">
+                            Saved Question
+                          </span>
+                        )}
+                      </div>
                       <span>Card {currentIndex + 1} of {filteredCards.length}</span>
                     </div>
 
-                    <div className="text-center my-auto px-4">
-                      <span className="text-[11px] font-mono text-white/70 uppercase tracking-wider block mb-2">Key Takeaway</span>
-                      <p className="text-base md:text-lg font-medium leading-relaxed">
+                    <div className="my-auto px-4 py-4 max-h-56 overflow-y-auto text-left font-sans text-xs leading-relaxed text-white/95">
+                      <span className="text-[10px] font-mono text-white/70 uppercase tracking-wider block mb-1.5 font-bold">Explanation & Solution</span>
+                      <p className="whitespace-pre-line">
                         {currentCard.back}
                       </p>
                     </div>
 
-                    <div className="text-center text-[11px] font-mono text-white/70">
-                      Click to flip back
+                    <div className="text-center text-[11px] font-mono text-white/70 pt-2 border-t border-white/20">
+                      Click to flip back to question
                     </div>
                   </div>
                 </div>

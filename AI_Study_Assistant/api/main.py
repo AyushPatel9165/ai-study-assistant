@@ -677,18 +677,75 @@ def ask_web_fallback(request: AskWebFallbackRequest) -> Dict[str, Any]:
             detail=f"External Web fallback failed: {str(e)}"
         )
 
+class SaveFlashcardPayload(BaseModel):
+    front: str = Field(..., min_length=2)
+    back: str = Field(..., min_length=2)
+    topic: Optional[str] = "Saved Recall"
+    source: Optional[str] = "Chat"
+
 @app.get("/flashcards", tags=["Study Tools"])
-def get_study_flashcards(topic: Optional[str] = None, limit: int = 8) -> List[Dict[str, Any]]:
-    """Generates interactive revision flashcards from uploaded technical notes."""
+def get_study_flashcards(topic: Optional[str] = None, count: Optional[int] = None, limit: int = 25) -> List[Dict[str, Any]]:
+    """Generates interactive revision flashcards from uploaded notes and saved recall bookmarks."""
     try:
+        actual_limit = count if count is not None else limit
+        db = get_db()
+        saved_cards = db.get_saved_flashcards()
+
+        # If user specifically asks for 'Saved' or 'Saved Recall'
+        if topic and topic.strip().lower() in ["saved", "saved recall", "favorites", "bookmarks"]:
+            return saved_cards[:actual_limit]
+
         from src.agents.tools.flashcard_tool import FlashcardTool
         rag = get_rag_pipeline()
         tool = FlashcardTool(vector_store=rag.vector_store)
-        return tool.generate_flashcards(topic=topic, limit=limit)
+        vector_cards = tool.generate_flashcards(topic=topic, limit=actual_limit)
+
+        # Merge saved recall cards with generated cards
+        all_cards = []
+        if not topic or topic.strip().lower() in ["all", ""]:
+            all_cards.extend(saved_cards)
+        elif topic:
+            t_lower = topic.strip().lower()
+            matching_saved = [c for c in saved_cards if t_lower in (c.get("topic") or "").lower() or t_lower in c.get("front", "").lower()]
+            all_cards.extend(matching_saved)
+
+        all_cards.extend(vector_cards)
+        return all_cards[:actual_limit]
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Flashcard generation failed: {str(e)}"
+        )
+
+@app.post("/flashcards/saved", tags=["Study Tools"])
+def save_user_flashcard(payload: SaveFlashcardPayload) -> Dict[str, Any]:
+    """Saves a question-answer pair from Chat or Web into 3D Flashcards for Active Recall."""
+    try:
+        db = get_db()
+        card_id = db.save_flashcard(
+            front=payload.front,
+            back=payload.back,
+            topic=payload.topic or "Saved Recall",
+            source=payload.source or "Chat"
+        )
+        return {"success": True, "id": card_id, "message": "Question saved to Active Recall 3D Flashcards."}
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to save flashcard: {str(e)}"
+        )
+
+@app.delete("/flashcards/saved/{card_id}", tags=["Study Tools"])
+def delete_user_flashcard(card_id: int) -> Dict[str, Any]:
+    """Deletes a saved recall flashcard by ID."""
+    try:
+        db = get_db()
+        deleted = db.delete_saved_flashcard(card_id)
+        return {"success": deleted, "message": "Flashcard removed from Saved Recall."}
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to delete flashcard: {str(e)}"
         )
 
 @app.get("/recommendations", tags=["Dashboard"])

@@ -165,6 +165,16 @@ class DatabaseManager:
                         created_at VARCHAR(100) NOT NULL
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
                 """)
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS saved_flashcards (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        front TEXT NOT NULL,
+                        back TEXT NOT NULL,
+                        topic VARCHAR(100) DEFAULT 'Saved Recall',
+                        source VARCHAR(100) DEFAULT 'Chat',
+                        created_at VARCHAR(100) NOT NULL
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                """)
 
     def _init_sqlite_tables(self):
         with self._get_connection() as conn:
@@ -199,6 +209,16 @@ class DatabaseManager:
                     score INTEGER NOT NULL,
                     total_questions INTEGER NOT NULL,
                     percentage REAL NOT NULL,
+                    created_at TEXT NOT NULL
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS saved_flashcards (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    front TEXT NOT NULL,
+                    back TEXT NOT NULL,
+                    topic TEXT DEFAULT 'Saved Recall',
+                    source TEXT DEFAULT 'Chat',
                     created_at TEXT NOT NULL
                 )
             """)
@@ -461,3 +481,57 @@ class DatabaseManager:
             "engine_info": engine_info,
             "recommendations": recommendations
         }
+
+    # --- Saved Flashcards Operations (Recall Bookmarks) ---
+    def save_flashcard(self, front: str, back: str, topic: str = "Saved Recall", source: str = "Chat") -> int:
+        now_str = datetime.utcnow().isoformat()
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            if self.engine == "mysql":
+                cursor.execute("""
+                    INSERT INTO saved_flashcards (front, back, topic, source, created_at)
+                    VALUES (%s, %s, %s, %s, %s)
+                """, (front, back, topic, source, now_str))
+                conn.commit()
+                return cursor.lastrowid
+            else:
+                cursor.execute("""
+                    INSERT INTO saved_flashcards (front, back, topic, source, created_at)
+                    VALUES (?, ?, ?, ?, ?)
+                """, (front, back, topic, source, now_str))
+                conn.commit()
+                return cursor.lastrowid
+
+    def get_saved_flashcards(self) -> List[Dict[str, Any]]:
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, front, back, topic, source, created_at FROM saved_flashcards ORDER BY id DESC")
+            rows = cursor.fetchall()
+
+            cards = []
+            for r in rows:
+                if isinstance(r, dict):
+                    card = dict(r)
+                    card["is_saved"] = True
+                    cards.append(card)
+                else:
+                    cards.append({
+                        "id": r[0],
+                        "front": r[1],
+                        "back": r[2],
+                        "topic": r[3] or "Saved Recall",
+                        "source": r[4] or "Chat",
+                        "created_at": r[5],
+                        "is_saved": True
+                    })
+            return cards
+
+    def delete_saved_flashcard(self, card_id: int) -> bool:
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            if self.engine == "mysql":
+                cursor.execute("DELETE FROM saved_flashcards WHERE id = %s", (card_id,))
+            else:
+                cursor.execute("DELETE FROM saved_flashcards WHERE id = ?", (card_id,))
+            conn.commit()
+            return cursor.rowcount > 0

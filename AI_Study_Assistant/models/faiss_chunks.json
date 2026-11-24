@@ -1,1039 +1,1067 @@
 [
   {
     "chunk_id": "sample_study_notes.txt_p1_c0",
-    "text": "# AI Study Assistant - Sample Technical Study Notes # Course: Artificial Intelligence & Modern Machine Learning ## Chapter 1: Python Advanced Internals and Memory Management Python manages memory automatically using an internal private heap. The core mechanism is reference counting: every Python object tracks how many variables refer to it.",
+    "text": "# AI Study Assistant - Sample Technical Study Notes\n# Course: Artificial Intelligence & Modern Machine Learning\n\n## Chapter 1: Python Programming Language and Core Internals\nPython is a high-level, interpreted, dynamically typed programming language created by Guido van Rossum.",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 0
   },
   {
     "chunk_id": "sample_study_notes.txt_p1_c1",
-    "text": "every Python object tracks how many variables refer to it. When an object's reference count drops to zero, its memory is immediately deallocated. However, reference counting alone cannot resolve cyclic references (where object A points to object B, and object B points to object A).",
+    "text": "lly typed programming language created by Guido van Rossum. It is renowned for its clean syntax, code readability, and vast ecosystem of libraries supporting web development, data science, artificial intelligence, and automation. Python supports multiple programming paradigms, including object-oriented, procedural, and functional programming.",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 1
   },
   {
     "chunk_id": "sample_study_notes.txt_p1_c2",
-    "text": "ect A points to object B, and object B points to object A). To solve this, CPython includes a cyclic garbage collector that runs periodically in generations (Generation 0, 1, and 2). The Global Interpreter Lock (GIL) is a mutex in CPython that prevents multiple native threads from executing Python bytecodes simultaneously.",
+    "text": "g object-oriented, procedural, and functional programming.\n\nPython manages memory automatically using an internal private heap. The core mechanism is reference counting: every Python object tracks how many variables refer to it. When an object's reference count drops to zero, its memory is immediately deallocated.",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 2
   },
   {
     "chunk_id": "sample_study_notes.txt_p1_c3",
-    "text": "ive threads from executing Python bytecodes simultaneously. The GIL was implemented to ensure thread-safety for reference counting and memory management. Consequently, CPU-bound multithreaded programs do not achieve true parallelism in Python; developers must use multiprocessing or asynchronous I/O via the asyncio event loop for concurrent tasks.",
+    "text": "count drops to zero, its memory is immediately deallocated. However, reference counting alone cannot resolve cyclic references (where object A points to object B, and object B points to object A). To solve this, CPython includes a cyclic garbage collector that runs periodically in generations (Generation 0, 1, and 2).",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 3
   },
   {
     "chunk_id": "sample_study_notes.txt_p1_c4",
-    "text": "ronous I/O via the asyncio event loop for concurrent tasks. Python generators are special functions that produce values lazily on-demand using the 'yield' keyword instead of 'return'. When yield executes, the function's execution state, local variables, and instruction pointer are paused and saved on the frame stack.",
+    "text": "runs periodically in generations (Generation 0, 1, and 2).\n\nThe Global Interpreter Lock (GIL) is a mutex in CPython that prevents multiple native threads from executing Python bytecodes simultaneously. The GIL was implemented to ensure thread-safety for reference counting and memory management.",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 4
   },
   {
     "chunk_id": "sample_study_notes.txt_p1_c5",
-    "text": "nstruction pointer are paused and saved on the frame stack. This makes generators memory-efficient because they do not build entire lists in memory at once. ## Chapter 2: Machine Learning Optimization and Regularization Supervised machine learning algorithms learn an approximation function mapping inputs to targets by minimizing an empirical loss function.",
+    "text": "thread-safety for reference counting and memory management. Consequently, CPU-bound multithreaded programs do not achieve true parallelism in Python; developers must use multiprocessing or asynchronous I/O via the asyncio event loop for concurrent tasks.\n\nPython generators are special functions that produce values lazily on-demand using the 'yield' keyword instead of 'return'.",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 5
   },
   {
     "chunk_id": "sample_study_notes.txt_p1_c6",
-    "text": "inputs to targets by minimizing an empirical loss function. Gradient descent is the primary first-order optimization algorithm. It iteratively calculates the partial derivatives (gradients) of the loss function with respect to model parameters and steps in the negative gradient direction scaled by the learning rate alpha.",
+    "text": "ly on-demand using the 'yield' keyword instead of 'return'. When yield executes, the function's execution state, local variables, and instruction pointer are paused and saved on the frame stack. This makes generators memory-efficient because they do not build entire lists in memory at once.\n\n## Chapter 2: Machine Learning Optimization and Regularization",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 6
   },
   {
     "chunk_id": "sample_study_notes.txt_p1_c7",
-    "text": "ative gradient direction scaled by the learning rate alpha. Overfitting occurs when a machine learning model learns spurious noise and specific idiosyncrasies in the training data rather than underlying generalizable patterns. An overfitted model exhibits high variance and low bias, performing poorly on unseen validation sets.",
+    "text": "Chapter 2: Machine Learning Optimization and Regularization\nMachine Learning (ML) is a branch of artificial intelligence focused on building mathematical algorithms that learn patterns from training data to make predictions or decisions without being explicitly programmed.",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 7
   },
   {
     "chunk_id": "sample_study_notes.txt_p1_c8",
-    "text": "and low bias, performing poorly on unseen validation sets. Regularization techniques penalize model complexity to prevent overfitting: 1. L1 Regularization (Lasso): Adds the sum of absolute parameter weights to the loss function. L1 encourages sparsity by driving unimportant weights strictly to zero, acting as an automatic feature selection mechanism. 2.",
+    "text": "edictions or decisions without being explicitly programmed. Supervised machine learning algorithms learn an approximation function mapping inputs to targets by minimizing an empirical loss function.\n\nGradient descent is the primary first-order optimization algorithm used in machine learning.",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 8
   },
   {
     "chunk_id": "sample_study_notes.txt_p1_c9",
-    "text": "ero, acting as an automatic feature selection mechanism. 2. L2 Regularization (Ridge): Adds the squared magnitude of parameter weights to the loss function. L2 shrinks weights uniformly toward zero without setting them strictly to zero, making it effective when many correlated features contribute to the prediction.",
+    "text": "irst-order optimization algorithm used in machine learning. It iteratively calculates the partial derivatives (gradients) of the loss function with respect to model parameters and steps in the negative gradient direction scaled by the learning rate alpha.",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 9
   },
   {
     "chunk_id": "sample_study_notes.txt_p1_c10",
-    "text": "when many correlated features contribute to the prediction. ## Chapter 3: Artificial Intelligence Search and Heuristics In Artificial Intelligence, problem-solving agents explore state spaces to find optimal paths from an initial state to a goal state. The A* search algorithm is an informed search strategy that evaluates nodes using the evaluation function: f(n) = g(n) + h(n).",
+    "text": "tive gradient direction scaled by the learning rate alpha.\n\nOverfitting occurs when a machine learning model learns spurious noise and specific idiosyncrasies in the training data rather than underlying generalizable patterns. An overfitted model exhibits high variance and low bias, performing poorly on unseen validation sets.",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 10
   },
   {
     "chunk_id": "sample_study_notes.txt_p1_c11",
-    "text": "es nodes using the evaluation function: f(n) = g(n) + h(n). - g(n) is the exact cost incurred from the start state to node n. - h(n) is the estimated heuristic cost from node n to the goal state. A* is guaranteed to be complete and optimal if the heuristic function h(n) is admissible. An admissible heuristic never overestimates the true cost to reach the goal (it is optimistic).",
+    "text": "and low bias, performing poorly on unseen validation sets.\n\nRegularization techniques penalize model complexity to prevent overfitting:\n1. L1 Regularization (Lasso): Adds the sum of absolute parameter weights to the loss function. L1 encourages sparsity by driving unimportant weights strictly to zero, acting as an automatic feature selection mechanism.\n2.",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 11
   },
   {
     "chunk_id": "sample_study_notes.txt_p1_c12",
-    "text": "timates the true cost to reach the goal (it is optimistic). In graph search, h(n) must also be consistent (monotonic), satisfying the triangle inequality: h(n) <= c(n, a, n') + h(n').",
+    "text": "ero, acting as an automatic feature selection mechanism.\n2. L2 Regularization (Ridge): Adds the squared magnitude of parameter weights to the loss function. L2 shrinks weights uniformly toward zero without setting them strictly to zero, making it effective when many correlated features contribute to the prediction.\n\n## Chapter 3: Artificial Intelligence Search and Heuristics",
     "document_name": "sample_study_notes.txt",
     "page_number": 1,
     "chunk_index": 12
   },
   {
+    "chunk_id": "sample_study_notes.txt_p1_c13",
+    "text": "## Chapter 3: Artificial Intelligence Search and Heuristics\nArtificial Intelligence (AI) is the broad branch of computer science dedicated to developing intelligent systems and software agents capable of performing tasks that typically require human cognition, such as problem solving, pattern recognition, and heuristic search.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 13
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c14",
+    "text": "roblem solving, pattern recognition, and heuristic search.\n\nIn Artificial Intelligence, problem-solving agents explore state spaces to find optimal paths from an initial state to a goal state. The A* search algorithm is an informed search strategy that evaluates nodes using the evaluation function: f(n) = g(n) + h(n).\n- g(n) is the exact cost incurred from the start state to node n.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 14
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c15",
+    "text": "is the exact cost incurred from the start state to node n.\n- h(n) is the estimated heuristic cost from node n to the goal state.\n\nA* is guaranteed to be complete and optimal if the heuristic function h(n) is admissible. An admissible heuristic never overestimates the true cost to reach the goal (it is optimistic).",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 15
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c16",
+    "text": "timates the true cost to reach the goal (it is optimistic). In graph search, h(n) must also be consistent (monotonic), satisfying the triangle inequality: h(n) <= c(n, a, n') + h(n').\n\n## Chapter 4: MongoDB NoSQL Database Systems\nMongoDB is an open-source, document-oriented NoSQL database system designed for high availability, horizontal scalability, and developer agility.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 16
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c17",
+    "text": "vailability, horizontal scalability, and developer agility. Unlike traditional relational SQL databases with rigid tabular schemas, MongoDB stores data in flexible, binary JSON-like records called BSON documents organized into collections.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 17
+  },
+  {
+    "chunk_id": "sample_study_notes.txt_p1_c18",
+    "text": "records called BSON documents organized into collections.\n\nIn MongoDB, the 'mongod' daemon is the core background server process that handles data requests, manages data formats, and handles background management operations. The 'mongosh' utility is the interactive command-line shell used by administrators and developers to query and administer the database.",
+    "document_name": "sample_study_notes.txt",
+    "page_number": 1,
+    "chunk_index": 18
+  },
+  {
     "chunk_id": "MongoDB Handbook.pdf_p2_c0",
-    "text": "MongoDB Handbook 1. Introduction In this MongoDB handbook, we\u2019ll cover everything you need to use MongoDB confidently as fast as possible. We\u2019ll use an e-commerce website as our primary example with three main collections: products : store products information orders : store order details contacts : messages from the contact form You\u2019ll learn all essential MongoDB operations using the latest",
+    "text": "MongoDB Handbook\n1. Introduction\nIn this MongoDB handbook, we\u2019ll cover everything you need to use MongoDB\nconfidently as fast as possible. We\u2019ll use an e-commerce website as our primary\nexample with three main collections:\nproducts : store products information\norders : store order details\ncontacts : messages from the contact form",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 2,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p2_c1",
-    "text": "u\u2019ll learn all essential MongoDB operations using the latest MongoDB features. 2. MongoDB Basics What is MongoDB? MongoDB is a NoSQL document-oriented database. It stores data in JSON-like documents (actually BSON, a binary form of JSON). Key Components mongod \u2013 the main MongoDB server daemon. It handles connections, database storage, and queries. You must run this before using MongoDB locally.",
+    "text": "ore order details\ncontacts : messages from the contact form\nYou\u2019ll learn all essential MongoDB operations using the latest MongoDB features.\n2. MongoDB Basics\nWhat is MongoDB?\nMongoDB is a NoSQL document-oriented database. It stores data in JSON-like\ndocuments (actually BSON, a binary form of JSON).\nKey Components\nmongod \u2013 the main MongoDB server daemon. It handles connections,",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 2,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p2_c2",
-    "text": "nd queries. You must run this before using MongoDB locally. mongosh \u2013 the MongoDB Shell. It\u2019s the command-line interface for interacting with MongoDB. You use it to run commands, queries, and scripts. MongoDB Compass \u2013 a GUI tool for visualizing data, running queries, and analyzing performance. Perfect for beginners who prefer a graphical view. \u2022 \u2022 \u2022 \u2022 \u2022 \u2022",
+    "text": "d \u2013 the main MongoDB server daemon. It handles connections,\ndatabase storage, and queries. You must run this before using MongoDB\nlocally.\nmongosh \u2013 the MongoDB Shell. It\u2019s the command-line interface for\ninteracting with MongoDB. You use it to run commands, queries, and scripts.\nMongoDB Compass \u2013 a GUI tool for visualizing data, running queries, and\nanalyzing performance.",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 2,
     "chunk_index": 2
   },
   {
+    "chunk_id": "MongoDB Handbook.pdf_p2_c3",
+    "text": "sualizing data, running queries, and\nanalyzing performance. Perfect for beginners who prefer a graphical view.\n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022",
+    "document_name": "MongoDB Handbook.pdf",
+    "page_number": 2,
+    "chunk_index": 3
+  },
+  {
     "chunk_id": "MongoDB Handbook.pdf_p3_c0",
-    "text": "3. Installing MongoDB Installing MongoDB can be easily done by visiting the official website. The community edition is free and suitable for most use cases. 4. Basic Mongo Shell Commands 5. Creating Collections and Inserting Data We\u2019ll create three collections: products orders contacts Insert Sample Products Let\u2019s populate our database using insertMany() .",
+    "text": "3. Installing MongoDB\nInstalling MongoDB can be easily done by visiting the official website. The\ncommunity edition is free and suitable for most use cases.\n4. Basic Mongo Shell Commands\n5. Creating Collections and Inserting Data\nWe\u2019ll create three collections:\nproducts\norders\ncontacts\nInsert Sample Products\nLet\u2019s populate our database using insertMany() .\nshow dbs // List all databases",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 3,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p3_c1",
-    "text": "e Products Let\u2019s populate our database using insertMany() . show dbs // List all databases use ecommerce // Create or switch to a database show collections // List all collections in the current DB db.dropDatabase() // Drop current database \u2022 \u2022 \u2022 use ecommerce db.products.insertMany([ { name: \"Wireless Mouse\", price: 799, category: \"Electronics\",",
+    "text": "atabase using insertMany() .\nshow dbs // List all databases\nuse ecommerce // Create or switch to a database\nshow collections // List all collections in the current DB\ndb.dropDatabase() // Drop current database\n\u2022 \n\u2022 \n\u2022 \nuse ecommerce\ndb.products.insertMany([\n{\n name: \"Wireless Mouse\",\n price: 799,\n category: \"Electronics\",",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 3,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p4_c0",
-    "text": "Insert Orders stock: 120, ratings: 4.5, tags: [\"computer\", \"accessory\", \"wireless\"], createdAt: new Date() }, { name: \"Mechanical Keyboard\", price: 2499, category: \"Electronics\", stock: 80, ratings: 4.8, tags: [\"keyboard\", \"mechanical\"], createdAt: new Date() }, { name: \"Gaming Laptop\", price: 85999, category: \"Computers\", stock: 30, ratings: 4.6, tags: [\"gaming\", \"laptop\"], createdAt: new Date()",
+    "text": "Insert Orders\n stock: 120,\n ratings: 4.5,\n tags: [\"computer\", \"accessory\", \"wireless\"],\n createdAt: new Date()\n},\n{\n name: \"Mechanical Keyboard\",\n price: 2499,\n category: \"Electronics\",\n stock: 80,\n ratings: 4.8,\n tags: [\"keyboard\", \"mechanical\"],\n createdAt: new Date()\n},\n{\n name: \"Gaming Laptop\",\n price: 85999,\n category: \"Computers\",\n stock: 30,\n ratings: 4.6,\n tags: [\"gaming\", \"laptop\"],",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 4,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p4_c1",
-    "text": "ings: 4.6, tags: [\"gaming\", \"laptop\"], createdAt: new Date() } ]) db.orders.insertMany([ { orderId: \"ORD001\", user: \"John Doe\", products: [ { name: \"Wireless Mouse\", quantity: 1, price: 799 }, { name: \"Mechanical Keyboard\", quantity: 1, price: 2499 } ], total: 3298, status: \"Delivered\", createdAt: new Date() },",
+    "text": "s\",\n stock: 30,\n ratings: 4.6,\n tags: [\"gaming\", \"laptop\"],\n createdAt: new Date()\n}\n])\ndb.orders.insertMany([\n{\n orderId: \"ORD001\",\n user: \"John Doe\",\n products: [\n{ name: \"Wireless Mouse\", quantity: 1, price: 799 },\n{ name: \"Mechanical Keyboard\", quantity: 1, price: 2499 }\n],\n total: 3298,\n status: \"Delivered\",\n createdAt: new Date()\n},",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 4,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p5_c0",
-    "text": "Insert Contact Messages 6. Reading Data (Find Queries) Find All Documents Pretty Print { orderId: \"ORD002\", user: \"Jane Smith\", products: [ { name: \"Gaming Laptop\", quantity: 1, price: 85999 } ], total: 85999, status: \"Pending\", createdAt: new Date() } ]) db.contacts.insertMany([ { name: \"Alice\", message: \"Loved your website!\", phone: \"9876543210\", createdAt: new Date() }, { name: \"Bob\", message:",
+    "text": "Insert Contact Messages\n6. Reading Data (Find Queries)\nFind All Documents\nPretty Print\n{\n orderId: \"ORD002\",\n user: \"Jane Smith\",\n products: [\n{ name: \"Gaming Laptop\", quantity: 1, price: 85999 }\n],\n total: 85999,\n status: \"Pending\",\n createdAt: new Date()\n}\n])\ndb.contacts.insertMany([\n{ name: \"Alice\", message: \"Loved your website!\", phone: \"9876543210\", createdAt:\nnew Date() },",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 5,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p5_c1",
-    "text": "876543210\", createdAt: new Date() }, { name: \"Bob\", message: \"Do you have discounts on laptops?\", phone: \"9123456789\", createdAt: new Date() }, { name: \"Carol\", message: \"I want to cancel my order.\", phone: \"9988776655\", createdAt: new Date() } ]) db.products.find() db.products.find().pretty()",
+    "text": "ur website!\", phone: \"9876543210\", createdAt:\nnew Date() },\n{ name: \"Bob\", message: \"Do you have discounts on laptops?\", phone: \"9123456789\",\ncreatedAt: new Date() },\n{ name: \"Carol\", message: \"I want to cancel my order.\", phone: \"9988776655\",\ncreatedAt: new Date() }\n])\ndb.products.find()\ndb.products.find().pretty()",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 5,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p6_c0",
-    "text": "Filter by Field Using Comparison Operators Logical Operators Projection (Select Specific Fields) Sorting and Limiting 7. Updating Documents Update One db.products.find({ category: \"Electronics\" }) db.products.find({ price: { $gt: 1000 } }) // greater than 1000 db.products.find({ price: { $gte: 1000, $lte: 50000 } }) db.products.find({ $or: [{ category: \"Electronics\" }, { stock: { $lt: 50 } }] })",
+    "text": "Filter by Field\nUsing Comparison Operators\nLogical Operators\nProjection (Select Specific Fields)\nSorting and Limiting\n7. Updating Documents\nUpdate One\ndb.products.find({ category: \"Electronics\" })\ndb.products.find({ price: { $gt: 1000 } }) // greater than 1000\ndb.products.find({ price: { $gte: 1000, $lte: 50000 } })\ndb.products.find({ $or: [{ category: \"Electronics\" }, { stock: { $lt: 50 } }] })",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 6,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p6_c1",
-    "text": "or: [{ category: \"Electronics\" }, { stock: { $lt: 50 } }] }) db.products.find({}, { name: 1, price: 1, _id: 0 }) db.products.find().sort({ price: -1 }).limit(2) db.products.updateOne( { name: \"Wireless Mouse\" }, { $set: { price: 899 } } )",
+    "text": "r: [{ category: \"Electronics\" }, { stock: { $lt: 50 } }] })\ndb.products.find({}, { name: 1, price: 1, _id: 0 })\ndb.products.find().sort({ price: -1 }).limit(2)\ndb.products.updateOne(\n{ name: \"Wireless Mouse\" },\n{ $set: { price: 899 } }\n)",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 6,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p7_c0",
-    "text": "Update Many Using $push to Add to Arrays 8. Deleting Documents Delete One Delete Many 9. Indexing and Performance Create an Index db.products.updateMany( { category: \"Electronics\" }, { $inc: { stock: 10 } } ) db.products.updateOne( { name: \"Wireless Mouse\" }, { $push: { tags: \"new\" } } ) db.contacts.deleteOne({ name: \"Alice\" }) db.orders.deleteMany({ status: \"Delivered\" })",
+    "text": "Update Many\nUsing $push to Add to Arrays\n8. Deleting Documents\nDelete One\nDelete Many\n9. Indexing and Performance\nCreate an Index\ndb.products.updateMany(\n{ category: \"Electronics\" },\n{ $inc: { stock: 10 } }\n)\ndb.products.updateOne(\n{ name: \"Wireless Mouse\" },\n{ $push: { tags: \"new\" } }\n)\ndb.contacts.deleteOne({ name: \"Alice\" })\ndb.orders.deleteMany({ status: \"Delivered\" })",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 7,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p7_c1",
-    "text": "me: \"Alice\" }) db.orders.deleteMany({ status: \"Delivered\" }) db.products.createIndex({ name: 1 })",
+    "text": "e: \"Alice\" })\ndb.orders.deleteMany({ status: \"Delivered\" })\ndb.products.createIndex({ name: 1 })",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 7,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p8_c0",
-    "text": "View All Indexes Explain Query Performance 10. Aggregation Framework Basic Example Total revenue from all orders: Group by Status Lookup (Join Orders with Products) db.products.getIndexes() db.products.find({ price: { $gt: 5000 } }).explain(\"executionStats\") db.orders.aggregate([ { $group: { _id: null, totalRevenue: { $sum: \"$total\" } } } ]) db.orders.aggregate([ { $group: { _id: \"$status\",",
+    "text": "View All Indexes\nExplain Query Performance\n10. Aggregation Framework\nBasic Example\nTotal revenue from all orders:\nGroup by Status\nLookup (Join Orders with Products)\ndb.products.getIndexes()\ndb.products.find({ price: { $gt: 5000 } }).explain(\"executionStats\")\ndb.orders.aggregate([\n{ $group: { _id: null, totalRevenue: { $sum: \"$total\" } } }\n])\ndb.orders.aggregate([",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 8,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p8_c1",
-    "text": "\" } } } ]) db.orders.aggregate([ { $group: { _id: \"$status\", totalOrders: { $sum: 1 } } } ]) db.orders.aggregate([ { $lookup: { from: \"products\", localField: \"products.name\", foreignField: \"name\", as: \"productDetails\"",
+    "text": "talRevenue: { $sum: \"$total\" } } }\n])\ndb.orders.aggregate([\n{ $group: { _id: \"$status\", totalOrders: { $sum: 1 } } }\n])\ndb.orders.aggregate([\n{\n $lookup: {\nfrom: \"products\",\n localField: \"products.name\",\n foreignField: \"name\",\nas: \"productDetails\"",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 8,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p9_c0",
-    "text": "11. MongoDB Atlas (Cloud) Steps to Use Atlas Go to https://cloud.mongodb.com Create a free cluster (Serverless recommended) Whitelist your IP and create a DB user Follow the connection string instructions to connect via mongosh or your application 12. Aggregation Pipeline Aggregation pipelines in MongoDB are used to analyze and transform data.",
+    "text": "11. MongoDB Atlas (Cloud)\nSteps to Use Atlas\nGo to https://cloud.mongodb.com\nCreate a free cluster (Serverless recommended)\nWhitelist your IP and create a DB user\nFollow the connection string instructions to connect via mongosh or your\napplication\n12. Aggregation Pipeline\nAggregation pipelines in MongoDB are used to analyze and transform data. They",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 9,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p9_c1",
-    "text": "ipelines in MongoDB are used to analyze and transform data. They work in stages: each stage performs an operation, and the output of one stage becomes the input of the next. Create a sample collection Let\u2019s start with a sales collection. } } ]) 1. 2. 3. 4.",
+    "text": "nes in MongoDB are used to analyze and transform data. They\nwork in stages: each stage performs an operation, and the output of one stage\nbecomes the input of the next.\nCreate a sample collection\nLet\u2019s start with a sales collection.\n}\n}\n])\n1. \n2. \n3. \n4. \nuse ecommerce;\ndb.sales.insertMany([\n{ _id: 1, item: \"Apple\", price: 10, quantity: 5, category: \"Fruit\" },",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 9,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p9_c2",
-    "text": "ion Let\u2019s start with a sales collection. } } ]) 1. 2. 3. 4. use ecommerce; db.sales.insertMany([ { _id: 1, item: \"Apple\", price: 10, quantity: 5, category: \"Fruit\" }, { _id: 2, item: \"Banana\", price: 5, quantity: 10, category: \"Fruit\" }, { _id: 3, item: \"Carrot\", price: 8, quantity: 6, category: \"Vegetable\" }, { _id: 4, item: \"Tomato\", price: 6, quantity: 8, category: \"Vegetable\" },",
+    "text": "item: \"Apple\", price: 10, quantity: 5, category: \"Fruit\" },\n{ _id: 2, item: \"Banana\", price: 5, quantity: 10, category: \"Fruit\" },\n{ _id: 3, item: \"Carrot\", price: 8, quantity: 6, category: \"Vegetable\" },\n{ _id: 4, item: \"Tomato\", price: 6, quantity: 8, category: \"Vegetable\" },",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 9,
     "chunk_index": 2
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p10_c0",
-    "text": "This collection has 5 documents. Each document represents a product with its price, quantity, and category. What is an aggregation pipeline? Think of it like a factory line: Each stage takes input (your data) Performs some operation (like filtering, sorting, grouping) Sends the result to the next stage Example structure: Aggregation Pipeline Example 1: $match : Filter documents Let\u2019s get only the",
+    "text": "This collection has 5 documents. Each document represents a product with its\nprice, quantity, and category.\nWhat is an aggregation pipeline?\nThink of it like a factory line:\nEach stage takes input (your data)\nPerforms some operation (like filtering, sorting, grouping)\nSends the result to the next stage\nExample structure:\nAggregation Pipeline Example 1: $match : Filter documents",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 10,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p10_c1",
-    "text": "line Example 1: $match : Filter documents Let\u2019s get only the sales where category is \"Fruit\" : Output: { _id: 5, item: \"Mango\", price: 15, quantity: 3, category: \"Fruit\" } ]); \u2022 \u2022 \u2022 db.sales.aggregate([ { /* stage 1 */ }, { /* stage 2 */ }, { /* stage 3 */ } ]); db.sales.aggregate([ { $match: { category: \"Fruit\" } } ]);",
+    "text": ":\nAggregation Pipeline Example 1: $match : Filter documents\nLet\u2019s get only the sales where category is \"Fruit\" :\nOutput:\n{ _id: 5, item: \"Mango\", price: 15, quantity: 3, category: \"Fruit\" }\n]);\n\u2022 \n\u2022 \n\u2022 \ndb.sales.aggregate([\n{ /* stage 1 */ },\n{ /* stage 2 */ },\n{ /* stage 3 */ }\n]);\ndb.sales.aggregate([\n{ $match: { category: \"Fruit\" } }\n]);",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 10,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p11_c0",
-    "text": "Aggregation Pipeline Example 2: $project : Select specific fields Let\u2019s display only item and price , and hide _id : Output: Aggregation Pipeline Example 3: $group : Group and calculate totals Let\u2019s calculate total sales (price \u00d7 quantity) for each category: { _id: 1, item: \"Apple\", price: 10, quantity: 5, category: \"Fruit\" } { _id: 2, item: \"Banana\", price: 5, quantity: 10, category: \"Fruit\" } {",
+    "text": "Aggregation Pipeline Example 2: $project : Select specific fields\nLet\u2019s display only item and price , and hide _id :\nOutput:\nAggregation Pipeline Example 3: $group : Group and calculate\ntotals\nLet\u2019s calculate total sales (price \u00d7 quantity) for each category:\n{ _id: 1, item: \"Apple\", price: 10, quantity: 5, category: \"Fruit\" }\n{ _id: 2, item: \"Banana\", price: 5, quantity: 10, category: \"Fruit\" }",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 11,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p11_c1",
-    "text": "tem: \"Banana\", price: 5, quantity: 10, category: \"Fruit\" } { _id: 5, item: \"Mango\", price: 15, quantity: 3, category: \"Fruit\" } db.sales.aggregate([ { $project: { _id: 0, item: 1, price: 1 } } ]); { item: \"Apple\", price: 10 } { item: \"Banana\", price: 5 } { item: \"Carrot\", price: 8 } { item: \"Tomato\", price: 6 } { item: \"Mango\", price: 15 } db.sales.aggregate([ { $group: { _id: \"$category\",",
+    "text": "item: \"Banana\", price: 5, quantity: 10, category: \"Fruit\" }\n{ _id: 5, item: \"Mango\", price: 15, quantity: 3, category: \"Fruit\" }\ndb.sales.aggregate([\n{ $project: { _id: 0, item: 1, price: 1 } }\n]);\n{ item: \"Apple\", price: 10 }\n{ item: \"Banana\", price: 5 }\n{ item: \"Carrot\", price: 8 }\n{ item: \"Tomato\", price: 6 }\n{ item: \"Mango\", price: 15 }\ndb.sales.aggregate([\n{\n $group: {\n _id: \"$category\",",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 11,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p11_c2",
-    "text": "ice: 15 } db.sales.aggregate([ { $group: { _id: \"$category\", totalSales: { $sum: { $multiply: [\"$price\", \"$quantity\"] } } }",
+    "text": ": 15 }\ndb.sales.aggregate([\n{\n $group: {\n _id: \"$category\",\n totalSales: { $sum: { $multiply: [\"$price\", \"$quantity\"] } }\n}",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 11,
     "chunk_index": 2
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p12_c0",
-    "text": "Output: How this works: $group groups all documents by category $sum adds up the result of price \u00d7 quantity for each document Aggregation Pipeline Example 4: $sort : Sort results Sort the total sales in descending order: Output: } ]); { _id: \"Fruit\", totalSales: 145 } { _id: \"Vegetable\", totalSales: 96 } \u2022 \u2022 db.sales.aggregate([ { $group: { _id: \"$category\", totalSales: { $sum: { $multiply:",
+    "text": "Output:\nHow this works:\n$group groups all documents by category\n$sum adds up the result of price \u00d7 quantity for each document\nAggregation Pipeline Example 4: $sort : Sort results\nSort the total sales in descending order:\nOutput:\n}\n]);\n{ _id: \"Fruit\", totalSales: 145 }\n{ _id: \"Vegetable\", totalSales: 96 }\n\u2022 \n\u2022 \ndb.sales.aggregate([\n{\n $group: {\n _id: \"$category\",",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 12,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p12_c1",
-    "text": "$group: { _id: \"$category\", totalSales: { $sum: { $multiply: [\"$price\", \"$quantity\"] } } } }, { $sort: { totalSales: -1 } } ]); { _id: \"Fruit\", totalSales: 145 } { _id: \"Vegetable\", totalSales: 96 }",
+    "text": "\u2022 \n\u2022 \ndb.sales.aggregate([\n{\n $group: {\n _id: \"$category\",\n totalSales: { $sum: { $multiply: [\"$price\", \"$quantity\"] } }\n}\n},\n{ $sort: { totalSales: -1 } }\n]);\n{ _id: \"Fruit\", totalSales: 145 }\n{ _id: \"Vegetable\", totalSales: 96 }",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 12,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p13_c0",
-    "text": "Aggregation Pipeline Example 5: Combine $match + $group Find total sales for only Fruits: Output: Aggregation Pipeline Summary table Stage Description Example Use $match Filter documents { category: \"Fruit\" } $project Show/hide fields or create new ones item , price $group Group data and calculate sums, averages total sales per category $sort Sort results Sort by total sales $limit Limit number",
+    "text": "Aggregation Pipeline Example 5: Combine $match + $group\nFind total sales for only Fruits:\nOutput:\nAggregation Pipeline Summary table\nStage Description Example Use\n$match Filter documents\n{ category: \n\"Fruit\" }\n$project Show/hide fields or create new ones item , price\n$group\nGroup data and calculate sums,\naverages\ntotal sales per\ncategory\n$sort Sort results Sort by total sales",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 13,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p13_c1",
-    "text": "y $sort Sort results Sort by total sales $limit Limit number of results Top 3 items The stages you\u2019ve learned ($match, $project, $group, $sort, $limit) are just the most common and beginner-friendly ones: often called the core stages.",
+    "text": "l sales per\ncategory\n$sort Sort results Sort by total sales\n$limit Limit number of results Top 3 items\nThe stages you\u2019ve learned ($match, $project, $group, $sort, $limit) are just the\nmost common and beginner-friendly ones: often called the core stages.\ndb.sales.aggregate([\n{ $match: { category: \"Fruit\" } },\n{\n $group: {\n _id: null,",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 13,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p13_c2",
-    "text": "n and beginner-friendly ones: often called the core stages. db.sales.aggregate([ { $match: { category: \"Fruit\" } }, { $group: { _id: null, totalFruitSales: { $sum: { $multiply: [\"$price\", \"$quantity\"] } } } } ]); { totalFruitSales: 145 }",
+    "text": "{ $match: { category: \"Fruit\" } },\n{\n $group: {\n _id: null,\n totalFruitSales: { $sum: { $multiply: [\"$price\", \"$quantity\"] } }\n}\n}\n]);\n{ totalFruitSales: 145 }",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 13,
     "chunk_index": 2
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p14_c0",
-    "text": "But MongoDB actually supports dozens of stages (over 25). 13. MongoDB Indexes Indexes in MongoDB are special data structures that improve the speed of read operations on a collection. They work similarly to indexes in books, allowing the database to quickly locate and access the data without scanning every document. Create Index View Indexes Should you always create indexes?",
+    "text": "But MongoDB actually supports dozens of stages (over 25).\n13. MongoDB Indexes\nIndexes in MongoDB are special data structures that improve the speed of read\noperations on a collection. They work similarly to indexes in books, allowing the\ndatabase to quickly locate and access the data without scanning every document.\nCreate Index\nView Indexes\nShould you always create indexes?",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 14,
     "chunk_index": 0
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p14_c1",
-    "text": "Create Index View Indexes Should you always create indexes? While indexes improve read performance, they can slow down write operations (inserts, updates, deletes) because the index must also be updated. Therefore, it\u2019s essential to create indexes thoughtfully based on your application\u2019s query patterns. 14.",
+    "text": "Create Index\nView Indexes\nShould you always create indexes?\nWhile indexes improve read performance, they can slow down write operations\n(inserts, updates, deletes) because the index must also be updated. Therefore, it\u2019s\nessential to create indexes thoughtfully based on your application\u2019s query patterns.\n14. Useful Admin Commands",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 14,
     "chunk_index": 1
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p14_c2",
-    "text": "houghtfully based on your application\u2019s query patterns. 14. Useful Admin Commands db.products.createIndex({ name: 1 }) // Ascending index on 'name' field db.products.getIndexes() // List all indexes on 'products' collection db.stats() // Show DB stats db.serverStatus() // Server info db.products.countDocuments() // Count documents db.products.renameCollection(\"items\") // Rename collection",
+    "text": "our application\u2019s query patterns.\n14. Useful Admin Commands\ndb.products.createIndex({ name: 1 }) // Ascending index on 'name' field\ndb.products.getIndexes() // List all indexes on 'products' collection\ndb.stats() // Show DB stats\ndb.serverStatus() // Server info\ndb.products.countDocuments() // Count documents\ndb.products.renameCollection(\"items\") // Rename collection",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 14,
     "chunk_index": 2
   },
   {
     "chunk_id": "MongoDB Handbook.pdf_p14_c3",
-    "text": "s db.products.renameCollection(\"items\") // Rename collection db.products.drop() // Drop collection",
+    "text": "db.products.renameCollection(\"items\") // Rename collection\ndb.products.drop() // Drop collection",
     "document_name": "MongoDB Handbook.pdf",
     "page_number": 14,
     "chunk_index": 3
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p2_c0",
-    "text": "Installing MySQL What is MySQL workbench? MySQL Workbench is a visual tool for database architects, developers, and DBAs. It provides data modeling, SQL development, and comprehensive administration tools for server configuration, user administration, backup, and much more. What is a Database Management System (DBMS)?",
+    "text": "Installing MySQL\nWhat is MySQL workbench?\nMySQL Workbench is a visual tool for database architects, developers, and DBAs. It\nprovides data modeling, SQL development, and comprehensive administration\ntools for server configuration, user administration, backup, and much more.\nWhat is a Database Management System (DBMS)?\nA Database Management System (DBMS) is software that interacts with end users,",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 2,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p2_c1",
-    "text": "and much more. What is a Database Management System (DBMS)? A Database Management System (DBMS) is software that interacts with end users, applications, and the database itself to capture and analyze data. It allows for the creation, retrieval, updating, and management of data in databases.",
+    "text": "nt System (DBMS) is software that interacts with end users,\napplications, and the database itself to capture and analyze data. It allows for the\ncreation, retrieval, updating, and management of data in databases. If you know\none DBMS, you can easily transition to another, as they share similar concepts and\nfunctionalities.\nWindows / macOS Installation",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 2,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p2_c2",
-    "text": ", retrieval, updating, and management of data in databases. If you know one DBMS, you can easily transition to another, as they share similar concepts and functionalities. Windows / macOS Installation Download from: https://dev.mysql.com/downloads/installer/ Run the installer and choose Developer Default. Set a root password when prompted. Install MySQL Workbench (optional but helpful GUI).",
+    "text": "concepts and\nfunctionalities.\nWindows / macOS Installation\nDownload from: https://dev.mysql.com/downloads/installer/\nRun the installer and choose Developer Default.\nSet a root password when prompted.\nInstall MySQL Workbench (optional but helpful GUI).\nLinux (Ubuntu) Installation\nFollow these steps to install MySQL and create a user:\n1. \n2. \n3. \n4.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 2,
     "chunk_index": 2
   },
   {
-    "chunk_id": "MySQL Handbook.pdf_p2_c3",
-    "text": "ompted. Install MySQL Workbench (optional but helpful GUI). Linux (Ubuntu) Installation Follow these steps to install MySQL and create a user: 1. 2. 3. 4.",
-    "document_name": "MySQL Handbook.pdf",
-    "page_number": 2,
-    "chunk_index": 3
-  },
-  {
     "chunk_id": "MySQL Handbook.pdf_p3_c0",
-    "text": "Step 1: Update Package Index Step 2: Install MySQL Server Step 3: Secure the Installation Choose your options (yes to most). Step 4: Create a User 'harry'@'localhost' Log into MySQL: Run the following SQL commands: sudo apt update sudo apt install mysql-server sudo mysql_secure_installation sudo mysql CREATE USER 'harry'@'localhost' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON *.* TO",
+    "text": "Step 1: Update Package Index\nStep 2: Install MySQL Server\nStep 3: Secure the Installation\nChoose your options (yes to most).\nStep 4: Create a User 'harry'@'localhost'\nLog into MySQL:\nRun the following SQL commands:\nsudo apt update\nsudo apt install mysql-server\nsudo mysql_secure_installation\nsudo mysql\nCREATE USER 'harry'@'localhost' IDENTIFIED BY 'password';",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 3,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p3_c1",
-    "text": "st' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON *.* TO 'harry'@'localhost' WITH GRANT OPTION; FLUSH PRIVILEGES; EXIT;",
+    "text": "l\nCREATE USER 'harry'@'localhost' IDENTIFIED BY 'password';\nGRANT ALL PRIVILEGES ON *.* TO 'harry'@'localhost' WITH GRANT OPTION;\nFLUSH PRIVILEGES;\nEXIT;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 3,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p4_c0",
-    "text": "Step 5: Test Login Enter the password: password Make sure to replace 'password' with a secure password of your choice in production environments. mysql -u harry -p",
+    "text": "Step 5: Test Login\nEnter the password: password\nMake sure to replace 'password' with a secure password of your choice in\nproduction environments.\nmysql -u harry -p",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 4,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p5_c0",
-    "text": "Getting Started with MySQL What is a Database? A database is a container that stores related data in an organized way. In MySQL, a database holds one or more tables. Think of it like: Folder analogy: A database is like a folder. Each table is a file inside that folder. The rows in the table are like the content inside each file. Excel analogy: A database is like an Excel workbook.",
+    "text": "Getting Started with MySQL\nWhat is a Database?\nA database is a container that stores related data in an organized way. In MySQL, a\ndatabase holds one or more tables.\nThink of it like:\nFolder analogy:\nA database is like a folder.\nEach table is a file inside that folder.\nThe rows in the table are like the content inside each file.\nExcel analogy:\nA database is like an Excel workbook.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 5,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p5_c1",
-    "text": "file. Excel analogy: A database is like an Excel workbook. Each table is a separate sheet inside that workbook. Each row in the table is like a row in Excel. Step 1: Create a Database After creating the database, either: Right-click it in MySQL Workbench and select \u201cSet as Default Schema\u201d, or Use this SQL command: \u2022 \u2022 \u2022 \u2022 \u2022 \u2022 \u2022 \u2022 CREATE DATABASE startersql; \u2022 \u2022 USE startersql;",
+    "text": "file.\nExcel analogy:\nA database is like an Excel workbook.\nEach table is a separate sheet inside that workbook.\nEach row in the table is like a row in Excel.\nStep 1: Create a Database\nAfter creating the database, either:\nRight-click it in MySQL Workbench and select \u201cSet as Default Schema\u201d, or\nUse this SQL command:\n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022 \nCREATE DATABASE startersql;\n\u2022 \n\u2022 \nUSE startersql;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 5,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p6_c0",
-    "text": "Step 2: Create a Table Now we\u2019ll create a simple users table: This table will store basic user info. Step 3: Drop the Database You can delete the entire database (and all its tables) using: Be careful \u2014 this will delete everything in that database. Data Types Explained INT : Integer type, used for whole numbers. VARCHAR(100) : Variable-length string, up to 100 characters.",
+    "text": "Step 2: Create a Table\nNow we\u2019ll create a simple users table:\nThis table will store basic user info.\nStep 3: Drop the Database\nYou can delete the entire database (and all its tables) using:\nBe careful \u2014 this will delete everything in that database.\nData Types Explained\nINT : Integer type, used for whole numbers.\nVARCHAR(100) : Variable-length string, up to 100 characters.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 6,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p6_c1",
-    "text": "ARCHAR(100) : Variable-length string, up to 100 characters. ENUM : A string object with a value chosen from a list of permitted values. eg. gender ENUM('Male', 'Female', 'Other') DATE : Stores date values.",
+    "text": "ARCHAR(100) : Variable-length string, up to 100 characters.\nENUM : A string object with a value chosen from a list of permitted values. eg. \ngender ENUM('Male', 'Female', 'Other')\nDATE : Stores date values. eg date_of_birth DATE\nCREATE TABLE users (\nid INT AUTO_INCREMENT PRIMARY KEY,\n name VARCHAR(100) NOT NULL,\n email VARCHAR(100) UNIQUE NOT NULL,\n gender ENUM('Male', 'Female', 'Other'),",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 6,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p6_c2",
-    "text": "ENUM('Male', 'Female', 'Other') DATE : Stores date values. eg date_of_birth DATE CREATE TABLE users ( id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(100) UNIQUE NOT NULL, gender ENUM('Male', 'Female', 'Other'), date_of_birth DATE, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ); DROP DATABASE startersql; \u2022 \u2022 \u2022 \u2022",
+    "text": ") UNIQUE NOT NULL,\n gender ENUM('Male', 'Female', 'Other'),\n date_of_birth DATE,\n created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\nDROP DATABASE startersql;\n\u2022 \n\u2022 \n\u2022 \n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 6,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p7_c0",
-    "text": "TIMESTAMP : Stores date and time, automatically set to the current timestamp when a row is created. BOOLEAN : Stores TRUE or FALSE values, often used for flags like is_active . DECIMAL(10, 2) : Stores exact numeric data values, useful for financial data. The first number is the total number of digits, and the second is the number of digits after the decimal point.",
+    "text": "TIMESTAMP : Stores date and time, automatically set to the current timestamp\nwhen a row is created.\nBOOLEAN : Stores TRUE or FALSE values, often used for flags like is_active .\nDECIMAL(10, 2) : Stores exact numeric data\nvalues, useful for financial data. The first number is\nthe total number of digits, and the second is the\nnumber of digits after the decimal point.\nConstraints Explained",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 7,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p7_c1",
-    "text": "the second is the number of digits after the decimal point. Constraints Explained AUTO_INCREMENT : Automatically generates a unique number for each row. PRIMARY KEY : Uniquely identifies each row in the table. NOT NULL : Ensures a column cannot have a NULL value. UNIQUE : Ensures all values in a column are different. DEFAULT : Sets a default value for a column if no value is provided. eg.",
+    "text": "er of digits after the decimal point.\nConstraints Explained\nAUTO_INCREMENT : Automatically generates a unique number for each row.\nPRIMARY KEY : Uniquely identifies each row in the table.\nNOT NULL : Ensures a column cannot have a NULL value.\nUNIQUE : Ensures all values in a column are different.\nDEFAULT : Sets a default value for a column if no value is provided. eg.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 7,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p7_c2",
-    "text": "s a default value for a column if no value is provided. eg. created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP , is_active BOOLEAN DEFAULT TRUE \u2022 \u2022 \u2022 \u2022 \u2022 \u2022 \u2022 \u2022",
+    "text": "s a default value for a column if no value is provided. eg. \ncreated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP , is_active BOOLEAN \nDEFAULT TRUE\n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 7,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p8_c0",
-    "text": "Working with Tables in MySQL Selecting Data from a Table Select All Columns This fetches every column and every row from the users table. Select Specific Columns This only fetches the name and email columns from all rows.",
+    "text": "Working with Tables in MySQL\nSelecting Data from a Table\nSelect All Columns\nThis fetches every column and every row from the users table.\nSelect Specific Columns\nThis only fetches the name and email columns from all rows.\nRenaming a Table\nTo rename an existing table:\nTo rename it back:\nSELECT * FROM users;\nSELECT name, email FROM users;\nRENAME TABLE users TO customers;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 8,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p8_c1",
-    "text": "This only fetches the name and email columns from all rows. Renaming a Table To rename an existing table: To rename it back: SELECT * FROM users; SELECT name, email FROM users; RENAME TABLE users TO customers; RENAME TABLE customers TO users;",
+    "text": "CT name, email FROM users;\nRENAME TABLE users TO customers;\nRENAME TABLE customers TO users;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 8,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p9_c0",
-    "text": "Altering a Table You can use ALTER TABLE to modify an existing table. Add a Column Drop a Column Modify a Column Type Move a Column to the First Position To move a column (e.g., email ) to the first position: To move a column after another column (e.g., move gender after name ): ALTER TABLE users ADD COLUMN is_active BOOLEAN DEFAULT TRUE; ALTER TABLE users DROP COLUMN is_active; ALTER TABLE users",
+    "text": "Altering a Table\nYou can use ALTER TABLE to modify an existing table.\nAdd a Column\nDrop a Column\nModify a Column Type\nMove a Column to the First Position\nTo move a column (e.g., email ) to the first position:\nTo move a column after another column (e.g., move gender after name ):\nALTER TABLE users ADD COLUMN is_active BOOLEAN DEFAULT TRUE;\nALTER TABLE users DROP COLUMN is_active;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 9,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p9_c1",
-    "text": "; ALTER TABLE users DROP COLUMN is_active; ALTER TABLE users MODIFY COLUMN name VARCHAR(150); ALTER TABLE users MODIFY COLUMN email VARCHAR(100) FIRST; ALTER TABLE users MODIFY COLUMN gender ENUM('Male', 'Female', 'Other') AFTER name;",
+    "text": "LEAN DEFAULT TRUE;\nALTER TABLE users DROP COLUMN is_active;\nALTER TABLE users MODIFY COLUMN name VARCHAR(150);\nALTER TABLE users MODIFY COLUMN email VARCHAR(100) FIRST;\nALTER TABLE users MODIFY COLUMN gender ENUM('Male', 'Female', 'Other') AFTER name;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 9,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p10_c0",
-    "text": "Inserting Data into MySQL Tables To add data into a table, we use the INSERT INTO statement. Insert Without Specifying Column Names (Full Row Insert) This method requires you to provide values for all columns in order, except columns with default values or AUTO_INCREMENT . Not recommended if your table structure might change (e.g., new columns added later).",
+    "text": "Inserting Data into MySQL Tables\nTo add data into a table, we use the INSERT INTO statement.\nInsert Without Specifying Column Names (Full Row\nInsert)\nThis method requires you to provide values for all columns in order, except\ncolumns with default values or AUTO_INCREMENT .\nNot recommended if your table structure might change (e.g., new columns\nadded later).",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 10,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p10_c1",
-    "text": "ble structure might change (e.g., new columns added later). Insert by Specifying Column Names (Best Practice) This method is safer and more readable. You only insert into specific columns. or for multiple rows: INSERT INTO users VALUES (1, 'Alice', 'alice@example.com', 'Female', '1995-05-14', DEFAULT); INSERT INTO users (name, email, gender, date_of_birth) VALUES ('Bob', 'bob@example.com',",
+    "text": "ble structure might change (e.g., new columns\nadded later).\nInsert by Specifying Column Names (Best Practice)\nThis method is safer and more readable. You only insert into specific columns.\nor for multiple rows:\nINSERT INTO users VALUES\n(1, 'Alice', 'alice@example.com', 'Female', '1995-05-14', DEFAULT);\nINSERT INTO users (name, email, gender, date_of_birth) VALUES",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 10,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p10_c2",
-    "text": "il, gender, date_of_birth) VALUES ('Bob', 'bob@example.com', 'Male', '1990-11-23'); INSERT INTO users (name, email, gender, date_of_birth) VALUES ('Bob', 'bob@example.com', 'Male', '1990-11-23'), ('Charlie', 'charlie@example.com', 'Other', '1988-02-17');",
+    "text": "SERT INTO users (name, email, gender, date_of_birth) VALUES\n('Bob', 'bob@example.com', 'Male', '1990-11-23');\nINSERT INTO users (name, email, gender, date_of_birth) VALUES\n('Bob', 'bob@example.com', 'Male', '1990-11-23'),\n('Charlie', 'charlie@example.com', 'Other', '1988-02-17');",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 10,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p11_c0",
-    "text": "The remaining columns like id (which is AUTO_INCREMENT ) and created_at (which has a default) are automatically handled by MySQL. Insert Multiple Rows at Once This is more efficient than inserting rows one by one.",
+    "text": "The remaining columns like id (which is AUTO_INCREMENT ) and created_at\n(which has a default) are automatically handled by MySQL.\nInsert Multiple Rows at Once\nThis is more efficient than inserting rows one by one.\nINSERT INTO users (name, email, gender, date_of_birth) VALUES\n('Charlie', 'charlie@example.com', 'Other', '1988-02-17'),\n('David', 'david@example.com', 'Male', '2000-08-09'),",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 11,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p11_c1",
-    "text": "Once This is more efficient than inserting rows one by one. INSERT INTO users (name, email, gender, date_of_birth) VALUES ('Charlie', 'charlie@example.com', 'Other', '1988-02-17'), ('David', 'david@example.com', 'Male', '2000-08-09'), ('Eva', 'eva@example.com', 'Female', '1993-12-30');",
+    "text": "17'),\n('David', 'david@example.com', 'Male', '2000-08-09'),\n('Eva', 'eva@example.com', 'Female', '1993-12-30');",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 11,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p12_c0",
-    "text": "Querying Data in MySQL using SELECT The SELECT statement is used to query data from a table. Basic Syntax To select all columns: Filtering Rows with WHERE Equal To Not Equal To SELECT column1, column2 FROM table_name; SELECT * FROM users; SELECT * FROM users WHERE gender = 'Male'; SELECT * FROM users WHERE gender != 'Female'; -- or SELECT * FROM users WHERE gender <> 'Female';",
+    "text": "Querying Data in MySQL using SELECT\nThe SELECT statement is used to query data from a table.\nBasic Syntax\nTo select all columns:\nFiltering Rows with WHERE\nEqual To\nNot Equal To\nSELECT column1, column2 FROM table_name;\nSELECT * FROM users;\nSELECT * FROM users WHERE gender = 'Male';\nSELECT * FROM users WHERE gender != 'Female';\n-- or\nSELECT * FROM users WHERE gender <> 'Female';",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 12,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p13_c0",
-    "text": "Greater Than / Less Than Greater Than or Equal / Less Than or Equal Working with NULL IS NULL IS NOT NULL BETWEEN SELECT * FROM users WHERE date_of_birth < '1995-01-01'; SELECT * FROM users WHERE id > 10; SELECT * FROM users WHERE id >= 5; SELECT * FROM users WHERE id <= 20; SELECT * FROM users WHERE date_of_birth IS NULL; SELECT * FROM users WHERE date_of_birth IS NOT NULL; SELECT * FROM users",
+    "text": "Greater Than / Less Than\nGreater Than or Equal / Less Than or Equal\nWorking with NULL\nIS NULL\nIS NOT NULL\nBETWEEN\nSELECT * FROM users WHERE date_of_birth < '1995-01-01';\nSELECT * FROM users WHERE id > 10;\nSELECT * FROM users WHERE id >= 5;\nSELECT * FROM users WHERE id <= 20;\nSELECT * FROM users WHERE date_of_birth IS NULL;\nSELECT * FROM users WHERE date_of_birth IS NOT NULL;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 13,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p13_c1",
-    "text": "M users WHERE date_of_birth IS NOT NULL; SELECT * FROM users WHERE date_of_birth BETWEEN '1990-01-01' AND '2000-12-31';",
+    "text": "NULL;\nSELECT * FROM users WHERE date_of_birth IS NOT NULL;\nSELECT * FROM users WHERE date_of_birth BETWEEN '1990-01-01' AND '2000-12-31';",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 13,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p14_c0",
-    "text": "IN LIKE (Pattern Matching) AND / OR ORDER BY LIMIT SELECT * FROM users WHERE gender IN ('Male', 'Other'); SELECT * FROM users WHERE name LIKE 'A%'; -- Starts with A SELECT * FROM users WHERE name LIKE '%a'; -- Ends with a SELECT * FROM users WHERE name LIKE '%li%'; -- Contains 'li' SELECT * FROM users WHERE gender = 'Female' AND date_of_birth > '1990-01-01'; SELECT * FROM users WHERE gender =",
+    "text": "IN\nLIKE (Pattern Matching)\nAND / OR\nORDER BY\nLIMIT\nSELECT * FROM users WHERE gender IN ('Male', 'Other');\nSELECT * FROM users WHERE name LIKE 'A%'; -- Starts with A\nSELECT * FROM users WHERE name LIKE '%a'; -- Ends with a\nSELECT * FROM users WHERE name LIKE '%li%'; -- Contains 'li'\nSELECT * FROM users WHERE gender = 'Female' AND date_of_birth > '1990-01-01';",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 14,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p14_c1",
-    "text": "_of_birth > '1990-01-01'; SELECT * FROM users WHERE gender = 'Male' OR gender = 'Other'; SELECT * FROM users ORDER BY date_of_birth ASC; SELECT * FROM users ORDER BY name DESC; SELECT * FROM users LIMIT 5; -- Top 5 rows SELECT * FROM users LIMIT 10 OFFSET 5; -- Skip first 5 rows, then get next 10 SELECT * FROM users LIMIT 5, 10; -- Get 10 rows starting from the 6th row (Same as",
+    "text": "s WHERE gender = 'Female' AND date_of_birth > '1990-01-01';\nSELECT * FROM users WHERE gender = 'Male' OR gender = 'Other';\nSELECT * FROM users ORDER BY date_of_birth ASC;\nSELECT * FROM users ORDER BY name DESC;\nSELECT * FROM users LIMIT 5; -- Top 5 rows\nSELECT * FROM users LIMIT 10 OFFSET 5; -- Skip first 5 rows, then get next 10",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 14,
     "chunk_index": 1
   },
   {
+    "chunk_id": "MySQL Handbook.pdf_p14_c2",
+    "text": "s LIMIT 10 OFFSET 5; -- Skip first 5 rows, then get next 10\nSELECT * FROM users LIMIT 5, 10; -- Get 10 rows starting from the 6th row (Same as",
+    "document_name": "MySQL Handbook.pdf",
+    "page_number": 14,
+    "chunk_index": 2
+  },
+  {
     "chunk_id": "MySQL Handbook.pdf_p15_c0",
-    "text": "Quick Quiz What does the following queries do? above) SELECT * FROM users ORDER BY created_at DESC LIMIT 10; SELECT * FROM users WHERE salary > 60000 ORDER BY created_at DESC LIMIT 5; SELECT * FROM users ORDER BY salary DESC; SELECT * FROM users WHERE salary BETWEEN 50000 AND 70000;",
+    "text": "Quick Quiz\nWhat does the following queries do?\nabove)\nSELECT * FROM users ORDER BY created_at DESC LIMIT 10;\nSELECT * FROM users WHERE salary > 60000 ORDER BY created_at DESC LIMIT 5;\nSELECT * FROM users ORDER BY salary DESC;\nSELECT * FROM users WHERE salary BETWEEN 50000 AND 70000;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 15,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p16_c0",
-    "text": "UPDATE - Modifying Existing Data The UPDATE statement is used to change values in one or more rows. Basic Syntax Example: Update One Column This changes the name of the user with id = 1 to \u201cAlicia\u201d. Example: Update Multiple Columns Without WHERE Clause (Warning) UPDATE table_name SET column1 = value1, column2 = value2 WHERE condition; UPDATE users SET name = 'Alicia' WHERE id = 1; UPDATE users",
+    "text": "UPDATE - Modifying Existing Data\nThe UPDATE statement is used to change values in one or more rows.\nBasic Syntax\nExample: Update One Column\nThis changes the name of the user with id = 1 to \u201cAlicia\u201d.\nExample: Update Multiple Columns\nWithout WHERE Clause (Warning)\nUPDATE table_name\nSET column1 = value1, column2 = value2\nWHERE condition;\nUPDATE users\nSET name = 'Alicia'\nWHERE id = 1;\nUPDATE users",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 16,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p16_c1",
-    "text": "UPDATE users SET name = 'Alicia' WHERE id = 1; UPDATE users SET name = 'Robert', email = 'robert@example.com' WHERE id = 2; UPDATE users SET gender = 'Other';",
+    "text": "UPDATE users\nSET name = 'Alicia'\nWHERE id = 1;\nUPDATE users\nSET name = 'Robert', email = 'robert@example.com'\nWHERE id = 2;\nUPDATE users\nSET gender = 'Other';",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 16,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p17_c0",
-    "text": "This updates every row in the table. Be very careful when omitting the WHERE clause. Quick Quiz: Practice Your UPDATE Skills Try answering or running these queries based on your users table. 1. Update the salary of user with id = 5 to \u20b970,000. 2. Change the name of the user with email aisha@example.com to Aisha Khan . 3. Increase salary by \u20b910,000 for all users whose salary is less than \u20b960,000.",
+    "text": "This updates every row in the table. Be very careful when omitting the WHERE\nclause.\nQuick Quiz: Practice Your UPDATE Skills\nTry answering or running these queries based on your users table.\n1. Update the salary of user with id = 5 to \u20b970,000.\n2. Change the name of the user with email aisha@example.com\nto Aisha Khan .\n3. Increase salary by \u20b910,000 for all users whose salary is less\nthan \u20b960,000.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 17,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p17_c1",
-    "text": "by \u20b910,000 for all users whose salary is less than \u20b960,000. UPDATE users SET salary = 70000 WHERE id = 5; UPDATE users SET name = 'Aisha Khan' WHERE email = 'aisha@example.com'; UPDATE users SET salary = salary + 10000 WHERE salary < 60000;",
+    "text": "by \u20b910,000 for all users whose salary is less\nthan \u20b960,000.\nUPDATE users\nSET salary = 70000\nWHERE id = 5;\nUPDATE users\nSET name = 'Aisha Khan'\nWHERE email = 'aisha@example.com';\nUPDATE users\nSET salary = salary + 10000\nWHERE salary < 60000;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 17,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p18_c0",
-    "text": "4. Set the gender of user Ishaan to Other . 5. Reset salary of all users to \u20b950,000 (Careful - affects all rows). Note: This query will overwrite salary for every user. Use with caution! UPDATE users SET gender = 'Other' WHERE name = 'Ishaan'; UPDATE users SET salary = 50000;",
+    "text": "4. Set the gender of user Ishaan to Other .\n5. Reset salary of all users to \u20b950,000 (Careful - affects all rows).\nNote: This query will overwrite salary for every user. Use with caution!\nUPDATE users\nSET gender = 'Other'\nWHERE name = 'Ishaan';\nUPDATE users\nSET salary = 50000;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 18,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p19_c0",
-    "text": "DELETE - Removing Data from a Table The DELETE statement removes rows from a table. Basic Syntax Example: Delete One Row Delete Multiple Rows Delete All Rows (but keep table structure) Drop the Entire Table (use with caution) DELETE FROM table_name WHERE condition; DELETE FROM users WHERE id = 3; DELETE FROM users WHERE gender = 'Other'; DELETE FROM users; DROP TABLE users;",
+    "text": "DELETE - Removing Data from a Table\nThe DELETE statement removes rows from a table.\nBasic Syntax\nExample: Delete One Row\nDelete Multiple Rows\nDelete All Rows (but keep table structure)\nDrop the Entire Table (use with caution)\nDELETE FROM table_name\nWHERE condition;\nDELETE FROM users\nWHERE id = 3;\nDELETE FROM users\nWHERE gender = 'Other';\nDELETE FROM users;\nDROP TABLE users;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 19,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p20_c0",
-    "text": "This removes the table structure and all data permanently. Best Practices Always use WHERE unless you\u2019re intentionally updating/deleting everything. Consider running a SELECT with the same WHERE clause first to confirm what will be affected: Always back up important data before performing destructive operations. Quick Quiz: Practice Your DELETE Skills what will happen if you run these queries?",
+    "text": "This removes the table structure and all data permanently.\nBest Practices\nAlways use WHERE unless you\u2019re intentionally updating/deleting everything.\nConsider running a SELECT with the same WHERE clause first to confirm what\nwill be affected:\nAlways back up important data before performing destructive operations.\nQuick Quiz: Practice Your DELETE Skills\nwhat will happen if you run these queries?\n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 20,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p20_c1",
-    "text": "ur DELETE Skills what will happen if you run these queries? \u2022 \u2022 SELECT * FROM users WHERE id = 3; \u2022 DELETE FROM users WHERE salary < 50000; DELETE FROM users WHERE salary IS NULL;",
+    "text": "DELETE Skills\nwhat will happen if you run these queries?\n\u2022 \n\u2022 \nSELECT * FROM users WHERE id = 3;\n\u2022 \nDELETE FROM users\nWHERE salary < 50000;\nDELETE FROM users\nWHERE salary IS NULL;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 20,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p21_c0",
-    "text": "MySQL Constraints Constraints in MySQL are rules applied to table columns to ensure the accuracy, validity, and integrity of the data. 1. UNIQUE Constraint Ensures that all values in a column are different. Example (during table creation): Add UNIQUE using ALTER TABLE : 2. NOT NULL Constraint Ensures that a column cannot contain NULL values.",
+    "text": "MySQL Constraints\nConstraints in MySQL are rules applied to table columns to ensure the accuracy, \nvalidity, and integrity of the data.\n1. UNIQUE Constraint\nEnsures that all values in a column are different.\nExample (during table creation):\nAdd UNIQUE using ALTER TABLE :\n2. NOT NULL Constraint\nEnsures that a column cannot contain NULL values.\nCREATE TABLE users (\nid INT PRIMARY KEY,",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 21,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p21_c1",
-    "text": "onstraint Ensures that a column cannot contain NULL values. CREATE TABLE users ( id INT PRIMARY KEY, email VARCHAR(100) UNIQUE ); ALTER TABLE users ADD CONSTRAINT unique_email UNIQUE (email);",
+    "text": "ntain NULL values.\nCREATE TABLE users (\nid INT PRIMARY KEY,\n email VARCHAR(100) UNIQUE\n);\nALTER TABLE users\nADD CONSTRAINT unique_email UNIQUE (email);",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 21,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p22_c0",
-    "text": "Example: Change an existing column to NOT NULL: Make a column nullable again: 3. CHECK Constraint Ensures that values in a column satisfy a specific condition. Example: Allow only dates of birth after Jan 1, 2000 Naming the constraint ( chk_dob ) helps if you want to drop it later. 4. DEFAULT Constraint Sets a default value for a column if none is provided during insert.",
+    "text": "Example:\nChange an existing column to NOT NULL:\nMake a column nullable again:\n3. CHECK Constraint\nEnsures that values in a column satisfy a specific condition.\nExample: Allow only dates of birth after Jan 1, 2000\nNaming the constraint ( chk_dob ) helps if you want to drop it later.\n4. DEFAULT Constraint\nSets a default value for a column if none is provided during insert.\nCREATE TABLE users (",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 22,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p22_c1",
-    "text": "fault value for a column if none is provided during insert. CREATE TABLE users ( id INT PRIMARY KEY, name VARCHAR(100) NOT NULL ); ALTER TABLE users MODIFY COLUMN name VARCHAR(100) NOT NULL; ALTER TABLE users MODIFY COLUMN name VARCHAR(100) NULL; ALTER TABLE users ADD CONSTRAINT chk_dob CHECK (date_of_birth > '2000-01-01');",
+    "text": "umn if none is provided during insert.\nCREATE TABLE users (\nid INT PRIMARY KEY,\n name VARCHAR(100) NOT NULL\n);\nALTER TABLE users\nMODIFY COLUMN name VARCHAR(100) NOT NULL;\nALTER TABLE users\nMODIFY COLUMN name VARCHAR(100) NULL;\nALTER TABLE users\nADD CONSTRAINT chk_dob CHECK (date_of_birth > '2000-01-01');",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 22,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p23_c0",
-    "text": "Example: Add DEFAULT using ALTER TABLE : 5. PRIMARY KEY Constraint Uniquely identifies each row. Must be NOT NULL and UNIQUE. Example: Add later with ALTER TABLE : 6. AUTO_INCREMENT Used with PRIMARY KEY to automatically assign the next number.",
+    "text": "Example:\nAdd DEFAULT using ALTER TABLE :\n5. PRIMARY KEY Constraint\nUniquely identifies each row. Must be NOT NULL and UNIQUE.\nExample:\nAdd later with ALTER TABLE :\n6. AUTO_INCREMENT\nUsed with PRIMARY KEY to automatically assign the next number.\nCREATE TABLE users (\nid INT PRIMARY KEY,\n is_active BOOLEAN DEFAULT TRUE\n);\nALTER TABLE users\nALTER COLUMN is_active SET DEFAULT TRUE;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 23,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p23_c1",
-    "text": "d with PRIMARY KEY to automatically assign the next number. CREATE TABLE users ( id INT PRIMARY KEY, is_active BOOLEAN DEFAULT TRUE ); ALTER TABLE users ALTER COLUMN is_active SET DEFAULT TRUE; CREATE TABLE users ( id INT PRIMARY KEY, name VARCHAR(100) ); ALTER TABLE users ADD PRIMARY KEY (id);",
+    "text": "ALTER TABLE users\nALTER COLUMN is_active SET DEFAULT TRUE;\nCREATE TABLE users (\nid INT PRIMARY KEY,\n name VARCHAR(100)\n);\nALTER TABLE users\nADD PRIMARY KEY (id);",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 23,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p24_c0",
-    "text": "Example: Each new row gets the next available integer value in id . Summary Table Constraint Purpose UNIQUE Prevents duplicate values NOT NULL Ensures value is not NULL CHECK Restricts values using a condition DEFAULT Sets a default value PRIMARY KEY Uniquely identifies each row AUTO_INCREMENT Automatically generates unique numbers CREATE TABLE users ( id INT AUTO_INCREMENT PRIMARY KEY, name",
+    "text": "Example:\nEach new row gets the next available integer value in id .\nSummary Table\nConstraint Purpose\nUNIQUE Prevents duplicate values\nNOT NULL Ensures value is not NULL\nCHECK Restricts values using a condition\nDEFAULT Sets a default value\nPRIMARY KEY Uniquely identifies each row\nAUTO_INCREMENT Automatically generates unique numbers\nCREATE TABLE users (\nid INT AUTO_INCREMENT PRIMARY KEY,",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 24,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p24_c1",
-    "text": "CREATE TABLE users ( id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100) );",
+    "text": "ers\nCREATE TABLE users (\nid INT AUTO_INCREMENT PRIMARY KEY,\n name VARCHAR(100)\n);",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 24,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p25_c0",
-    "text": "SQL Functions (MySQL) SQL functions help you analyze, transform, or summarize data in your tables. We\u2019ll use the users table which includes: id , name , email , gender , date_of_birth , salary , created_at 1. Aggregate Functions These return a single value from a set of rows.",
+    "text": "SQL Functions (MySQL)\nSQL functions help you analyze, transform, or summarize data in your tables.\nWe\u2019ll use the users table which includes:\nid , name , email , gender , date_of_birth , salary , created_at\n1. Aggregate Functions\nThese return a single value from a set of rows.\nCOUNT()\nCount total number of users:\nCount users who are Female:\nMIN() and MAX()\nGet the minimum and maximum salary:\n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 25,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p25_c1",
-    "text": "e Functions These return a single value from a set of rows. COUNT() Count total number of users: Count users who are Female: MIN() and MAX() Get the minimum and maximum salary: \u2022 SELECT COUNT(*) FROM users; SELECT COUNT(*) FROM users WHERE gender = 'Female'; SELECT MIN(salary) AS min_salary, MAX(salary) AS max_salary FROM users;",
+    "text": "ale:\nMIN() and MAX()\nGet the minimum and maximum salary:\n\u2022 \nSELECT COUNT(*) FROM users;\nSELECT COUNT(*) FROM users WHERE gender = 'Female';\nSELECT MIN(salary) AS min_salary, MAX(salary) AS max_salary FROM users;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 25,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p26_c0",
-    "text": "SUM() Calculate total salary payout: AVG() Find average salary: Grouping with GROUP BY Average salary by gender: 2. String Functions LENGTH() Length of user names: SELECT SUM(salary) AS total_payroll FROM users; SELECT AVG(salary) AS avg_salary FROM users; SELECT gender, AVG(salary) AS avg_salary FROM users GROUP BY gender; SELECT name, LENGTH(name) AS name_length FROM users;",
+    "text": "SUM()\nCalculate total salary payout:\nAVG()\nFind average salary:\nGrouping with GROUP BY\nAverage salary by gender:\n2. String Functions\nLENGTH()\nLength of user names:\nSELECT SUM(salary) AS total_payroll FROM users;\nSELECT AVG(salary) AS avg_salary FROM users;\nSELECT gender, AVG(salary) AS avg_salary\nFROM users\nGROUP BY gender;\nSELECT name, LENGTH(name) AS name_length FROM users;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 26,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p27_c0",
-    "text": "LOWER() and UPPER() Convert names to lowercase or uppercase: CONCAT() Combine name and email: 3. Date Functions NOW() Current date and time: YEAR() , MONTH() , DAY() Extract parts of date_of_birth : SELECT name, LOWER(name) AS lowercase_name FROM users; SELECT name, UPPER(name) AS uppercase_name FROM users; SELECT CONCAT(name, ' <', email, '>') AS user_contact FROM users; SELECT NOW(); SELECT",
+    "text": "LOWER() and UPPER()\nConvert names to lowercase or uppercase:\nCONCAT()\nCombine name and email:\n3. Date Functions\nNOW()\nCurrent date and time:\nYEAR() , MONTH() , DAY()\nExtract parts of date_of_birth :\nSELECT name, LOWER(name) AS lowercase_name FROM users;\nSELECT name, UPPER(name) AS uppercase_name FROM users;\nSELECT CONCAT(name, ' <', email, '>') AS user_contact FROM users;\nSELECT NOW();",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 27,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p27_c1",
-    "text": "email, '>') AS user_contact FROM users; SELECT NOW(); SELECT name, YEAR(date_of_birth) AS birth_year FROM users;",
+    "text": "' <', email, '>') AS user_contact FROM users;\nSELECT NOW();\nSELECT name, YEAR(date_of_birth) AS birth_year FROM users;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 27,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p28_c0",
-    "text": "DATEDIFF() Find number of days between today and birthdate: TIMESTAMPDIFF() Calculate age in years: 4. Mathematical Functions ROUND() , FLOOR() , CEIL() MOD() Find even or odd user IDs: SELECT name, DATEDIFF(CURDATE(), date_of_birth) AS days_lived FROM users; SELECT name, TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) AS age FROM users; SELECT salary, ROUND(salary) AS rounded, FLOOR(salary) AS",
+    "text": "DATEDIFF()\nFind number of days between today and birthdate:\nTIMESTAMPDIFF()\nCalculate age in years:\n4. Mathematical Functions\nROUND() , FLOOR() , CEIL()\nMOD()\nFind even or odd user IDs:\nSELECT name, DATEDIFF(CURDATE(), date_of_birth) AS days_lived FROM users;\nSELECT name, TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) AS age FROM users;\nSELECT salary,\n ROUND(salary) AS rounded,",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 28,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p28_c1",
-    "text": "s; SELECT salary, ROUND(salary) AS rounded, FLOOR(salary) AS floored, CEIL(salary) AS ceiled FROM users; SELECT id, MOD(id, 2) AS remainder FROM users;",
+    "text": "S age FROM users;\nSELECT salary,\n ROUND(salary) AS rounded,\n FLOOR(salary) AS floored,\n CEIL(salary) AS ceiled\nFROM users;\nSELECT id, MOD(id, 2) AS remainder FROM users;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 28,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p29_c0",
-    "text": "5. Conditional Functions IF() Summary Table Function Purpose COUNT() Count rows SUM() Total of a column AVG() Average of values MIN() / MAX() Lowest / highest value LENGTH() String length CONCAT() Merge strings YEAR() / DATEDIFF() Date breakdown / age ROUND() Rounding numbers IF() Conditional logic SELECT name, gender, IF(gender = 'Female', 'Yes', 'No') AS is_female FROM users;",
+    "text": "5. Conditional Functions\nIF()\nSummary Table\nFunction Purpose\nCOUNT() Count rows\nSUM() Total of a column\nAVG() Average of values\nMIN() / MAX() Lowest / highest value\nLENGTH() String length\nCONCAT() Merge strings\nYEAR() / DATEDIFF() Date breakdown / age\nROUND() Rounding numbers\nIF() Conditional logic\nSELECT name, gender,\n IF(gender = 'Female', 'Yes', 'No') AS is_female\nFROM users;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 29,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p30_c0",
-    "text": "MySQL Transactions and AutoCommit By default, MySQL operates in AutoCommit mode. This means that every SQL statement is treated as a transaction and is committed automatically. However, for more control over when changes are saved, you can turn AutoCommit off and manage transactions manually. 1.",
+    "text": "MySQL Transactions and AutoCommit\nBy default, MySQL operates in AutoCommit mode. This means that every SQL\nstatement is treated as a transaction and is committed automatically. However, for\nmore control over when changes are saved, you can turn AutoCommit off and\nmanage transactions manually.\n1. Disabling AutoCommit\nWhen AutoCommit is off, you can explicitly control when to commit or rollback",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 30,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p30_c1",
-    "text": "an turn AutoCommit off and manage transactions manually. 1. Disabling AutoCommit When AutoCommit is off, you can explicitly control when to commit or rollback changes. To disable AutoCommit: This turns off AutoCommit, meaning that changes you make won\u2019t be saved to the database unless you explicitly tell MySQL to commit them. Important: Until you execute a COMMIT , your changes are not permanent.",
+    "text": "off, you can explicitly control when to commit or rollback\nchanges.\nTo disable AutoCommit:\nThis turns off AutoCommit, meaning that changes you make won\u2019t be saved to the\ndatabase unless you explicitly tell MySQL to commit them.\nImportant: Until you execute a COMMIT , your changes are not permanent.\n2. COMMIT \u2014 Save Changes to the Database",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 30,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p30_c2",
-    "text": "ntil you execute a COMMIT , your changes are not permanent. 2. COMMIT \u2014 Save Changes to the Database Once you\u2019ve made changes and you\u2019re confident that everything is correct, you can use the COMMIT command to save those changes. To commit a transaction: SET autocommit = 0; COMMIT;",
+    "text": "are not permanent.\n2. COMMIT \u2014 Save Changes to the Database\nOnce you\u2019ve made changes and you\u2019re confident that everything is correct, you can\nuse the COMMIT command to save those changes.\nTo commit a transaction:\nSET autocommit = 0;\nCOMMIT;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 30,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p31_c0",
-    "text": "This saves all the changes made since the last COMMIT or ROLLBACK . After this point, the changes become permanent. 3. ROLLBACK \u2014 Revert Changes to the Last Safe Point If you make an error or decide you don\u2019t want to save your changes, you can rollback the transaction to its previous state. To rollback a transaction: This undoes all changes since the last COMMIT or ROLLBACK .",
+    "text": "This saves all the changes made since the last COMMIT or ROLLBACK . After this\npoint, the changes become permanent.\n3. ROLLBACK \u2014 Revert Changes to the Last Safe Point\nIf you make an error or decide you don\u2019t want to save your changes, you can \nrollback the transaction to its previous state.\nTo rollback a transaction:\nThis undoes all changes since the last COMMIT or ROLLBACK .\nExample Workflow",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 31,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p31_c1",
-    "text": "This undoes all changes since the last COMMIT or ROLLBACK . Example Workflow Here\u2019s a simple example of using COMMIT and ROLLBACK in a transaction: Turn off AutoCommit: Make some changes (e.g., updating a salary): Decide whether to commit or rollback: If you\u2019re happy with the changes, run: If you\u2019re not happy and want to revert the changes, run: ROLLBACK; 1. SET autocommit = 0; 2.",
+    "text": "hanges since the last COMMIT or ROLLBACK .\nExample Workflow\nHere\u2019s a simple example of using COMMIT and ROLLBACK in a transaction:\nTurn off AutoCommit:\nMake some changes (e.g., updating a salary):\nDecide whether to commit or rollback:\nIf you\u2019re happy with the changes, run:\nIf you\u2019re not happy and want to revert the changes, run:\nROLLBACK;\n1. \nSET autocommit = 0;\n2.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 31,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p31_c2",
-    "text": "evert the changes, run: ROLLBACK; 1. SET autocommit = 0; 2. UPDATE users SET salary = 80000 WHERE id = 5; 3. 1. COMMIT; 2.",
+    "text": "vert the changes, run:\nROLLBACK;\n1. \nSET autocommit = 0;\n2. \nUPDATE users SET salary = 80000 WHERE id = 5;\n3. \n1. \nCOMMIT;\n2.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 31,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p32_c0",
-    "text": "4. Enabling AutoCommit Again If you want to turn AutoCommit back on (so that every statement is automatically committed), you can do so with: Best Practices Use COMMIT when you want to make changes permanent. Use ROLLBACK to discard changes if something goes wrong. Consider disabling AutoCommit when performing complex updates to avoid saving partial or incorrect data.",
+    "text": "4. Enabling AutoCommit Again\nIf you want to turn AutoCommit back on (so that every statement is automatically\ncommitted), you can do so with:\nBest Practices\nUse COMMIT when you want to make changes permanent.\nUse ROLLBACK to discard changes if something goes wrong.\nConsider disabling AutoCommit when performing complex updates to avoid\nsaving partial or incorrect data.\nROLLBACK;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 32,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p32_c1",
-    "text": "complex updates to avoid saving partial or incorrect data. ROLLBACK; SET autocommit = 1; \u2022 \u2022 \u2022",
+    "text": "pdates to avoid\nsaving partial or incorrect data.\nROLLBACK;\nSET autocommit = 1;\n\u2022 \n\u2022 \n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 32,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p33_c0",
-    "text": "Understanding PRIMARY KEY in MySQL A PRIMARY KEY is a constraint in SQL that uniquely identifies each row in a table. It is one of the most important concepts in database design. What is a Primary Key?",
+    "text": "Understanding PRIMARY KEY in MySQL\nA PRIMARY KEY is a constraint in SQL that uniquely identifies each row in a table.\nIt is one of the most important concepts in database design.\nWhat is a Primary Key?\nA PRIMARY KEY :\nMust be unique\nCannot be NULL\nIs used to identify rows in a table\nCan be a single column or a combination of columns\nEach table can have only one primary key\nExample:",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 33,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p33_c1",
-    "text": "portant concepts in database design. What is a Primary Key? A PRIMARY KEY : Must be unique Cannot be NULL Is used to identify rows in a table Can be a single column or a combination of columns Each table can have only one primary key Example: How Is PRIMARY KEY Different from UNIQUE ? At first glance, PRIMARY KEY and UNIQUE might seem similar since both prevent duplicate values.",
+    "text": "f columns\nEach table can have only one primary key\nExample:\nHow Is PRIMARY KEY Different from UNIQUE ?\nAt first glance, PRIMARY KEY and UNIQUE might seem similar since both prevent\nduplicate values. But there are important differences:\n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022 \nCREATE TABLE users (\nid INT AUTO_INCREMENT PRIMARY KEY,\n name VARCHAR(100)\n);",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 33,
     "chunk_index": 1
   },
   {
-    "chunk_id": "MySQL Handbook.pdf_p33_c2",
-    "text": "QUE might seem similar since both prevent duplicate values. But there are important differences: \u2022 \u2022 \u2022 \u2022 \u2022 \u2022 CREATE TABLE users ( id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100) );",
-    "document_name": "MySQL Handbook.pdf",
-    "page_number": 33,
-    "chunk_index": 2
-  },
-  {
     "chunk_id": "MySQL Handbook.pdf_p34_c0",
-    "text": "Feature PRIMARY KEY UNIQUE Must be unique Yes Yes Allows NULL values No Yes (one or more NULLs allowed) How many allowed Only one per table Can have multiple Required by table Recommended, often required Optional Dropping Cannot be easily dropped Can be dropped anytime Example with UNIQUE In this example: id is the unique identifier for each row. email must be unique, but is not the primary key.",
+    "text": "Feature PRIMARY KEY UNIQUE\nMust be\nunique\nYes Yes\nAllows NULL\nvalues No\nYes (one or more NULLs\nallowed)\nHow many\nallowed Only one per table Can have multiple\nRequired by\ntable\nRecommended, often\nrequired\nOptional\nDropping Cannot be easily dropped Can be dropped anytime\nExample with UNIQUE\nIn this example:\nid is the unique identifier for each row.\nemail must be unique, but is not the primary key.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 34,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p34_c1",
-    "text": "each row. email must be unique, but is not the primary key. Can I Drop a PRIMARY KEY? Yes, but it is more restricted than dropping a UNIQUE constraint. CREATE TABLE users ( id INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(100) UNIQUE, name VARCHAR(100) ); \u2022 \u2022 ALTER TABLE users DROP PRIMARY KEY;",
+    "text": "each row.\nemail must be unique, but is not the primary key.\nCan I Drop a PRIMARY KEY?\nYes, but it is more restricted than dropping a UNIQUE constraint.\nCREATE TABLE users (\nid INT AUTO_INCREMENT PRIMARY KEY,\n email VARCHAR(100) UNIQUE,\n name VARCHAR(100)\n);\n\u2022 \n\u2022 \nALTER TABLE users DROP PRIMARY KEY;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 34,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p35_c0",
-    "text": "This may fail if the primary key is being used elsewhere (like in a foreign key or auto_increment column). To drop a UNIQUE constraint: Auto Increment In MySQL, a PRIMARY KEY is often used with the AUTO_INCREMENT attribute to automatically generate unique values for new rows. This means that every time you insert a new row, MySQL will automatically assign a unique value to the id column.",
+    "text": "This may fail if the primary key is being used elsewhere (like in a foreign key\nor auto_increment column).\nTo drop a UNIQUE constraint:\nAuto Increment\nIn MySQL, a PRIMARY KEY is often used with the AUTO_INCREMENT attribute to\nautomatically generate unique values for new rows.\nThis means that every time you insert a new row, MySQL will automatically assign a\nunique value to the id column.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 35,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p35_c1",
-    "text": "will automatically assign a unique value to the id column. You can change the starting value of AUTO_INCREMENT using: Key Takeaways Use PRIMARY KEY for the main identifier of a row. Use UNIQUE for enforcing non-duplicate values in other columns (like email or phone). You can have only one primary key, but you can have many unique constraints.",
+    "text": "will automatically assign a\nunique value to the id column. You can change the starting value of \nAUTO_INCREMENT using:\nKey Takeaways\nUse PRIMARY KEY for the main identifier of a row.\nUse UNIQUE for enforcing non-duplicate values in other columns (like email\nor phone).\nYou can have only one primary key, but you can have many unique\nconstraints.\nALTER TABLE users DROP INDEX email;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 35,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p35_c2",
-    "text": "one primary key, but you can have many unique constraints. ALTER TABLE users DROP INDEX email; CREATE TABLE users ( id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100) ); ALTER TABLE users AUTO_INCREMENT = 1000; \u2022 \u2022 \u2022",
+    "text": "any unique\nconstraints.\nALTER TABLE users DROP INDEX email;\nCREATE TABLE users (\nid INT AUTO_INCREMENT PRIMARY KEY,\n name VARCHAR(100)\n);\nALTER TABLE users AUTO_INCREMENT = 1000;\n\u2022 \n\u2022 \n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 35,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p36_c0",
-    "text": "Foreign Keys in MySQL A foreign key is a column that creates a link between two tables. It ensures that the value in one table must match a value in another table. This is used to maintain data integrity between related data. Why Use Foreign Keys? Imagine this scenario: You have a users table. Now you want to store each user\u2019s address.",
+    "text": "Foreign Keys in MySQL\nA foreign key is a column that creates a link between two tables. It ensures that\nthe value in one table must match a value in another table.\nThis is used to maintain data integrity between related data.\nWhy Use Foreign Keys?\nImagine this scenario:\nYou have a users table. Now you want to store each user\u2019s address. Instead of",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 36,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p36_c1",
-    "text": "e a users table. Now you want to store each user\u2019s address. Instead of putting address columns inside the users table, you create a separate addresses table, and link it to users using a foreign key. Creating a Table with a Foreign Key Let\u2019s create an addresses table where each address belongs to a user.",
+    "text": "able. Now you want to store each user\u2019s address. Instead of\nputting address columns inside the users table, you create a separate \naddresses table, and link it to users using a foreign key.\nCreating a Table with a Foreign Key\nLet\u2019s create an addresses table where each address belongs to a user.\nCREATE TABLE addresses (\nid INT AUTO_INCREMENT PRIMARY KEY,\n user_id INT,\n street VARCHAR(255),",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 36,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p36_c2",
-    "text": "te an addresses table where each address belongs to a user. CREATE TABLE addresses ( id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, street VARCHAR(255), city VARCHAR(100), state VARCHAR(100), pincode VARCHAR(10), FOREIGN KEY (user_id) REFERENCES users(id) );",
+    "text": "_INCREMENT PRIMARY KEY,\n user_id INT,\n street VARCHAR(255),\n city VARCHAR(100),\n state VARCHAR(100),\n pincode VARCHAR(10),\n FOREIGN KEY (user_id) REFERENCES users(id)\n);",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 36,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p37_c0",
-    "text": "Explanation: user_id is a foreign key. It references the id column in the users table. This ensures that every address must be linked to a valid user. Dropping a Foreign Key To drop a foreign key, you need to know its constraint name.",
+    "text": "Explanation:\nuser_id is a foreign key.\nIt references the id column in the users table.\nThis ensures that every address must be linked to a valid user.\nDropping a Foreign Key\nTo drop a foreign key, you need to know its constraint name. MySQL auto-\ngenerates it if you don\u2019t specify one, or you can name it yourself:\nTo drop it:\nAdding a Foreign Key Later (Using ALTER)",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 37,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p37_c1",
-    "text": "o drop a foreign key, you need to know its constraint name. MySQL auto- generates it if you don\u2019t specify one, or you can name it yourself: To drop it: Adding a Foreign Key Later (Using ALTER) Suppose the foreign key was not defined during table creation.",
+    "text": "rself:\nTo drop it:\nAdding a Foreign Key Later (Using ALTER)\nSuppose the foreign key was not defined during table creation. You can add it\nlater using ALTER TABLE :\n\u2022 \n\u2022 \n\u2022 \nCREATE TABLE addresses (\nid INT AUTO_INCREMENT PRIMARY KEY,\n user_id INT,\n CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)\n);\nALTER TABLE addresses\nDROP FOREIGN KEY fk_user;\nALTER TABLE addresses",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 37,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p37_c2",
-    "text": "pose the foreign key was not defined during table creation. You can add it later using ALTER TABLE : \u2022 \u2022 \u2022 CREATE TABLE addresses ( id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ); ALTER TABLE addresses DROP FOREIGN KEY fk_user; ALTER TABLE addresses ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id);",
+    "text": "E addresses\nDROP FOREIGN KEY fk_user;\nALTER TABLE addresses\nADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id);",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 37,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p38_c0",
-    "text": "Adding ON DELETE Action By default, if you delete a user that has related addresses, MySQL will throw an error. You can control this behavior with ON DELETE . Example with ON DELETE CASCADE : If you want addresses to be automatically deleted when the user is deleted: Or alter it later: Other ON DELETE Options ON DELETE Option Behavior CASCADE Deletes all related rows in child table SET NULL Sets",
+    "text": "Adding ON DELETE Action\nBy default, if you delete a user that has related addresses, MySQL will throw an\nerror. You can control this behavior with ON DELETE .\nExample with ON DELETE CASCADE :\nIf you want addresses to be automatically deleted when the user is deleted:\nOr alter it later:\nOther ON DELETE Options\nON\u00a0DELETE\nOption Behavior\nCASCADE Deletes all related rows in child table",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 38,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p38_c1",
-    "text": "ASCADE Deletes all related rows in child table SET NULL Sets the foreign key to NULL in the child table RESTRICT Prevents deletion of parent if child exists (default) CREATE TABLE addresses ( id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, street VARCHAR(255), city VARCHAR(100), state VARCHAR(100), pincode VARCHAR(10), CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE",
+    "text": "on Behavior\nCASCADE Deletes all related rows in child table\nSET NULL Sets the foreign key to NULL in the child table\nRESTRICT Prevents deletion of parent if child exists (default)\nCREATE TABLE addresses (\nid INT AUTO_INCREMENT PRIMARY KEY,\n user_id INT,\n street VARCHAR(255),\n city VARCHAR(100),\n state VARCHAR(100),\n pincode VARCHAR(10),",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 38,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p38_c2",
-    "text": "fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ); ALTER TABLE addresses ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;",
+    "text": "ty VARCHAR(100),\n state VARCHAR(100),\n pincode VARCHAR(10),\n CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE\n);\nALTER TABLE addresses\nADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE \nCASCADE;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 38,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p39_c0",
-    "text": "Summary Foreign keys connect tables and enforce valid references. You can create them inline or with ALTER TABLE . You can drop them by name. Use ON DELETE to control what happens when the parent row is deleted. \u2022 \u2022 \u2022 \u2022",
+    "text": "Summary\nForeign keys connect tables and enforce valid references.\nYou can create them inline or with ALTER TABLE .\nYou can drop them by name.\nUse ON DELETE to control what happens when the parent row is deleted.\n\u2022 \n\u2022 \n\u2022 \n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 39,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p40_c0",
-    "text": "SQL JOINs in MySQL In SQL, JOINs are used to combine rows from two or more tables based on related columns \u2014 usually a foreign key in one table referencing a primary key in another. We\u2019ll use the following two tables: users table id name 1 Aarav 2 Sneha 3 Raj addresses table id user_id city 1 1 Mumbai 2 2 Kolkata 3 4 Delhi Note: user_id is a foreign key that references users.id . 1.",
+    "text": "SQL JOINs in MySQL\nIn SQL, JOINs are used to combine rows from two or more tables based on related\ncolumns \u2014 usually a foreign key in one table referencing a primary key in another.\nWe\u2019ll use the following two tables:\nusers table\nid name\n1 Aarav\n2 Sneha\n3 Raj\naddresses table\nid user_id city\n1 1 Mumbai\n2 2 Kolkata\n3 4 Delhi\nNote: user_id is a foreign key that references users.id .\n1. INNER JOIN",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 40,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p40_c1",
-    "text": "ote: user_id is a foreign key that references users.id . 1. INNER JOIN Returns only the matching rows from both tables.",
+    "text": "d is a foreign key that references users.id .\n1. INNER JOIN\nReturns only the matching rows from both tables.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 40,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p41_c0",
-    "text": "Output: name city Aarav Mumbai Sneha Kolkata Raj is excluded because there is no matching address. Delhi is excluded because its user_id (4) is not in users . Visual Representation: 2. LEFT JOIN Returns all rows from the left table ( users ), and matching rows from the right table ( addresses ). If no match is found, NULLs are returned.",
+    "text": "Output:\nname city\nAarav Mumbai\nSneha Kolkata\nRaj is excluded because there is no matching address. Delhi is excluded\nbecause its user_id (4) is not in users .\nVisual Representation:\n2. LEFT JOIN\nReturns all rows from the left table ( users ), and matching rows from the right\ntable ( addresses ). If no match is found, NULLs are returned.\nSELECT users.name, addresses.city\nFROM users",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 41,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p41_c1",
-    "text": "le ( addresses ). If no match is found, NULLs are returned. SELECT users.name, addresses.city FROM users INNER JOIN addresses ON users.id = addresses.user_id; users addresses ----- ------ | 1 | | 1 | | 2 | | 2 | | | | | => only matching pairs SELECT users.name, addresses.city FROM users LEFT JOIN addresses ON users.id = addresses.user_id;",
+    "text": "are returned.\nSELECT users.name, addresses.city\nFROM users\nINNER JOIN addresses ON users.id = addresses.user_id;\nusers addresses\n----- ------\n| 1 | | 1 |\n| 2 | | 2 |\n| | | |\n=> only matching pairs\nSELECT users.name, addresses.city\nFROM users\nLEFT JOIN addresses ON users.id = addresses.user_id;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 41,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p42_c0",
-    "text": "Output: name city Aarav Mumbai Sneha Kolkata Raj NULL Raj is shown even though he doesn\u2019t have an address. Visual Representation: 3. RIGHT JOIN Returns all rows from the right table ( addresses ), and matching rows from the left table ( users ). If no match is found, NULLs are returned.",
+    "text": "Output:\nname city\nAarav Mumbai\nSneha Kolkata\nRaj NULL\nRaj is shown even though he doesn\u2019t have an address.\nVisual Representation:\n3. RIGHT JOIN\nReturns all rows from the right table ( addresses ), and matching rows from the\nleft table ( users ). If no match is found, NULLs are returned.\nOutput:\nname city\nAarav Mumbai\nSneha Kolkata\nusers addresses\n----- ------\n| 1 | | 1 |\n| 2 | | 2 |\n| 3 | | |",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 42,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p42_c1",
-    "text": "table ( users ). If no match is found, NULLs are returned. Output: name city Aarav Mumbai Sneha Kolkata users addresses ----- ------ | 1 | | 1 | | 2 | | 2 | | 3 | | | => all users + matched addresses (or NULL) SELECT users.name, addresses.city FROM users RIGHT JOIN addresses ON users.id = addresses.user_id;",
+    "text": "rs addresses\n----- ------\n| 1 | | 1 |\n| 2 | | 2 |\n| 3 | | |\n=> all users + matched addresses (or NULL)\nSELECT users.name, addresses.city\nFROM users\nRIGHT JOIN addresses ON users.id = addresses.user_id;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 42,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p43_c0",
-    "text": "name city NULL Delhi Delhi is shown even though it points to a user_id that doesn\u2019t exist. Visual Representation: Summary Table JOIN Type Description INNER JOIN Only matching rows from both tables LEFT JOIN All rows from left table + matching from right RIGHT JOIN All rows from right table + matching from left users addresses ----- ------ | 1 | | 1 | | 2 | | 2 | | | | 4 | => all addresses +",
+    "text": "name city\nNULL Delhi\nDelhi is shown even though it points to a user_id that doesn\u2019t exist.\nVisual Representation:\nSummary Table\nJOIN Type Description\nINNER JOIN Only matching rows from both tables\nLEFT JOIN All rows from left table + matching from right\nRIGHT JOIN All rows from right table + matching from left\nusers addresses\n----- ------\n| 1 | | 1 |\n| 2 | | 2 |\n| | | 4 |",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 43,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p43_c1",
-    "text": "------ | 1 | | 1 | | 2 | | 2 | | | | 4 | => all addresses + matched users (or NULL)",
+    "text": "rs addresses\n----- ------\n| 1 | | 1 |\n| 2 | | 2 |\n| | | 4 |\n=> all addresses + matched users (or NULL)",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 43,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p44_c0",
-    "text": "SQL UNION and UNION ALL The UNION operator in SQL is used to combine the result sets of two or more SELECT statements. It removes duplicates by default. If you want to include all rows including duplicates, use UNION ALL . Example Scenario You already have a users table for active users. Now, we\u2019ll create an admin_users table to store users who are administrators or have special roles.",
+    "text": "SQL UNION and UNION ALL\nThe UNION operator in SQL is used to combine the result sets of two or more \nSELECT statements. It removes duplicates by default.\nIf you want to include all rows including duplicates, use UNION ALL .\nExample Scenario\nYou already have a users table for active users. Now, we\u2019ll create an \nadmin_users table to store users who are administrators or have special roles. We",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 44,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p44_c1",
-    "text": "o store users who are administrators or have special roles. We will then combine the names from both tables using UNION . Step 1: Create the admin_users Table CREATE TABLE admin_users ( id INT PRIMARY KEY, name VARCHAR(100), email VARCHAR(100), gender ENUM('Male', 'Female', 'Other'), date_of_birth DATE, salary INT );",
+    "text": "tore users who are administrators or have special roles. We\nwill then combine the names from both tables using UNION .\nStep 1: Create the admin_users Table\nCREATE TABLE admin_users (\nid INT PRIMARY KEY,\n name VARCHAR(100),\n email VARCHAR(100),\n gender ENUM('Male', 'Female', 'Other'),\n date_of_birth DATE,\n salary INT\n);",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 44,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p45_c0",
-    "text": "Step 2: Insert Sample Data into admin_users Step 3: Use UNION to Combine Data Let\u2019s combine the active and admin user names. This returns a single list of unique names from both tables. UNION ALL Example If you want to keep duplicate names (if any), use UNION ALL .",
+    "text": "Step 2: Insert Sample Data into admin_users\nStep 3: Use UNION to Combine Data\nLet\u2019s combine the active and admin user names.\nThis returns a single list of unique names from both tables.\nUNION ALL Example\nIf you want to keep duplicate names (if any), use UNION ALL .\nUsing More Than One Column\nYou can also select multiple columns as long as both SELECT queries return the",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 45,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p45_c1",
-    "text": "you want to keep duplicate names (if any), use UNION ALL . Using More Than One Column You can also select multiple columns as long as both SELECT queries return the same number of columns with compatible types.",
+    "text": "multiple columns as long as both SELECT queries return the \nsame number of columns with compatible types.\nINSERT INTO admin_users (id, name, email, gender, date_of_birth, salary) VALUES\n(101, 'Anil Kumar', 'anil@example.com', 'Male', '1985-04-12', 60000),\n(102, 'Pooja Sharma', 'pooja@example.com', 'Female', '1992-09-20', 58000),",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 45,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p45_c2",
-    "text": "es return the same number of columns with compatible types. INSERT INTO admin_users (id, name, email, gender, date_of_birth, salary) VALUES (101, 'Anil Kumar', 'anil@example.com', 'Male', '1985-04-12', 60000), (102, 'Pooja Sharma', 'pooja@example.com', 'Female', '1992-09-20', 58000), (103, 'Rakesh Yadav', 'rakesh@example.com', 'Male', '1989-11-05', 54000), (104, 'Fatima Begum',",
+    "text": "arma', 'pooja@example.com', 'Female', '1992-09-20', 58000),\n(103, 'Rakesh Yadav', 'rakesh@example.com', 'Male', '1989-11-05', 54000),\n(104, 'Fatima Begum', 'fatima@example.com', 'Female', '1990-06-30', 62000);\nSELECT name FROM users\nUNION\nSELECT name FROM admin_users;\nSELECT name FROM users\nUNION ALL\nSELECT name FROM admin_users;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 45,
     "chunk_index": 2
   },
   {
-    "chunk_id": "MySQL Handbook.pdf_p45_c3",
-    "text": "le.com', 'Male', '1989-11-05', 54000), (104, 'Fatima Begum', 'fatima@example.com', 'Female', '1990-06-30', 62000); SELECT name FROM users UNION SELECT name FROM admin_users; SELECT name FROM users UNION ALL SELECT name FROM admin_users;",
-    "document_name": "MySQL Handbook.pdf",
-    "page_number": 45,
-    "chunk_index": 3
-  },
-  {
     "chunk_id": "MySQL Handbook.pdf_p46_c0",
-    "text": "Adding separate roles Using Order By with UNION Rules of UNION The number of columns and their data types must match in all SELECT statements. UNION removes duplicates by default. UNION ALL keeps duplicates.",
+    "text": "Adding separate roles\nUsing Order By with UNION\nRules of UNION\nThe number of columns and their data types must match in all SELECT\nstatements.\nUNION removes duplicates by default.\nUNION ALL keeps duplicates.\nSELECT name, salary FROM users\nUNION\nSELECT name, salary FROM admin_users;\nSELECT name, 'User' AS role FROM users\nUNION\nSELECT name, 'Admin' AS role FROM admin_users;\nSELECT name FROM users",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 46,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p46_c1",
-    "text": "removes duplicates by default. UNION ALL keeps duplicates. SELECT name, salary FROM users UNION SELECT name, salary FROM admin_users; SELECT name, 'User' AS role FROM users UNION SELECT name, 'Admin' AS role FROM admin_users; SELECT name FROM users UNION SELECT name FROM admin_users ORDER BY name; 1. 2. 3.",
+    "text": "e, 'Admin' AS role FROM admin_users;\nSELECT name FROM users\nUNION\nSELECT name FROM admin_users\nORDER BY name;\n1. \n2. \n3.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 46,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p47_c0",
-    "text": "When to Use UNION When you have two similar tables (like current and archived data). When you need to combine filtered results (e.g., high-salary users from two sources). When performing cross-category reporting. Summary Operator Behavior UNION Combines results, removes duplicates UNION ALL Combines results, keeps duplicates \u2022 \u2022 \u2022",
+    "text": "When to Use UNION\nWhen you have two similar tables (like current and archived data).\nWhen you need to combine filtered results (e.g., high-salary users from two\nsources).\nWhen performing cross-category reporting.\nSummary\nOperator Behavior\nUNION Combines results, removes duplicates\nUNION ALL Combines results, keeps duplicates\n\u2022 \n\u2022 \n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 47,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p48_c0",
-    "text": "Self JOIN in MySQL A Self JOIN is a regular join, but the table is joined with itself. This is useful when rows in the same table are related to each other. For example, when users refer other users, and we store the ID of the person who referred them in the same users table.",
+    "text": "Self JOIN in MySQL\nA Self JOIN is a regular join, but the table is joined with itself.\nThis is useful when rows in the same table are related to each other. For example,\nwhen users refer other users, and we store the ID of the person who referred them\nin the same users table.\nStep 1: Add a referred_by_id Column\nWe\u2019ll extend the existing users table to include a column called referred_by_id ,",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 48,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p48_c1",
-    "text": "ID of the person who referred them in the same users table. Step 1: Add a referred_by_id Column We\u2019ll extend the existing users table to include a column called referred_by_id , which holds the id of the user who referred them. This column: Will be NULL for users who were not referred. Will contain the id of another user who referred them.",
+    "text": "ing users table to include a column called referred_by_id ,\nwhich holds the id of the user who referred them.\nThis column:\nWill be NULL for users who were not referred.\nWill contain the id of another user who referred them.\nStep 2: Insert Referral Data (Optional)\nAssuming id = 1 is the first user, and referred others:\nALTER TABLE users\nADD COLUMN referred_by_id INT;\n\u2022 \n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 48,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p48_c2",
-    "text": "red. Will contain the id of another user who referred them. Step 2: Insert Referral Data (Optional) Assuming id = 1 is the first user, and referred others: ALTER TABLE users ADD COLUMN referred_by_id INT; \u2022 \u2022 UPDATE users SET referred_by_id = 1 WHERE id IN (2, 3); -- User 1 referred Users 2 and 3 UPDATE users SET referred_by_id = 2 WHERE id = 4; -- User 2 referred User 4",
+    "text": "ers:\nALTER TABLE users\nADD COLUMN referred_by_id INT;\n\u2022 \n\u2022 \nUPDATE users SET referred_by_id = 1 WHERE id IN (2, 3); -- User 1 referred Users 2\nand 3\nUPDATE users SET referred_by_id = 2 WHERE id = 4; -- User 2 referred User 4",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 48,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p49_c0",
-    "text": "Step 3: Use a Self JOIN to Get Referrer Names We want to get each user\u2019s name along with the name of the person who referred them. Explanation: a refers to the user being queried. b refers to the user who referred them. LEFT JOIN is used so that users with NULL in referred_by_id are also included.",
+    "text": "Step 3: Use a Self JOIN to Get Referrer Names\nWe want to get each user\u2019s name along with the name of the person who referred\nthem.\nExplanation:\na refers to the user being queried.\nb refers to the user who referred them.\nLEFT JOIN is used so that users with NULL in referred_by_id are also\nincluded.\nSample Output:\nid user_name referred_by\n1 Aarav NULL\n2 Sneha Aarav\n3 Raj Aarav\n4 Fatima Sneha",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 49,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p49_c1",
-    "text": "o that users with NULL in referred_by_id are also included. Sample Output: id user_name referred_by 1 Aarav NULL 2 Sneha Aarav 3 Raj Aarav 4 Fatima Sneha Summary Use Self JOIN when you need to join a table with itself. In referral-based relationships, store the referrer\u2019s id in the same table.",
+    "text": "ed_by\n1 Aarav NULL\n2 Sneha Aarav\n3 Raj Aarav\n4 Fatima Sneha\nSummary\nUse Self JOIN when you need to join a table with itself.\nIn referral-based relationships, store the referrer\u2019s id in the same table.\nSELECT \n a.id,\n a.name AS user_name,\n b.name AS referred_by\nFROM users a\nINNER JOIN users b ON a.referred_by_id = b.id;\n\u2022 \n\u2022 \n\u2022 \n\u2022 \n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 49,
     "chunk_index": 1
-  },
-  {
-    "chunk_id": "MySQL Handbook.pdf_p49_c2",
-    "text": "d relationships, store the referrer\u2019s id in the same table. SELECT a.id, a.name AS user_name, b.name AS referred_by FROM users a INNER JOIN users b ON a.referred_by_id = b.id; \u2022 \u2022 \u2022 \u2022 \u2022",
-    "document_name": "MySQL Handbook.pdf",
-    "page_number": 49,
-    "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p50_c0",
@@ -1044,555 +1072,310 @@
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p51_c0",
-    "text": "MySQL Views A view in MySQL is a virtual table based on the result of a SELECT query. It does not store data itself \u2014 it always reflects the current data in the base tables. Views are useful when: You want to simplify complex queries You want to reuse logic You want to hide certain columns from users You want a \u201clive snapshot\u201d of filtered data Creating a View Suppose we want a view that lists all",
+    "text": "MySQL Views\nA view in MySQL is a virtual table based on the result of a SELECT query. It does\nnot store data itself \u2014 it always reflects the current data in the base tables.\nViews are useful when:\nYou want to simplify complex queries\nYou want to reuse logic\nYou want to hide certain columns from users\nYou want a \u201clive snapshot\u201d of filtered data\nCreating a View",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 51,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p51_c1",
-    "text": "d data Creating a View Suppose we want a view that lists all users earning more than \u20b970,000. Querying the View This will return all users from the users table where salary is above \u20b970,000. \u2022 \u2022 \u2022 \u2022 CREATE VIEW high_salary_users AS SELECT id, name, salary FROM users WHERE salary > 70000; SELECT * FROM high_salary_users;",
+    "text": "You want a \u201clive snapshot\u201d of filtered data\nCreating a View\nSuppose we want a view that lists all users earning more than \u20b970,000.\nQuerying the View\nThis will return all users from the users table where salary is above \u20b970,000.\n\u2022 \n\u2022 \n\u2022 \n\u2022 \nCREATE VIEW high_salary_users AS\nSELECT id, name, salary\nFROM users\nWHERE salary > 70000;\nSELECT * FROM high_salary_users;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 51,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p52_c0",
-    "text": "Demonstrating That a View is Always Up-To-Date Let\u2019s see what happens when the underlying data changes. Step 1: View before update Output: id name salary 2 Sneha 75000 5 Fatima 80000 Step 2: Update a user\u2019s salary Step 3: Query the view again New Output: id name salary 2 Sneha 75000 5 Fatima 80000 3 Raj 72000 Notice how Raj is now included in the view \u2014 without updating the view itself.",
+    "text": "Demonstrating That a View is Always Up-To-Date\nLet\u2019s see what happens when the underlying data changes.\nStep 1: View before update\nOutput:\nid name salary\n2 Sneha 75000\n5 Fatima 80000\nStep 2: Update a user\u2019s salary\nStep 3: Query the view again\nNew Output:\nid name salary\n2 Sneha 75000\n5 Fatima 80000\n3 Raj 72000\nNotice how Raj is now included in the view \u2014 without updating the view\nitself.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 52,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p52_c1",
-    "text": "ow included in the view \u2014 without updating the view itself. That\u2019s because views always reflect live data from the original table. SELECT * FROM high_salary_users; UPDATE users SET salary = 72000 WHERE name = 'Raj'; SELECT * FROM high_salary_users;",
+    "text": "ow included in the view \u2014 without updating the view\nitself. That\u2019s because views always reflect live data from the original table.\nSELECT * FROM high_salary_users;\nUPDATE users\nSET salary = 72000\nWHERE name = 'Raj';\nSELECT * FROM high_salary_users;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 52,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p53_c0",
-    "text": "Dropping a View To remove a view: Summary Views act like saved SELECT queries Views are not duplicated data Changes to base tables are reflected automatically Great for simplifying complex queries or creating filtered access DROP VIEW high_salary_users; \u2022 \u2022 \u2022 \u2022",
+    "text": "Dropping a View\nTo remove a view:\nSummary\nViews act like saved SELECT queries\nViews are not duplicated data\nChanges to base tables are reflected automatically\nGreat for simplifying complex queries or creating filtered access\nDROP VIEW high_salary_users;\n\u2022 \n\u2022 \n\u2022 \n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 53,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p54_c0",
-    "text": "MySQL Indexes Indexes in MySQL are used to speed up data retrieval. They work like the index of a book \u2014 helping the database engine find rows faster, especially for searches, filters, and joins. Viewing Indexes on a Table To see the indexes on a table, use: This shows all the indexes currently defined on the users table, including the automatically created primary key index.",
+    "text": "MySQL Indexes\nIndexes in MySQL are used to speed up data retrieval. They work like the index of\na book \u2014 helping the database engine find rows faster, especially for searches,\nfilters, and joins.\nViewing Indexes on a Table\nTo see the indexes on a table, use:\nThis shows all the indexes currently defined on the users table, including the\nautomatically created primary key index.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 54,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p54_c1",
-    "text": "ble, including the automatically created primary key index. Creating a Single-Column Index Suppose you\u2019re frequently searching users by their email . You can speed this up by indexing the email column.",
+    "text": "ble, including the\nautomatically created primary key index.\nCreating a Single-Column Index\nSuppose you\u2019re frequently searching users by their email . You can speed this up\nby indexing the email column.\nWhat this does:\nCreates an index named idx_email\nImproves performance of queries like:\nSHOW INDEXES FROM users;\nCREATE INDEX idx_email ON users(email);\n\u2022 \n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 54,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p54_c2",
-    "text": "email . You can speed this up by indexing the email column. What this does: Creates an index named idx_email Improves performance of queries like: SHOW INDEXES FROM users; CREATE INDEX idx_email ON users(email); \u2022 \u2022 SELECT * FROM users WHERE email = 'example@example.com';",
+    "text": "S FROM users;\nCREATE INDEX idx_email ON users(email);\n\u2022 \n\u2022 \nSELECT * FROM users WHERE email = 'example@example.com';",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 54,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p55_c0",
-    "text": "Important Notes Indexes consume extra disk space Indexes slow down INSERT , UPDATE , and DELETE operations slightly (because the index must be updated) Use indexes only when needed (i.e., for columns used in WHERE , JOIN , ORDER BY ) Creating a Multi-Column Index If you often query users using both gender and salary , a multi-column index is more efficient than separate indexes.",
+    "text": "Important Notes\nIndexes consume extra disk space\nIndexes slow down INSERT , UPDATE , and DELETE operations slightly\n(because the index must be updated)\nUse indexes only when needed (i.e., for columns used in WHERE , JOIN , \nORDER BY )\nCreating a Multi-Column Index\nIf you often query users using both gender and salary , a multi-column index is\nmore efficient than separate indexes.\nUsage Example:",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 55,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p55_c1",
-    "text": "multi-column index is more efficient than separate indexes. Usage Example: This query can take advantage of the combined index on gender and salary . Index Order Matters For a multi-column index on (gender, salary) : This works efficiently: \u2022 \u2022 \u2022 CREATE INDEX idx_gender_salary ON users(gender, salary); SELECT * FROM users WHERE gender = 'Female' AND salary > 70000; \u2022 WHERE gender = 'Female' AND",
+    "text": "dex is\nmore efficient than separate indexes.\nUsage Example:\nThis query can take advantage of the combined index on gender and salary .\nIndex Order Matters\nFor a multi-column index on (gender, salary) :\nThis works efficiently:\n\u2022 \n\u2022 \n\u2022 \nCREATE INDEX idx_gender_salary ON users(gender, salary);\nSELECT * FROM users\nWHERE gender = 'Female' AND salary > 70000;\n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 55,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p55_c2",
-    "text": "= 'Female' AND salary > 70000; \u2022 WHERE gender = 'Female' AND salary > 70000",
+    "text": "* FROM users\nWHERE gender = 'Female' AND salary > 70000;\n\u2022 \nWHERE gender = 'Female' AND salary > 70000",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 55,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p56_c0",
-    "text": "But this may not use the index effectively: Because the first column in the index ( gender ) is missing in the filter. Dropping an Index To delete an index: Summary Feature Description SHOW INDEXES View current indexes on a table CREATE INDEX Create single or multi-column indexes DROP INDEX Remove an index Use when Query performance on large tables is a concern Avoid on Columns that are rarely",
+    "text": "But this may not use the index effectively:\nBecause the first column in the index ( gender ) is missing in the filter.\nDropping an Index\nTo delete an index:\nSummary\nFeature Description\nSHOW INDEXES View current indexes on a table\nCREATE INDEX Create single or multi-column indexes\nDROP INDEX Remove an index\nUse when Query performance on large tables is a concern",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 56,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p56_c1",
-    "text": "n large tables is a concern Avoid on Columns that are rarely queried or always unique \u2022 WHERE salary > 70000 DROP INDEX idx_email ON users;",
+    "text": "dex\nUse when Query performance on large tables is a concern\nAvoid on Columns that are rarely queried or always unique\n\u2022 \nWHERE salary > 70000\nDROP INDEX idx_email ON users;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 56,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p57_c0",
-    "text": "Subqueries in MySQL A subquery is a query nested inside another query. Subqueries are useful for breaking down complex problems into smaller parts. They can be used in: SELECT statements WHERE clauses FROM clauses Example Scenario: Salary Comparison Suppose we want to find all users who earn more than the average salary of all users.",
+    "text": "Subqueries in MySQL\nA subquery is a query nested inside another query. Subqueries are useful for\nbreaking down complex problems into smaller parts.\nThey can be used in:\nSELECT statements\nWHERE clauses\nFROM clauses\nExample Scenario: Salary Comparison\nSuppose we want to find all users who earn more than the average salary of all\nusers.\nScalar Subquery Example",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 57,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p57_c1",
-    "text": "l users who earn more than the average salary of all users. Scalar Subquery Example This subquery returns a single value \u2014 the average salary \u2014 and we compare each user\u2019s salary against it. Explanation: The inner query: SELECT AVG(salary) FROM users returns the average salary. \u2022 \u2022 \u2022 SELECT id, name, salary FROM users WHERE salary > ( SELECT AVG(salary) FROM users ); \u2022",
+    "text": "an the average salary of all\nusers.\nScalar Subquery Example\nThis subquery returns a single value \u2014 the average salary \u2014 and we compare each\nuser\u2019s salary against it.\nExplanation:\nThe inner query: SELECT AVG(salary) FROM users returns the average salary.\n\u2022 \n\u2022 \n\u2022 \nSELECT id, name, salary\nFROM users\nWHERE salary > (\n SELECT AVG(salary) FROM users\n);\n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 57,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p58_c0",
-    "text": "The outer query selects all users with a salary greater than that average. Subquery with IN Now let\u2019s say we want to find users who have been referred by someone who earns more than \u20b975,000. Explanation: The inner query: SELECT id FROM users WHERE salary > 75000 returns a list of user IDs (referrers) who earn more than \u20b975,000. The outer query selects users whose referred_by_id is in that list.",
+    "text": "The outer query selects all users with a salary greater than that average.\nSubquery with IN\nNow let\u2019s say we want to find users who have been referred by someone who earns\nmore than \u20b975,000.\nExplanation:\nThe inner query: SELECT id FROM users WHERE salary > 75000 returns a list\nof user IDs (referrers) who earn more than \u20b975,000.\nThe outer query selects users whose referred_by_id is in that list.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 58,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p58_c1",
-    "text": "r query selects users whose referred_by_id is in that list. Other Places Subqueries Are Used You can also use subqueries: Inside SELECT columns (called scalar subqueries) In the FROM clause to create derived tables Example in SELECT : This shows each user\u2019s salary along with the overall average.",
+    "text": "r query selects users whose referred_by_id is in that list.\nOther Places Subqueries Are Used\nYou can also use subqueries:\nInside SELECT columns (called scalar subqueries)\nIn the FROM clause to create derived tables\nExample in SELECT :\nThis shows each user\u2019s salary along with the overall average.\n\u2022 \nSELECT id, name, referred_by_id\nFROM users\nWHERE referred_by_id IN (",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 58,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p58_c2",
-    "text": "is shows each user\u2019s salary along with the overall average. \u2022 SELECT id, name, referred_by_id FROM users WHERE referred_by_id IN ( SELECT id FROM users WHERE salary > 75000 ); \u2022 \u2022 \u2022 \u2022 SELECT name, salary, (SELECT AVG(salary) FROM users) AS average_salary FROM users;",
+    "text": ", name, referred_by_id\nFROM users\nWHERE referred_by_id IN (\n SELECT id FROM users WHERE salary > 75000\n);\n\u2022 \n\u2022 \n\u2022 \n\u2022 \nSELECT name, salary,\n(SELECT AVG(salary) FROM users) AS average_salary\nFROM users;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 58,
     "chunk_index": 2
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p59_c0",
-    "text": "Summary Subquery Type Use Case Scalar Subquery Returns one value (e.g. AVG, MAX) Subquery with IN Returns multiple values Subquery in SELECT Shows related calculated value Subquery in FROM Acts as a virtual table Subqueries are powerful tools when filtering based on computed or dynamic conditions.",
+    "text": "Summary\nSubquery Type Use Case\nScalar Subquery Returns one value (e.g.\u00a0AVG, MAX)\nSubquery with IN Returns multiple values\nSubquery in SELECT Shows related calculated value\nSubquery in FROM Acts as a virtual table\nSubqueries are powerful tools when filtering based on computed or dynamic\nconditions.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 59,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p60_c0",
-    "text": "GROUP BY and HAVING in MySQL The GROUP BY clause is used to group rows that have the same values in specified columns. It is typically used with aggregate functions like COUNT , SUM , AVG , MIN , or MAX . The HAVING clause is used to filter groups after aggregation \u2014 similar to how WHERE filters individual rows.",
+    "text": "GROUP BY and HAVING in MySQL\nThe GROUP BY clause is used to group rows that have the same values in\nspecified columns. It is typically used with aggregate functions like COUNT , SUM , \nAVG , MIN , or MAX .\nThe HAVING clause is used to filter groups after aggregation \u2014 similar to how \nWHERE filters individual rows.\nExample Table: users\nAssume this is your users table:",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 60,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p60_c1",
-    "text": "aggregation \u2014 similar to how WHERE filters individual rows. Example Table: users Assume this is your users table: id name gender salary referred_by_id 1 Aarav Male 80000 NULL 2 Sneha Female 75000 1 3 Raj Male 72000 1 4 Fatima Female 85000 2 5 Priya Female 70000 NULL GROUP BY Example: Average Salary by Gender SELECT gender, AVG(salary) AS average_salary FROM users GROUP BY gender;",
+    "text": "rows.\nExample Table: users\nAssume this is your users table:\nid name gender salary referred_by_id\n1 Aarav Male 80000 NULL\n2 Sneha Female 75000 1\n3 Raj Male 72000 1\n4 Fatima Female 85000 2\n5 Priya Female 70000 NULL\nGROUP BY Example: Average Salary by Gender\nSELECT gender, AVG(salary) AS average_salary\nFROM users\nGROUP BY gender;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 60,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p61_c0",
-    "text": "Explanation: This groups users by gender. Then calculates the average salary for each group. GROUP BY with COUNT Find how many users were referred by each user: Output: referred_by_id total_referred 1 2 2 1 HAVING Clause: Filtering Groups Let\u2019s say we only want to show genders where the average salary is greater than \u20b975,000.",
+    "text": "Explanation:\nThis groups users by gender.\nThen calculates the average salary for each group.\nGROUP BY with COUNT\nFind how many users were referred by each user:\nOutput:\nreferred_by_id total_referred\n1 2\n2 1\nHAVING Clause: Filtering Groups\nLet\u2019s say we only want to show genders where the average salary is greater than\n\u20b975,000.\n\u2022 \n\u2022 \nSELECT referred_by_id, COUNT(*) AS total_referred\nFROM users",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 61,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p61_c1",
-    "text": "w genders where the average salary is greater than \u20b975,000. \u2022 \u2022 SELECT referred_by_id, COUNT(*) AS total_referred FROM users WHERE referred_by_id IS NOT NULL GROUP BY referred_by_id; SELECT gender, AVG(salary) AS avg_salary FROM users GROUP BY gender HAVING AVG(salary) > 75000;",
+    "text": "ELECT referred_by_id, COUNT(*) AS total_referred\nFROM users\nWHERE referred_by_id IS NOT NULL\nGROUP BY referred_by_id;\nSELECT gender, AVG(salary) AS avg_salary\nFROM users\nGROUP BY gender\nHAVING AVG(salary) > 75000;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 61,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p62_c0",
-    "text": "Why not WHERE ? WHERE is used before grouping. HAVING is used after groups are formed \u2014 it\u2019s the only way to filter aggregated values. Another Example: Groups with More Than 1 Referral Summary Clause Purpose Can use aggregates?",
+    "text": "Why not WHERE ?\nWHERE is used before grouping.\nHAVING is used after groups are formed \u2014 it\u2019s the only way to filter\naggregated values.\nAnother Example: Groups with More Than 1 Referral\nSummary\nClause Purpose Can use\naggregates?\nWHERE Filters rows before grouping No\nGROUP \nBY\nGroups rows based on column values N/A\nHAVING Filters groups after aggregation Yes",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 62,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p62_c1",
-    "text": "Than 1 Referral Summary Clause Purpose Can use aggregates? WHERE Filters rows before grouping No GROUP BY Groups rows based on column values N/A HAVING Filters groups after aggregation Yes Use GROUP BY to organize data, and HAVING to filter those groups based on aggregate conditions.",
+    "text": "lumn values N/A\nHAVING Filters groups after aggregation Yes\nUse GROUP BY to organize data, and HAVING to filter those groups based on\naggregate conditions.\nROLLUP\nTo get subtotals and grand totals, you can use ROLLUP :\n\u2022 \n\u2022 \nSELECT referred_by_id, COUNT(*) AS total_referred\nFROM users\nWHERE referred_by_id IS NOT NULL\nGROUP BY referred_by_id\nHAVING COUNT(*) > 1;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 62,
     "chunk_index": 1
   },
   {
-    "chunk_id": "MySQL Handbook.pdf_p62_c2",
-    "text": "AVING to filter those groups based on aggregate conditions. ROLLUP To get subtotals and grand totals, you can use ROLLUP : \u2022 \u2022 SELECT referred_by_id, COUNT(*) AS total_referred FROM users WHERE referred_by_id IS NOT NULL GROUP BY referred_by_id HAVING COUNT(*) > 1;",
-    "document_name": "MySQL Handbook.pdf",
-    "page_number": 62,
-    "chunk_index": 2
-  },
-  {
     "chunk_id": "MySQL Handbook.pdf_p63_c0",
-    "text": "Explanation: This will give you a count of users by gender, along with a grand total for all users. SELECT gender, COUNT(*) AS total_users FROM users GROUP BY gender WITH ROLLUP; \u2022",
+    "text": "Explanation:\nThis will give you a count of users by gender, along with a grand total for all\nusers.\nSELECT gender, COUNT(*) AS total_users\nFROM users\nGROUP BY gender WITH ROLLUP;\n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 63,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p64_c0",
-    "text": "Stored Procedures in MySQL A stored procedure is a saved SQL block that can be executed later. It\u2019s useful when you want to encapsulate logic that can be reused multiple times \u2014 like queries, updates, or conditional operations. Why Change the Delimiter? By default, MySQL uses ; to end SQL statements. But when defining stored procedures, we use ; inside the procedure as well.",
+    "text": "Stored Procedures in MySQL\nA stored procedure is a saved SQL block that can be executed later. It\u2019s useful\nwhen you want to encapsulate logic that can be reused multiple times \u2014 like\nqueries, updates, or conditional operations.\nWhy Change the Delimiter?\nBy default, MySQL uses ; to end SQL statements.\nBut when defining stored procedures, we use ; inside the procedure as well. This",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 64,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p64_c1",
-    "text": "g stored procedures, we use ; inside the procedure as well. This can confuse MySQL. To avoid this, we temporarily change the delimiter (e.g. to $$ or // ) while creating the procedure. Syntax for Creating a Stored Procedure After the procedure is created, we reset the delimiter back to ; . DELIMITER $$ CREATE PROCEDURE procedure_name() BEGIN -- SQL statements go here END$$ DELIMITER ;",
+    "text": "red procedures, we use ; inside the procedure as well. This\ncan confuse MySQL. To avoid this, we temporarily change the delimiter (e.g.\u00a0to \n$$ or // ) while creating the procedure.\nSyntax for Creating a Stored Procedure\nAfter the procedure is created, we reset the delimiter back to ; .\nDELIMITER $$\nCREATE PROCEDURE procedure_name()\nBEGIN\n-- SQL statements go here\nEND$$\nDELIMITER ;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 64,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p65_c0",
-    "text": "Creating a Procedure with Input Parameters Let\u2019s say you want to create a stored procedure that inserts a new user into the users table. Example: This creates a procedure named AddUser that accepts five input parameters. Calling the Procedure You can call the procedure using: This will insert the new user into the users table.",
+    "text": "Creating a Procedure with Input Parameters\nLet\u2019s say you want to create a stored procedure that inserts a new user into the \nusers table.\nExample:\nThis creates a procedure named AddUser that accepts five input parameters.\nCalling the Procedure\nYou can call the procedure using:\nThis will insert the new user into the users table.\nDELIMITER $$\nCREATE PROCEDURE AddUser(\n IN p_name VARCHAR(100),",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 65,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p65_c1",
-    "text": "using: This will insert the new user into the users table. DELIMITER $$ CREATE PROCEDURE AddUser( IN p_name VARCHAR(100), IN p_email VARCHAR(100), IN p_gender ENUM('Male', 'Female', 'Other'), IN p_dob DATE, IN p_salary INT ) BEGIN INSERT INTO users (name, email, gender, date_of_birth, salary) VALUES (p_name, p_email, p_gender, p_dob, p_salary); END$$ DELIMITER ; CALL AddUser('Kiran Sharma',",
+    "text": "MITER $$\nCREATE PROCEDURE AddUser(\n IN p_name VARCHAR(100),\n IN p_email VARCHAR(100),\n IN p_gender ENUM('Male', 'Female', 'Other'),\n IN p_dob DATE,\n IN p_salary INT\n)\nBEGIN\n INSERT INTO users (name, email, gender, date_of_birth, salary)\n VALUES (p_name, p_email, p_gender, p_dob, p_salary);\nEND$$\nDELIMITER ;\nCALL AddUser('Kiran Sharma', 'kiran@example.com', 'Female', '1994-06-15', 72000);",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 65,
     "chunk_index": 1
   },
   {
-    "chunk_id": "MySQL Handbook.pdf_p65_c2",
-    "text": "b, p_salary); END$$ DELIMITER ; CALL AddUser('Kiran Sharma', 'kiran@example.com', 'Female', '1994-06-15', 72000);",
-    "document_name": "MySQL Handbook.pdf",
-    "page_number": 65,
-    "chunk_index": 2
-  },
-  {
     "chunk_id": "MySQL Handbook.pdf_p66_c0",
-    "text": "Notes Input parameters are declared using the IN keyword. Stored procedures are stored in the database and can be reused. Viewing Stored Procedures Dropping a Stored Procedure Summary Command Purpose DELIMITER $$ Temporarily change statement delimiter CREATE PROCEDURE Defines a new stored procedure CALL procedure_name(...) Executes a stored procedure DROP PROCEDURE Removes an existing procedure \u2022",
+    "text": "Notes\nInput parameters are declared using the IN keyword.\nStored procedures are stored in the database and can be reused.\nViewing Stored Procedures\nDropping a Stored Procedure\nSummary\nCommand Purpose\nDELIMITER $$ Temporarily change statement delimiter\nCREATE PROCEDURE Defines a new stored procedure\nCALL procedure_name(...) Executes a stored procedure\nDROP PROCEDURE Removes an existing procedure",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 66,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p66_c1",
-    "text": "red procedure DROP PROCEDURE Removes an existing procedure \u2022 \u2022 SHOW PROCEDURE STATUS WHERE Db = 'startersql'; DROP PROCEDURE IF EXISTS AddUser;",
+    "text": "ored procedure\nDROP PROCEDURE Removes an existing procedure\n\u2022 \n\u2022 \nSHOW PROCEDURE STATUS WHERE Db = 'startersql';\nDROP PROCEDURE IF EXISTS AddUser;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 66,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p67_c0",
-    "text": "Triggers in MySQL A trigger is a special kind of stored program that is automatically executed (triggered) when a specific event occurs in a table \u2014 such as INSERT , UPDATE , or DELETE . Triggers are commonly used for: Logging changes Enforcing additional business rules Automatically updating related data Basic Trigger Structure Triggers can be fired: BEFORE or AFTER an event On INSERT , UPDATE ,",
+    "text": "Triggers in MySQL\nA trigger is a special kind of stored program that is automatically executed\n(triggered) when a specific event occurs in a table \u2014 such as INSERT , UPDATE , or \nDELETE .\nTriggers are commonly used for:\nLogging changes\nEnforcing additional business rules\nAutomatically updating related data\nBasic Trigger Structure\nTriggers can be fired:\nBEFORE or AFTER an event",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 67,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p67_c1",
-    "text": "can be fired: BEFORE or AFTER an event On INSERT , UPDATE , or DELETE Scenario: Log Every New User Insertion Suppose we want to log every time a new user is inserted into the users table. We\u2019ll create a separate table called user_log to store log entries. \u2022 \u2022 \u2022 CREATE TRIGGER trigger_name AFTER INSERT ON table_name FOR EACH ROW BEGIN -- statements to execute END; \u2022 \u2022",
+    "text": "r Structure\nTriggers can be fired:\nBEFORE or AFTER an event\nOn INSERT , UPDATE , or DELETE\nScenario: Log Every New User Insertion\nSuppose we want to log every time a new user is inserted into the users table.\nWe\u2019ll create a separate table called user_log to store log entries.\n\u2022 \n\u2022 \n\u2022 \nCREATE TRIGGER trigger_name\nAFTER INSERT ON table_name\nFOR EACH ROW\nBEGIN\n-- statements to execute\nEND;\n\u2022 \n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 67,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p68_c0",
-    "text": "Step 1: Create the Log Table Step 2: Create the Trigger We now define a trigger that runs after a new user is added. Explanation: AFTER INSERT means the trigger fires after the user is inserted. NEW refers to the new row being added to the users table. We insert the new user\u2019s ID and name into the user_log table.",
+    "text": "Step 1: Create the Log Table\nStep 2: Create the Trigger\nWe now define a trigger that runs after a new user is added.\nExplanation:\nAFTER INSERT means the trigger fires after the user is inserted.\nNEW refers to the new row being added to the users table.\nWe insert the new user\u2019s ID and name into the user_log table.\nCREATE TABLE user_log (\nid INT AUTO_INCREMENT PRIMARY KEY,\n user_id INT,",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 68,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p68_c1",
-    "text": "insert the new user\u2019s ID and name into the user_log table. CREATE TABLE user_log ( id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, name VARCHAR(100), created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ); DELIMITER $$ CREATE TRIGGER after_user_insert AFTER INSERT ON users FOR EACH ROW BEGIN INSERT INTO user_log (user_id, name) VALUES (NEW.id, NEW.name); END$$ DELIMITER ; \u2022 \u2022 \u2022",
+    "text": "user_log (\nid INT AUTO_INCREMENT PRIMARY KEY,\n user_id INT,\n name VARCHAR(100),\n created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\nDELIMITER $$\nCREATE TRIGGER after_user_insert\nAFTER INSERT ON users\nFOR EACH ROW\nBEGIN\n INSERT INTO user_log (user_id, name)\n VALUES (NEW.id, NEW.name);\nEND$$\nDELIMITER ;\n\u2022 \n\u2022 \n\u2022",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 68,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p69_c0",
-    "text": "Step 3: Test the Trigger Now check the user_log table: You should see Ritika\u2019s info automatically logged. Dropping a Trigger If you need to remove a trigger: Summary Trigger Component Description BEFORE / AFTER When the trigger runs INSERT / UPDATE / DELETE What kind of action triggers it NEW.column Refers to the new row (for INSERT , UPDATE ) OLD.column Refers to the old row (for UPDATE , DELETE",
+    "text": "Step 3: Test the Trigger\nNow check the user_log table:\nYou should see Ritika\u2019s info automatically logged.\nDropping a Trigger\nIf you need to remove a trigger:\nSummary\nTrigger Component Description\nBEFORE / AFTER When the trigger runs\nINSERT / UPDATE / \nDELETE\nWhat kind of action triggers it\nNEW.column Refers to the new row (for INSERT , UPDATE )",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 69,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p69_c1",
-    "text": "DATE ) OLD.column Refers to the old row (for UPDATE , DELETE ) FOR EACH ROW Executes for each affected row CALL AddUser('Ritika Jain', 'ritika@example.com', 'Female', '1996-03-12', 74000); SELECT * FROM user_log; DROP TRIGGER IF EXISTS after_user_insert;",
+    "text": "it\nNEW.column Refers to the new row (for INSERT , UPDATE )\nOLD.column Refers to the old row (for UPDATE , DELETE )\nFOR EACH ROW Executes for each affected row\nCALL AddUser('Ritika Jain', 'ritika@example.com', 'Female', '1996-03-12', 74000);\nSELECT * FROM user_log;\nDROP TRIGGER IF EXISTS after_user_insert;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 69,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p70_c0",
-    "text": "More on MySQL This section covers some essential MySQL features and operators that help you write more powerful and flexible queries. 1. Logical Operators Logical operators are used to combine multiple conditions in a WHERE clause.",
+    "text": "More on MySQL\nThis section covers some essential MySQL features and operators that help you\nwrite more powerful and flexible queries.\n1. Logical Operators\nLogical operators are used to combine multiple conditions in a WHERE clause.\nOperator Description Example\nAND All conditions must be true\nsalary > 50000 AND gender = \n'Male'\nOR\nAt least one condition is\ntrue\ngender = 'Male' OR gender = \n'Other'",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 70,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p70_c1",
-    "text": "are used to combine multiple conditions in a WHERE clause. Operator Description Example AND All conditions must be true salary > 50000 AND gender = 'Male' OR At least one condition is true gender = 'Male' OR gender = 'Other' NOT Reverses a condition NOT gender = 'Female' 2. Add a Column to an Existing Table Use ALTER TABLE to add a column: This adds a new column named city to the users table.",
+    "text": "one condition is\ntrue\ngender = 'Male' OR gender = \n'Other'\nNOT Reverses a condition NOT gender = 'Female'\n2. Add a Column to an Existing Table\nUse ALTER TABLE to add a column:\nThis adds a new column named city to the users table.\nALTER TABLE users\nADD COLUMN city VARCHAR(100);",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 70,
     "chunk_index": 1
   },
   {
-    "chunk_id": "MySQL Handbook.pdf_p70_c2",
-    "text": "lumn: This adds a new column named city to the users table. ALTER TABLE users ADD COLUMN city VARCHAR(100);",
-    "document_name": "MySQL Handbook.pdf",
-    "page_number": 70,
-    "chunk_index": 2
-  },
-  {
     "chunk_id": "MySQL Handbook.pdf_p71_c0",
-    "text": "3. Wildcard Operators Wildcards are used with the LIKE operator for pattern matching in text. Wildcard Description Example % Matches any sequence WHERE name LIKE 'A%' (starts with A) _ Matches a single character WHERE name LIKE '_a%' (second letter is \u2018a\u2019) 4. LIMIT with OFFSET LIMIT is used to limit the number of rows returned. OFFSET skips a number of rows before starting to return rows.",
+    "text": "3. Wildcard Operators\nWildcards are used with the LIKE operator for pattern matching in text.\nWildcard Description Example\n%\nMatches any\nsequence\nWHERE name LIKE 'A%' (starts with A)\n_\nMatches a single\ncharacter\nWHERE name LIKE '_a%' (second letter\nis \u2018a\u2019)\n4. LIMIT with OFFSET\nLIMIT is used to limit the number of rows returned. OFFSET skips a number of\nrows before starting to return rows.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 71,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p71_c1",
-    "text": "FSET skips a number of rows before starting to return rows. This skips the first 10 rows and returns the next 5. Alternative syntax: This also skips 10 and returns 5 (syntax: LIMIT offset, count ). 5. DISTINCT Keyword DISTINCT is used to return only unique values. SELECT * FROM users ORDER BY id LIMIT 5 OFFSET 10; SELECT * FROM users ORDER BY id LIMIT 10, 5;",
+    "text": "FSET skips a number of\nrows before starting to return rows.\nThis skips the first 10 rows and returns the next 5.\nAlternative syntax:\nThis also skips 10 and returns 5 (syntax: LIMIT offset, count ).\n5. DISTINCT Keyword\nDISTINCT is used to return only unique values.\nSELECT * FROM users\nORDER BY id\nLIMIT 5 OFFSET 10;\nSELECT * FROM users\nORDER BY id\nLIMIT 10, 5;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 71,
     "chunk_index": 1
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p72_c0",
-    "text": "Returns a list of unique gender values from the users table. 6. TRUNCATE Keyword TRUNCATE removes all rows from a table, but keeps the table structure. Faster than DELETE FROM users Cannot be rolled back (unless in a transaction-safe environment) 7. CHANGE vs MODIFY Column Both CHANGE and MODIFY are used to alter existing columns in a table, but they work slightly differently.",
+    "text": "Returns a list of unique gender values from the users table.\n6. TRUNCATE Keyword\nTRUNCATE removes all rows from a table, but keeps the table structure.\nFaster than DELETE FROM users\nCannot be rolled back (unless in a transaction-safe environment)\n7. CHANGE vs MODIFY Column\nBoth CHANGE and MODIFY are used to alter existing columns in a table, but they\nwork slightly differently.",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 72,
     "chunk_index": 0
   },
   {
     "chunk_id": "MySQL Handbook.pdf_p72_c1",
-    "text": "ing columns in a table, but they work slightly differently. CHANGE: Rename and change datatype This renames city to location and changes its type. MODIFY: Only change datatype This changes only the datatype of salary . SELECT DISTINCT gender FROM users; TRUNCATE TABLE users; \u2022 \u2022 ALTER TABLE users CHANGE COLUMN city location VARCHAR(150); ALTER TABLE users MODIFY COLUMN salary BIGINT;",
+    "text": "ing columns in a table, but they\nwork slightly differently.\nCHANGE: Rename and change datatype\nThis renames city to location and changes its type.\nMODIFY: Only change datatype\nThis changes only the datatype of salary .\nSELECT DISTINCT gender FROM users;\nTRUNCATE TABLE users;\n\u2022 \n\u2022 \nALTER TABLE users\nCHANGE COLUMN city location VARCHAR(150);\nALTER TABLE users\nMODIFY COLUMN salary BIGINT;",
     "document_name": "MySQL Handbook.pdf",
     "page_number": 72,
     "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p2_c0",
-    "text": "MongoDB Handbook 1. Introduction In this MongoDB handbook, we\u2019ll cover everything you need to use MongoDB confidently as fast as possible. We\u2019ll use an e-commerce website as our primary example with three main collections: products : store products information orders : store order details contacts : messages from the contact form You\u2019ll learn all essential MongoDB operations using the latest",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 2,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p2_c1",
-    "text": "u\u2019ll learn all essential MongoDB operations using the latest MongoDB features. 2. MongoDB Basics What is MongoDB? MongoDB is a NoSQL document-oriented database. It stores data in JSON-like documents (actually BSON, a binary form of JSON). Key Components mongod \u2013 the main MongoDB server daemon. It handles connections, database storage, and queries. You must run this before using MongoDB locally.",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 2,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p2_c2",
-    "text": "nd queries. You must run this before using MongoDB locally. mongosh \u2013 the MongoDB Shell. It\u2019s the command-line interface for interacting with MongoDB. You use it to run commands, queries, and scripts. MongoDB Compass \u2013 a GUI tool for visualizing data, running queries, and analyzing performance. Perfect for beginners who prefer a graphical view. \u2022 \u2022 \u2022 \u2022 \u2022 \u2022",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 2,
-    "chunk_index": 2
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p3_c0",
-    "text": "3. Installing MongoDB Installing MongoDB can be easily done by visiting the official website. The community edition is free and suitable for most use cases. 4. Basic Mongo Shell Commands 5. Creating Collections and Inserting Data We\u2019ll create three collections: products orders contacts Insert Sample Products Let\u2019s populate our database using insertMany() .",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 3,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p3_c1",
-    "text": "e Products Let\u2019s populate our database using insertMany() . show dbs // List all databases use ecommerce // Create or switch to a database show collections // List all collections in the current DB db.dropDatabase() // Drop current database \u2022 \u2022 \u2022 use ecommerce db.products.insertMany([ { name: \"Wireless Mouse\", price: 799, category: \"Electronics\",",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 3,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p4_c0",
-    "text": "Insert Orders stock: 120, ratings: 4.5, tags: [\"computer\", \"accessory\", \"wireless\"], createdAt: new Date() }, { name: \"Mechanical Keyboard\", price: 2499, category: \"Electronics\", stock: 80, ratings: 4.8, tags: [\"keyboard\", \"mechanical\"], createdAt: new Date() }, { name: \"Gaming Laptop\", price: 85999, category: \"Computers\", stock: 30, ratings: 4.6, tags: [\"gaming\", \"laptop\"], createdAt: new Date()",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 4,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p4_c1",
-    "text": "ings: 4.6, tags: [\"gaming\", \"laptop\"], createdAt: new Date() } ]) db.orders.insertMany([ { orderId: \"ORD001\", user: \"John Doe\", products: [ { name: \"Wireless Mouse\", quantity: 1, price: 799 }, { name: \"Mechanical Keyboard\", quantity: 1, price: 2499 } ], total: 3298, status: \"Delivered\", createdAt: new Date() },",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 4,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p5_c0",
-    "text": "Insert Contact Messages 6. Reading Data (Find Queries) Find All Documents Pretty Print { orderId: \"ORD002\", user: \"Jane Smith\", products: [ { name: \"Gaming Laptop\", quantity: 1, price: 85999 } ], total: 85999, status: \"Pending\", createdAt: new Date() } ]) db.contacts.insertMany([ { name: \"Alice\", message: \"Loved your website!\", phone: \"9876543210\", createdAt: new Date() }, { name: \"Bob\", message:",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 5,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p5_c1",
-    "text": "876543210\", createdAt: new Date() }, { name: \"Bob\", message: \"Do you have discounts on laptops?\", phone: \"9123456789\", createdAt: new Date() }, { name: \"Carol\", message: \"I want to cancel my order.\", phone: \"9988776655\", createdAt: new Date() } ]) db.products.find() db.products.find().pretty()",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 5,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p6_c0",
-    "text": "Filter by Field Using Comparison Operators Logical Operators Projection (Select Specific Fields) Sorting and Limiting 7. Updating Documents Update One db.products.find({ category: \"Electronics\" }) db.products.find({ price: { $gt: 1000 } }) // greater than 1000 db.products.find({ price: { $gte: 1000, $lte: 50000 } }) db.products.find({ $or: [{ category: \"Electronics\" }, { stock: { $lt: 50 } }] })",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 6,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p6_c1",
-    "text": "or: [{ category: \"Electronics\" }, { stock: { $lt: 50 } }] }) db.products.find({}, { name: 1, price: 1, _id: 0 }) db.products.find().sort({ price: -1 }).limit(2) db.products.updateOne( { name: \"Wireless Mouse\" }, { $set: { price: 899 } } )",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 6,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p7_c0",
-    "text": "Update Many Using $push to Add to Arrays 8. Deleting Documents Delete One Delete Many 9. Indexing and Performance Create an Index db.products.updateMany( { category: \"Electronics\" }, { $inc: { stock: 10 } } ) db.products.updateOne( { name: \"Wireless Mouse\" }, { $push: { tags: \"new\" } } ) db.contacts.deleteOne({ name: \"Alice\" }) db.orders.deleteMany({ status: \"Delivered\" })",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 7,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p7_c1",
-    "text": "me: \"Alice\" }) db.orders.deleteMany({ status: \"Delivered\" }) db.products.createIndex({ name: 1 })",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 7,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p8_c0",
-    "text": "View All Indexes Explain Query Performance 10. Aggregation Framework Basic Example Total revenue from all orders: Group by Status Lookup (Join Orders with Products) db.products.getIndexes() db.products.find({ price: { $gt: 5000 } }).explain(\"executionStats\") db.orders.aggregate([ { $group: { _id: null, totalRevenue: { $sum: \"$total\" } } } ]) db.orders.aggregate([ { $group: { _id: \"$status\",",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 8,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p8_c1",
-    "text": "\" } } } ]) db.orders.aggregate([ { $group: { _id: \"$status\", totalOrders: { $sum: 1 } } } ]) db.orders.aggregate([ { $lookup: { from: \"products\", localField: \"products.name\", foreignField: \"name\", as: \"productDetails\"",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 8,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p9_c0",
-    "text": "11. MongoDB Atlas (Cloud) Steps to Use Atlas Go to https://cloud.mongodb.com Create a free cluster (Serverless recommended) Whitelist your IP and create a DB user Follow the connection string instructions to connect via mongosh or your application 12. Aggregation Pipeline Aggregation pipelines in MongoDB are used to analyze and transform data.",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 9,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p9_c1",
-    "text": "ipelines in MongoDB are used to analyze and transform data. They work in stages: each stage performs an operation, and the output of one stage becomes the input of the next. Create a sample collection Let\u2019s start with a sales collection. } } ]) 1. 2. 3. 4.",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 9,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p9_c2",
-    "text": "ion Let\u2019s start with a sales collection. } } ]) 1. 2. 3. 4. use ecommerce; db.sales.insertMany([ { _id: 1, item: \"Apple\", price: 10, quantity: 5, category: \"Fruit\" }, { _id: 2, item: \"Banana\", price: 5, quantity: 10, category: \"Fruit\" }, { _id: 3, item: \"Carrot\", price: 8, quantity: 6, category: \"Vegetable\" }, { _id: 4, item: \"Tomato\", price: 6, quantity: 8, category: \"Vegetable\" },",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 9,
-    "chunk_index": 2
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p10_c0",
-    "text": "This collection has 5 documents. Each document represents a product with its price, quantity, and category. What is an aggregation pipeline? Think of it like a factory line: Each stage takes input (your data) Performs some operation (like filtering, sorting, grouping) Sends the result to the next stage Example structure: Aggregation Pipeline Example 1: $match : Filter documents Let\u2019s get only the",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 10,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p10_c1",
-    "text": "line Example 1: $match : Filter documents Let\u2019s get only the sales where category is \"Fruit\" : Output: { _id: 5, item: \"Mango\", price: 15, quantity: 3, category: \"Fruit\" } ]); \u2022 \u2022 \u2022 db.sales.aggregate([ { /* stage 1 */ }, { /* stage 2 */ }, { /* stage 3 */ } ]); db.sales.aggregate([ { $match: { category: \"Fruit\" } } ]);",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 10,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p11_c0",
-    "text": "Aggregation Pipeline Example 2: $project : Select specific fields Let\u2019s display only item and price , and hide _id : Output: Aggregation Pipeline Example 3: $group : Group and calculate totals Let\u2019s calculate total sales (price \u00d7 quantity) for each category: { _id: 1, item: \"Apple\", price: 10, quantity: 5, category: \"Fruit\" } { _id: 2, item: \"Banana\", price: 5, quantity: 10, category: \"Fruit\" } {",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 11,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p11_c1",
-    "text": "tem: \"Banana\", price: 5, quantity: 10, category: \"Fruit\" } { _id: 5, item: \"Mango\", price: 15, quantity: 3, category: \"Fruit\" } db.sales.aggregate([ { $project: { _id: 0, item: 1, price: 1 } } ]); { item: \"Apple\", price: 10 } { item: \"Banana\", price: 5 } { item: \"Carrot\", price: 8 } { item: \"Tomato\", price: 6 } { item: \"Mango\", price: 15 } db.sales.aggregate([ { $group: { _id: \"$category\",",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 11,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p11_c2",
-    "text": "ice: 15 } db.sales.aggregate([ { $group: { _id: \"$category\", totalSales: { $sum: { $multiply: [\"$price\", \"$quantity\"] } } }",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 11,
-    "chunk_index": 2
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p12_c0",
-    "text": "Output: How this works: $group groups all documents by category $sum adds up the result of price \u00d7 quantity for each document Aggregation Pipeline Example 4: $sort : Sort results Sort the total sales in descending order: Output: } ]); { _id: \"Fruit\", totalSales: 145 } { _id: \"Vegetable\", totalSales: 96 } \u2022 \u2022 db.sales.aggregate([ { $group: { _id: \"$category\", totalSales: { $sum: { $multiply:",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 12,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p12_c1",
-    "text": "$group: { _id: \"$category\", totalSales: { $sum: { $multiply: [\"$price\", \"$quantity\"] } } } }, { $sort: { totalSales: -1 } } ]); { _id: \"Fruit\", totalSales: 145 } { _id: \"Vegetable\", totalSales: 96 }",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 12,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p13_c0",
-    "text": "Aggregation Pipeline Example 5: Combine $match + $group Find total sales for only Fruits: Output: Aggregation Pipeline Summary table Stage Description Example Use $match Filter documents { category: \"Fruit\" } $project Show/hide fields or create new ones item , price $group Group data and calculate sums, averages total sales per category $sort Sort results Sort by total sales $limit Limit number",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 13,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p13_c1",
-    "text": "y $sort Sort results Sort by total sales $limit Limit number of results Top 3 items The stages you\u2019ve learned ($match, $project, $group, $sort, $limit) are just the most common and beginner-friendly ones: often called the core stages.",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 13,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p13_c2",
-    "text": "n and beginner-friendly ones: often called the core stages. db.sales.aggregate([ { $match: { category: \"Fruit\" } }, { $group: { _id: null, totalFruitSales: { $sum: { $multiply: [\"$price\", \"$quantity\"] } } } } ]); { totalFruitSales: 145 }",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 13,
-    "chunk_index": 2
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p14_c0",
-    "text": "But MongoDB actually supports dozens of stages (over 25). 13. MongoDB Indexes Indexes in MongoDB are special data structures that improve the speed of read operations on a collection. They work similarly to indexes in books, allowing the database to quickly locate and access the data without scanning every document. Create Index View Indexes Should you always create indexes?",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 14,
-    "chunk_index": 0
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p14_c1",
-    "text": "Create Index View Indexes Should you always create indexes? While indexes improve read performance, they can slow down write operations (inserts, updates, deletes) because the index must also be updated. Therefore, it\u2019s essential to create indexes thoughtfully based on your application\u2019s query patterns. 14.",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 14,
-    "chunk_index": 1
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p14_c2",
-    "text": "houghtfully based on your application\u2019s query patterns. 14. Useful Admin Commands db.products.createIndex({ name: 1 }) // Ascending index on 'name' field db.products.getIndexes() // List all indexes on 'products' collection db.stats() // Show DB stats db.serverStatus() // Server info db.products.countDocuments() // Count documents db.products.renameCollection(\"items\") // Rename collection",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 14,
-    "chunk_index": 2
-  },
-  {
-    "chunk_id": "MongoDB Handbook.pdf_p14_c3",
-    "text": "s db.products.renameCollection(\"items\") // Rename collection db.products.drop() // Drop collection",
-    "document_name": "MongoDB Handbook.pdf",
-    "page_number": 14,
-    "chunk_index": 3
   }
 ]

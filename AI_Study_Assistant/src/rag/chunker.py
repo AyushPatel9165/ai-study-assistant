@@ -37,7 +37,9 @@ class TextChunker:
         self.chunk_overlap = chunk_overlap
 
     def chunk_text(self, text: str, document_name: str, page_number: int) -> List[DocumentChunk]:
-        clean_text = re.sub(r"\s+", " ", text).strip()
+        # Preserve paragraph breaks while normalizing spaces
+        clean_text = re.sub(r"[ \t\r\f\v]+", " ", text)
+        clean_text = re.sub(r"\n\s*\n+", "\n\n", clean_text).strip()
         if not clean_text:
             return []
 

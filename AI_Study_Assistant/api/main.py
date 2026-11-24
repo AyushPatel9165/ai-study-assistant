@@ -632,6 +632,51 @@ def ask_notes(request: AskRequest) -> AskResponse:
             detail=f"RAG query execution failed: {str(e)}"
         )
 
+class AskWebFallbackRequest(BaseModel):
+    query: str = Field(..., min_length=1, max_length=1000)
+    session_id: str = Field(default="default_session")
+
+@app.post("/ask-web", tags=["Module 3: RAG"])
+def ask_web_fallback(request: AskWebFallbackRequest) -> Dict[str, Any]:
+    """Fallback to Web Search / External AI when a topic is not in uploaded notes."""
+    try:
+        from src.rag.web_search import WebSearchFallback
+        cleaned_query = verify_and_sanitize_input(request.query)
+        result = WebSearchFallback.search_and_answer(cleaned_query)
+
+        db = get_db()
+        db.add_conversation(
+            session_id=request.session_id,
+            role="student",
+            query=cleaned_query,
+            answer=result["answer"],
+            confidence=1.0,
+            tool_used=f"Web Fallback ({result['provider']})"
+        )
+
+        return {
+            "question": request.query,
+            "answer": result["answer"],
+            "found_in_notes": False,
+            "is_web": True,
+            "provider": result["provider"],
+            "confidence": 1.0,
+            "citations": [
+                {
+                    "document_name": f"Global Web & AI Knowledge ({result['provider']})",
+                    "page_number": 1,
+                    "relevance_score": 1.0,
+                    "snippet": "Answer synthesized via External AI / Web knowledge fallback."
+                }
+            ],
+            "retrieved_count": 1
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"External Web fallback failed: {str(e)}"
+        )
+
 @app.get("/flashcards", tags=["Study Tools"])
 def get_study_flashcards(topic: Optional[str] = None, limit: int = 8) -> List[Dict[str, Any]]:
     """Generates interactive revision flashcards from uploaded technical notes."""

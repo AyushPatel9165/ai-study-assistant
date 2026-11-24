@@ -110,9 +110,17 @@ class RAGPipeline:
         if not previous_query or not previous_query.strip():
             return question
 
-        q_lower = question.lower()
+        q_lower = question.lower().strip()
+
+        # Standalone definitional questions without pronouns are NOT follow-ups
+        if re.match(r"^(what|who|where|when|define|explain)\s+(is|are|was|were)\s+", q_lower):
+            pronouns = [r"\bit\b", r"\bthis\b", r"\bthese\b", r"\bthat\b", r"\bthe above\b", r"\bthem\b"]
+            if not any(re.search(p, q_lower) for p in pronouns):
+                return question
+
         pronouns = [r"\bit\b", r"\bthis\b", r"\bthese\b", r"\bthat\b", r"\bthe above\b", r"\bthem\b"]
-        is_followup = any(re.search(p, q_lower) for p in pronouns) or len(question.split()) <= 3
+        followup_starters = [r"^why\??$", r"^how\??$", r"^explain more", r"^give (an )?example", r"^and \w+"]
+        is_followup = any(re.search(p, q_lower) for p in pronouns) or any(re.search(p, q_lower) for p in followup_starters)
 
         if is_followup:
             prev_terms = re.findall(r"\b[A-Za-z0-9_]{3,}\b", previous_query)

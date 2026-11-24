@@ -874,7 +874,42 @@
       const [copiedIdx, setCopiedIdx] = useState(null);
       const [loadingHistory, setLoadingHistory] = useState(true);
       const [isListening, setIsListening] = useState(false);
+      const [lastQuery, setLastQuery] = useState("");
       const recognitionRef = useRef(null);
+
+      const handleAskWeb = async (queryText) => {
+        const queryToAsk = queryText || lastQuery;
+        if (!queryToAsk || loading) return;
+        setLoading(true);
+        try {
+          const res = await fetch(`${API_BASE}/ask-web`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query: queryToAsk })
+          });
+          if (res.ok) {
+            const data = await res.json();
+            setMessages(prev => [...prev, {
+              role: "assistant",
+              text: data.answer,
+              citations: data.citations,
+              found_in_notes: false,
+              is_web: true,
+              provider: data.provider,
+              confidence: 1.0,
+              timestamp: new Date().toISOString()
+            }]);
+            onRefreshMetrics();
+          } else {
+            alert("External AI / Web search failed.");
+          }
+        } catch (err) {
+          console.error("Web search failed", err);
+          alert("Error connecting to web knowledge fallback: " + err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
 
       const toggleVoiceInput = () => {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -1008,6 +1043,7 @@
         if (!queryToSend.trim() || loading) return;
 
         const userMsg = queryToSend.trim();
+        setLastQuery(userMsg);
         setInput("");
         setMessages(prev => [...prev, {
           role: "user",
@@ -1140,12 +1176,38 @@
                       m.role === "user" ? "border-white/20 text-white/80" : "border-[#e6e6e6] dark:border-[#2f2f2f] text-[#615d59] dark:text-[#888888]"
                     }`}>
                       <span className="font-semibold uppercase tracking-wider">
-                        {m.role === "user" ? "You (Student)" : "AI Study Tutor"}
+                        {m.role === "user" ? "You (Student)" : (m.is_web ? "AI Web Tutor" : "AI Study Tutor")}
                       </span>
                       {m.timestamp && (
                         <span>{new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                       )}
                     </div>
+
+                    {/* Verified In Notes Header Banner */}
+                    {m.role === "assistant" && m.found_in_notes && m.citations && m.citations.length > 0 && (
+                      <div className="mb-2.5 pb-2 border-b border-[#e6e6e6] dark:border-[#2f2f2f] flex items-center justify-between flex-wrap gap-2 text-[11px] font-mono">
+                        <div className="flex items-center space-x-1.5 text-[#1aae39] font-semibold">
+                          <span className="h-2 w-2 rounded-full bg-[#1aae39]"></span>
+                          <span>Verified in Study Notes:</span>
+                          <span className="font-bold underline text-[#0075de]">{m.citations[0].document_name}</span>
+                          <span className="bg-[#eef9f1] dark:bg-[#1aae39]/15 px-1.5 py-0.2 rounded border border-[#c6eed0] dark:border-[#1aae39]/30">Page {m.citations[0].page_number}</span>
+                        </div>
+                        <span className="text-[#615d59] dark:text-[#888888]">
+                          Match: {(m.citations[0].relevance_score * 100).toFixed(1)}%
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Web / External AI Header Banner */}
+                    {m.role === "assistant" && m.is_web && (
+                      <div className="mb-2.5 pb-2 border-b border-[#e6e6e6] dark:border-[#2f2f2f] flex items-center justify-between text-[11px] font-mono text-[#0075de]">
+                        <div className="flex items-center space-x-1.5 font-semibold">
+                          <span className="h-2 w-2 rounded-full bg-[#0075de]"></span>
+                          <span>Global Web & AI Knowledge ({m.provider || "External AI"})</span>
+                        </div>
+                        <span className="text-[#615d59] dark:text-[#888888]">Out-of-Notes Search</span>
+                      </div>
+                    )}
 
                     <div className="leading-relaxed font-sans text-xs">
                       {m.role === "user" ? (
@@ -1154,6 +1216,24 @@
                         <FormattedTutorResponse text={m.text} />
                       )}
                     </div>
+
+                    {/* Out of Notes Action Card: Continue to Web / Ask AI */}
+                    {m.role === "assistant" && !m.found_in_notes && !m.is_web && (
+                      <div className="mt-3.5 p-3 bg-[#eef6fc] dark:bg-[#0075de]/10 border border-[#c5e1fb] dark:border-[#0075de]/30 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 font-sans">
+                        <div>
+                          <div className="font-semibold text-[#0075de] text-xs">Topic not found in your study notes</div>
+                          <div className="text-[11px] text-[#615d59] dark:text-[#888888]">Would you like to search via Web & External AI?</div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleAskWeb(lastQuery)}
+                          disabled={loading}
+                          className="px-3.5 py-1.5 bg-[#0075de] hover:bg-[#005fb2] text-white text-xs font-semibold rounded-md shadow-sm transition whitespace-nowrap cursor-pointer"
+                        >
+                          Continue to Web / Ask AI
+                        </button>
+                      </div>
+                    )}
 
                     {/* Citations Box */}
                     {m.citations && m.citations.length > 0 && (

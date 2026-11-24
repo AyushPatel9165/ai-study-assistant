@@ -25,12 +25,13 @@ class RAGGenerator:
         if not retrieved_chunks:
             return {
                 "answer": (
-                    f"I could not find relevant information in your uploaded study notes regarding: '{query}'.\n\n"
-                    "Currently indexed notes cover:\n"
-                    "• Python Internals (Memory Management, Garbage Collection, GIL, Generators)\n"
-                    "• Machine Learning (Gradient Descent, Overfitting, L1/L2 Regularization)\n"
-                    "• Artificial Intelligence (Search Spaces, A* Algorithm, Heuristics)\n\n"
-                    "Tip: You can upload your own lecture notes or textbooks in 'My Documents' to study new topics!"
+                    f"Unable to find relevant information in your uploaded study notes regarding: '{query}'.\n\n"
+                    "Currently indexed topics include:\n"
+                    "• Python Programming Language & Internals (Memory Management, Garbage Collection, GIL, Generators)\n"
+                    "• Machine Learning (Optimization, Gradient Descent, Overfitting, L1/L2 Regularization)\n"
+                    "• Artificial Intelligence (Search Spaces, A* Algorithm, Heuristics)\n"
+                    "• MongoDB NoSQL (Architecture, BSON Documents, mongod, mongosh)\n\n"
+                    "Tip: You can click 'Ask Web / External AI' below to get a comprehensive answer from global AI knowledge, or upload additional PDF/TXT notes in 'My Documents'!"
                 ),
                 "found_in_notes": False,
                 "confidence": 0.0,
@@ -41,10 +42,10 @@ class RAGGenerator:
         if top_score < self.confidence_threshold:
             return {
                 "answer": (
-                    f"I could not find relevant information in your uploaded study notes to answer '{query}' reliably. "
-                    f"(Relevance score: {top_score:.2f} is below the {self.confidence_threshold:.2f} confidence threshold).\n\n"
-                    "Currently indexed notes cover Python Internals, ML Regularization & Overfitting, and AI A* Search. "
-                    "Upload additional notes in 'My Documents' to ask about this topic!"
+                    f"Unable to find relevant information in your uploaded study notes regarding: '{query}'. "
+                    f"(Highest relevance match was only {top_score:.1%}, which is below the required {self.confidence_threshold:.0%} confidence threshold).\n\n"
+                    "Currently indexed notes cover Python Programming & Internals, ML Optimization & Regularization, AI A* Search, and MongoDB.\n\n"
+                    "Tip: Click 'Ask Web / External AI' below to search global AI knowledge, or upload lecture notes for this topic in 'My Documents'!"
                 ),
                 "found_in_notes": False,
                 "confidence": top_score,
@@ -84,11 +85,11 @@ class RAGGenerator:
         for snip in snippets:
             # Normalize bullets, carriage returns and colons
             text = snip.replace("•", "\n• ").replace("\r\n", "\n")
-            # Strip markdown header comments and boilerplate lines
-            text = re.sub(r"(?m)^\s*#+.*$", " ", text)
-            text = re.sub(r"(?i)sample technical study notes.*", " ", text)
-            text = re.sub(r"(?i)course:\s*[^\n]+", " ", text)
-            text = re.sub(r"(?i)chapter\s+\d+:\s*[^\n]+", " ", text)
+            # Strip specific markdown header titles safely without deleting trailing text
+            text = re.sub(r"(?i)#+\s*AI Study Assistant\s*[-–]\s*Sample Technical Study Notes", " ", text)
+            text = re.sub(r"(?i)#+\s*Course:[^#\n.]*(?:##|\.|\n|$)", " ", text)
+            text = re.sub(r"(?i)#+\s*Chapter\s+\d+:[^#\n.]*(?:##|\.|\n|$)", " ", text)
+            text = re.sub(r"(?i)sample technical study notes", " ", text)
 
             raw_parts = re.split(r"(?<=[.?!])\s+|\n+", text)
 
@@ -191,6 +192,14 @@ class RAGGenerator:
             overlap = len(key_query_words.intersection(s_words))
             core_overlap = len(core_raw_keywords.intersection(s_words))
             weighted_score = overlap + (core_overlap * 2)
+
+            # Direct definition bonus: if the sentence directly defines the exact query term (e.g. "python is a...")
+            for kw in core_raw_keywords:
+                if len(kw) > 2:
+                    if re.search(rf"\b{re.escape(kw)}\s+(is\s+(a|an|the)|are|refers\s+to|was\s+created)\b", s_lower):
+                        weighted_score += 15
+                    elif s_lower.startswith(f"{kw} "):
+                        weighted_score += 8
 
             # Categorize sentences
             if any(d in s_lower for d in def_indicators) and weighted_score > 0:

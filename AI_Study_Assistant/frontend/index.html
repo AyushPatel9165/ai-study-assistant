@@ -288,9 +288,9 @@
         <div className="flex h-screen overflow-hidden bg-[#f6f5f4] dark:bg-[#191919] transition-colors duration-200">
           {/* Left Sidebar (Notion Clean Desk Style) */}
           <aside className="w-64 bg-[#ffffff] dark:bg-[#202020] border-r border-[#e6e6e6] dark:border-[#2f2f2f] flex flex-col justify-between select-none shrink-0 shadow-sm z-20 transition-colors duration-200">
-            <div>
+            <div className="flex-1 flex flex-col min-h-0">
               {/* App Brand & Dark Mode Button */}
-              <div className="p-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f] flex items-center justify-between">
+              <div className="p-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f] flex items-center justify-between shrink-0">
                 <div className="flex items-center space-x-3">
                   <div className="h-8 w-8 rounded-lg bg-[#0075de] flex items-center justify-center font-bold text-white text-xs tracking-wider shadow-sm">
                     AI
@@ -312,7 +312,7 @@
               </div>
 
               {/* Navigation Menu */}
-              <nav className="p-2.5 space-y-1">
+              <nav className="p-2.5 space-y-1 overflow-y-auto flex-1">
                 {navItems.map(item => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.id;
@@ -344,7 +344,7 @@
             </div>
 
             {/* Sidebar Footer with Live API Pill */}
-            <div className="p-3.5 border-t border-[#e6e6e6] dark:border-[#2f2f2f] bg-[#fdfdfd] dark:bg-[#1d1d1d] text-xs">
+            <div className="p-3.5 border-t border-[#e6e6e6] dark:border-[#2f2f2f] bg-[#fdfdfd] dark:bg-[#1d1d1d] text-xs shrink-0">
               <div className="flex items-center justify-between font-mono text-[11px]">
                 <span className="text-[#615d59] dark:text-[#888888]">Backend API:</span>
                 <span className="inline-flex items-center space-x-1.5 font-semibold text-[#1aae39]">
@@ -362,7 +362,7 @@
           </aside>
 
           {/* Main Content Area */}
-          <main className="flex-1 overflow-y-auto bg-[#f6f5f4] dark:bg-[#191919] p-6 md:p-8 transition-colors duration-200">
+          <main className={`flex-1 ${activeTab === 'chat' ? 'overflow-hidden p-3 sm:p-4 md:p-6 flex flex-col' : 'overflow-y-auto p-4 sm:p-6 md:p-8'} bg-[#f6f5f4] dark:bg-[#191919] transition-colors duration-200`}>
             {activeTab === "dashboard" && (
               <DashboardView
                 data={dashboardData}
@@ -428,7 +428,7 @@
       };
 
       return (
-        <div className="max-w-5xl mx-auto space-y-6">
+        <div className="max-w-5xl mx-auto space-y-6 pb-8">
           {/* Signature Inverted Hero Night Band (Deep Indigo) */}
           <div className="bg-[#213183] text-white rounded-2xl p-6 md:p-8 relative overflow-hidden shadow-lg">
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -625,7 +625,7 @@
               <span className="text-[11px] font-mono text-[#a39e98] dark:text-[#666666]">FastAPI • PyTorch • FAISS • SQLite</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 mt-4">
               {/* Module 1 */}
               <div onClick={() => onNavigate("classify")} className="bg-[#f6f5f4] dark:bg-[#191919] hover:bg-[#ffffff] dark:hover:bg-[#252525] border border-[#e6e6e6] dark:border-[#2f2f2f] hover:border-[#0075de] p-3.5 rounded-xl cursor-pointer transition notion-shadow-sm space-y-1">
                 <div className="flex items-center justify-between text-[10px] font-mono">
@@ -1201,9 +1201,9 @@
       };
 
       return (
-        <div className="max-w-4xl mx-auto flex flex-col h-[calc(100vh-5.5rem)] space-y-4">
+        <div className="max-w-4xl w-full mx-auto flex flex-col flex-1 min-h-0 space-y-3">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-[#e6e6e6] dark:border-[#2f2f2f] shrink-0">
             <div>
               <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Chat With Your Study Notes</h2>
               <p className="text-xs text-[#615d59] dark:text-[#888888] mt-0.5">Retrieval-Augmented Generation (RAG) with anti-hallucination guardrail (0.40 threshold).</p>
@@ -1230,7 +1230,7 @@
           </div>
 
           {/* Starter Chips Bar */}
-          <div className="flex items-center space-x-2 overflow-x-auto pb-1 text-xs font-mono text-[#615d59] dark:text-[#888888] select-none">
+          <div className="flex items-center space-x-2 overflow-x-auto pb-1 text-xs font-mono text-[#615d59] dark:text-[#888888] select-none shrink-0">
             <span className="text-[#a39e98] dark:text-[#666666] shrink-0 text-xs">Sample Questions:</span>
             {starterQuestions.map((q, idx) => (
               <button
@@ -1245,7 +1245,7 @@
           </div>
 
           {/* Message Stream */}
-          <div className="flex-1 bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-5 overflow-y-auto space-y-5 notion-shadow-sm transition-colors">
+          <div className="flex-1 min-h-0 bg-[#ffffff] dark:bg-[#202020] border border-[#e6e6e6] dark:border-[#2f2f2f] rounded-xl p-4 sm:p-5 overflow-y-auto space-y-4 notion-shadow-sm transition-colors">
             {loadingHistory ? (
               <div className="p-8 text-center text-xs font-mono text-[#0075de]">
                 Loading persistent study conversations from SQLite...
@@ -1420,7 +1420,7 @@
           </div>
 
           {/* Input Form with Char Counter */}
-          <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="space-y-1">
+          <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="space-y-1 shrink-0 pt-1">
             {isListening && (
               <div className="text-[11px] font-mono text-[#dd5b00] flex items-center space-x-1.5 animate-pulse pb-1 px-1">
                 <span className="h-2 w-2 rounded-full bg-[#dd5b00]"></span>
@@ -1504,7 +1504,7 @@
       };
 
       return (
-        <div className="max-w-3xl mx-auto space-y-6">
+        <div className="max-w-3xl mx-auto space-y-6 pb-8">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Question Subject Classifier</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Classify student queries into Python, AI, or Machine Learning topics instantly.</p>
@@ -1802,7 +1802,7 @@
       const totalChunksAcrossAll = documents.reduce((acc, d) => acc + (d.chunks_count || 0), 0);
 
       return (
-        <div className="max-w-5xl mx-auto space-y-6">
+        <div className="max-w-5xl mx-auto space-y-6 pb-8">
           {/* Header & Stats Bar */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#e6e6e6] dark:border-[#2f2f2f]">
             <div>
@@ -2089,7 +2089,7 @@
       };
 
       return (
-        <div className="max-w-3xl mx-auto space-y-6">
+        <div className="max-w-3xl mx-auto space-y-6 pb-8">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Notes Summarizer Tool</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Distill lengthy study material into structured executive overviews and core takeaways.</p>
@@ -2239,7 +2239,7 @@
       };
 
       return (
-        <div className="max-w-3xl mx-auto space-y-6">
+        <div className="max-w-3xl mx-auto space-y-6 pb-8">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Interactive MCQ Quiz Generator</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Generate multiple-choice practice tests grounded in your study notes with explanations.</p>
@@ -2430,7 +2430,7 @@
       };
 
       return (
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-4xl mx-auto space-y-6 pb-8">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">Autonomous AI Agent</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Natural language prompt routing. The agent automatically detects intent and executes Answer, Summary, or Quiz tool.</p>
@@ -2725,10 +2725,10 @@
               {/* 3D Flip Card Container */}
               <div
                 onClick={() => setIsFlipped(!isFlipped)}
-                className="perspective-1000 cursor-pointer w-full min-h-[22rem] h-auto"
+                className="perspective-1000 cursor-pointer w-full h-[22rem] sm:h-[24rem]"
               >
                 <div
-                  className={`relative w-full min-h-[22rem] duration-500 transform-style-3d transition-transform ${
+                  className={`relative w-full h-full duration-500 transform-style-3d transition-transform ${
                     isFlipped ? "rotate-y-180" : ""
                   }`}
                 >
@@ -2856,7 +2856,7 @@
     // ==========================================
     function SettingsView({ status, darkMode, onToggleTheme }) {
       return (
-        <div className="max-w-3xl mx-auto space-y-6">
+        <div className="max-w-3xl mx-auto space-y-6 pb-8">
           <div>
             <h2 className="text-2xl font-bold text-[#000000] dark:text-[#ffffff] tracking-heading">System Diagnostics & Security Settings</h2>
             <p className="text-xs text-[#615d59] dark:text-[#888888] mt-1">Runtime health, guardrail parameters, and active models.</p>

@@ -7,7 +7,7 @@ class RAGGenerator:
     on retrieved study note chunks. Enforces strict guardrails against hallucinating
     or inventing facts.
     """
-    def __init__(self, confidence_threshold: float = 0.35):
+    def __init__(self, confidence_threshold: float = 0.40):
         self.confidence_threshold = confidence_threshold
 
     # Metadata headers and boilerplate to filter out from raw text

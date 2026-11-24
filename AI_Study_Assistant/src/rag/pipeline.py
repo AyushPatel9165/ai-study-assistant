@@ -24,7 +24,7 @@ class RAGPipeline:
         metadata_path: str = "models/faiss_chunks.json",
         chunk_size: int = 400,
         chunk_overlap: int = 60,
-        confidence_threshold: float = 0.35
+        confidence_threshold: float = 0.40
     ):
         project_root = Path(__file__).resolve().parent.parent.parent
         self.index_path = str(project_root / index_path) if not os.path.isabs(index_path) else index_path

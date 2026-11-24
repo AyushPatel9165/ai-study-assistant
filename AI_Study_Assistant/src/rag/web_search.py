@@ -38,8 +38,9 @@ class WebSearchFallback:
         """Calls Google Gemini API via standard urllib."""
         gemini_models = ["gemini-flash-lite-latest", "gemini-3.8-flash", "gemini-flash-latest"]
         prompt_text = (
-            f"You are an expert academic tutor for computer science. Answer the student's question clearly, accurately, "
-            f"and pedagogically using structured Markdown headings, bullet points, and code snippets where appropriate.\n\n"
+            f"You are an expert academic tutor for computer science and AI. Answer the student's question clearly, accurately, "
+            f"and pedagogically using structured Markdown headings, bullet points, and code snippets where appropriate.\n"
+            f"If the student asks in Hinglish or Hindi (e.g. 'kya hain', 'samjhao'), explain in simple, natural Hinglish with technical terms in English so it is very easy for a beginner student to understand.\n\n"
             f"Question: {query}"
         )
         payload = json.dumps({

@@ -74,7 +74,7 @@ def get_rag_pipeline() -> RAGPipeline:
         _rag_pipeline = RAGPipeline(
             index_path=idx_path,
             metadata_path=meta_path,
-            confidence_threshold=0.35
+            confidence_threshold=0.40
         )
     return _rag_pipeline
 
@@ -291,7 +291,7 @@ def get_dashboard_summary() -> Dict[str, Any]:
         "model_accuracy": "96.15%",
         "embeddings": "sentence-transformers/all-MiniLM-L6-v2 (384-d)",
         "vector_store": "FAISS IndexFlatIP",
-        "anti_hallucination_threshold": 0.35,
+        "anti_hallucination_threshold": 0.40,
         "database": engine_name,
         "database_engine": db.engine,
         "version": "0.2.0"

@@ -1,5 +1,27 @@
 [
   {
+    "id": 84,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "What is React?",
+    "category": null,
+    "answer": "### Web & AI Knowledge Overview: React\n**Note:** This topic was not found in your currently uploaded study notes. The explanation below has been synthesized from global computer science and software engineering knowledge.\n\n#### 1. Core Definition & Concept\n'React' refers to a fundamental concept in software engineering, computing, or intelligent systems. In modern technical architectures, it provides standard methodologies, abstractions, or frameworks to solve complex computational problems efficiently, securely, and scalably.\n\n#### 2. Key Architectural Characteristics & Principles\n\u2022 **Modularity & Separation of Concerns**: Encourages decoupled system components that can be tested, maintained, and scaled independently.\n\u2022 **Predictable Execution & Determinism**: Establishes defined rules and operational guarantees for state management and processing.\n\u2022 **Performance & Resource Optimization**: Engineered to minimize latency, optimize memory allocation, and handle concurrent workloads.\n\u2022 **Ecosystem & Industry Standardization**: Widely supported across enterprise toolchains, production environments, and technical communities.\n\n#### 3. Practical Usage & Best Practices\n\u2022 Always evaluate trade-offs between computational overhead and development velocity before adoption.\n\u2022 Follow official language conventions, clean architecture patterns, and standard security guidelines.\n\u2022 For exam or viva questions on this topic, emphasize the formal definition, 2-3 architectural advantages, and a real-world use case.\n\nTip: To ground future questions strictly in your university syllabus, you can upload the relevant textbook or lecture PDF in 'My Documents'!",
+    "confidence": 1.0,
+    "tool_used": "Web Fallback (Global Web & AI Knowledge Engine)",
+    "timestamp": "2026-11-24T17:33:42.980440"
+  },
+  {
+    "id": 83,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "What is React?",
+    "category": null,
+    "answer": "Unable to find relevant information in your uploaded study notes regarding: 'What is React?'.\n\nCurrently indexed topics include:\n\u2022 Python Programming Language & Internals (Memory Management, Garbage Collection, GIL, Generators)\n\u2022 Machine Learning (Optimization, Gradient Descent, Overfitting, L1/L2 Regularization)\n\u2022 Artificial Intelligence (Search Spaces, A* Algorithm, Heuristics)\n\u2022 MongoDB NoSQL (Architecture, BSON Documents, mongod, mongosh)\n\nTip: You can click 'Ask Web / External AI' below to get a comprehensive answer from global AI knowledge, or upload additional PDF/TXT notes in 'My Documents'!",
+    "confidence": 0.0,
+    "tool_used": "RAG Q&A",
+    "timestamp": "2026-11-24T17:31:22.937461"
+  },
+  {
     "id": 82,
     "session_id": "default_session",
     "role": "student",

@@ -72,7 +72,7 @@ git status --porcelain
 
 **If changes found:**
 ```
-⚠️ UNCOMMITTED CHANGES DETECTED
+[WARN] UNCOMMITTED CHANGES DETECTED
 
 {list of modified files}
 
@@ -108,7 +108,7 @@ Suggested action based on state:
 
 ───────────────────────────────────────────────────────
 
-💡 Fresh session = fresh perspective
+[NOTE] Fresh session = fresh perspective
 
 You have all the context you need.
 The previous struggles are documented.

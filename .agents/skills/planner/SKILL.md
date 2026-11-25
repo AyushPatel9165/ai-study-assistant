@@ -110,23 +110,23 @@ Every task has four required fields:
 
 ### `<files>`
 Exact file paths created or modified.
-- ✅ Good: `src/app/api/auth/login/route.ts`, `prisma/schema.prisma`
-- ❌ Bad: "the auth files", "relevant components"
+- [PASS] Good: `src/app/api/auth/login/route.ts`, `prisma/schema.prisma`
+- [FAIL] Bad: "the auth files", "relevant components"
 
 ### `<action>`
 Specific implementation instructions, including what to avoid and WHY.
-- ✅ Good: "Create POST endpoint accepting {email, password}, validates using bcrypt against User table, returns JWT in httpOnly cookie with 15-min expiry. Use jose library (not jsonwebtoken - CommonJS issues with Edge runtime)."
-- ❌ Bad: "Add authentication", "Make login work"
+- [PASS] Good: "Create POST endpoint accepting {email, password}, validates using bcrypt against User table, returns JWT in httpOnly cookie with 15-min expiry. Use jose library (not jsonwebtoken - CommonJS issues with Edge runtime)."
+- [FAIL] Bad: "Add authentication", "Make login work"
 
 ### `<verify>`
 How to prove the task is complete.
-- ✅ Good: `npm test` passes, `curl -X POST /api/auth/login` returns 200 with Set-Cookie header
-- ❌ Bad: "It works", "Looks good"
+- [PASS] Good: `npm test` passes, `curl -X POST /api/auth/login` returns 200 with Set-Cookie header
+- [FAIL] Bad: "It works", "Looks good"
 
 ### `<done>`
 Acceptance criteria — measurable state of completion.
-- ✅ Good: "Valid credentials return 200 + JWT cookie, invalid credentials return 401"
-- ❌ Bad: "Authentication is complete"
+- [PASS] Good: "Valid credentials return 200 + JWT cookie, invalid credentials return 401"
+- [FAIL] Bad: "Authentication is complete"
 
 ---
 
@@ -186,11 +186,11 @@ Split into multiple plans when:
 **Prefer vertical slices:** Each plan delivers a complete feature path.
 
 ```
-✅ Vertical (preferred):
+[PASS] Vertical (preferred):
 Plan 1: User registration (API + DB + validation)
 Plan 2: User login (API + session + cookie)
 
-❌ Horizontal (avoid):
+[FAIL] Horizontal (avoid):
 Plan 1: All database models
 Plan 2: All API endpoints
 ```
@@ -428,7 +428,7 @@ OPTIONS: [choices if applicable]
 
 ## Anti-Patterns to Avoid
 
-### ❌ Vague Tasks
+### [FAIL] Vague Tasks
 ```xml
 <task type="auto">
   <name>Add authentication</name>
@@ -437,7 +437,7 @@ OPTIONS: [choices if applicable]
 </task>
 ```
 
-### ✅ Specific Tasks
+### [PASS] Specific Tasks
 ```xml
 <task type="auto">
   <name>Create login endpoint with JWT</name>
@@ -453,7 +453,7 @@ OPTIONS: [choices if applicable]
 </task>
 ```
 
-### ❌ Reflexive Chaining
+### [FAIL] Reflexive Chaining
 ```yaml
 # Bad: Every plan refs previous
 context:
@@ -461,7 +461,7 @@ context:
   - .gsd/phases/1/02-SUMMARY.md  # Plan 3 refs 2
 ```
 
-### ✅ Minimal Context
+### [PASS] Minimal Context
 ```yaml
 # Good: Only ref when truly needed
 context:

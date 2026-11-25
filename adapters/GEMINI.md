@@ -83,9 +83,9 @@ For Gemini-specific tips, see adapters/GEMINI.md.
 
 ## Anti-Patterns
 
-❌ **Loading entire codebase** — Even with large context, quality degrades
-❌ **Ignoring context thresholds** — 50% is still the quality boundary
-❌ **Skipping STATE.md** — Context window size doesn't replace persistent state
+[FAIL] **Loading entire codebase** — Even with large context, quality degrades
+[FAIL] **Ignoring context thresholds** — 50% is still the quality boundary
+[FAIL] **Skipping STATE.md** — Context window size doesn't replace persistent state
 
 ---
 

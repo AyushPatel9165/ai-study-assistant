@@ -29,9 +29,9 @@ status: complete | partial | failed
 
 | Task | Description | Commit | Status |
 |------|-------------|--------|--------|
-| 1 | {task name} | {hash} | ✅ Complete |
-| 2 | {task name} | {hash} | ✅ Complete |
-| 3 | {task name} | — | ❌ Blocked |
+| 1 | {task name} | {hash} | [PASS] Complete |
+| 2 | {task name} | {hash} | [PASS] Complete |
+| 3 | {task name} | — | [FAIL] Blocked |
 
 ---
 
@@ -64,8 +64,8 @@ status: complete | partial | failed
 
 | Check | Status | Evidence |
 |-------|--------|----------|
-| {verification 1} | ✅ Pass | {command/output} |
-| {verification 2} | ✅ Pass | {command/output} |
+| {verification 1} | [PASS] Pass | {command/output} |
+| {verification 2} | [PASS] Pass | {command/output} |
 
 ---
 

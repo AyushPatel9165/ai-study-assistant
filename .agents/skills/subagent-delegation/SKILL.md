@@ -141,7 +141,7 @@ mode**: the orchestrator does the work itself, in its own context.
 When falling back, tell the user once, at the start:
 
 ```
-⚠️  Subagent delegation unavailable (requires Antigravity 2.0+)
+[WARN]  Subagent delegation unavailable (requires Antigravity 2.0+)
     Running inline — context will fill faster.
     Recommended: one plan per session, /pause between plans.
 ```

@@ -58,8 +58,8 @@ Create `.gsd/SPRINT.md` using the template from `.gsd/templates/sprint.md`:
 
 | Task | Assignee | Status | Est. Hours |
 |------|----------|--------|------------|
-| {Task 1} | Claude | ⬜ Todo | — |
-| {Task 2} | Claude | ⬜ Todo | — |
+| {Task 1} | Claude | [ ] Todo | — |
+| {Task 2} | Claude | [ ] Todo | — |
 
 ## Daily Log
 
@@ -157,7 +157,7 @@ git commit -m "docs: close sprint {name}"
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► SPRINT CLOSED ✓
+ GSD ► SPRINT CLOSED [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Sprint: {name}

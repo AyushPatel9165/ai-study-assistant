@@ -59,7 +59,7 @@ echo "Remote version: $remote_version"
 **If same version:**
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► ALREADY UP TO DATE ✓
+ GSD ► ALREADY UP TO DATE [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Version: {version}
@@ -172,7 +172,7 @@ rm -rf .gsd/templates.backup
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► UPDATED ✓
+ GSD ► UPDATED [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Updated to version {remote-version}

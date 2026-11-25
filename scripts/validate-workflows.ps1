@@ -19,26 +19,26 @@ foreach ($file in $workflows) {
     
     # Check for frontmatter
     if ($content -notmatch "^---") {
-        Write-Host "❌ $($file.Name): Missing frontmatter" -ForegroundColor Red
+        Write-Host "[FAIL] $($file.Name): Missing frontmatter" -ForegroundColor Red
         $ErrorCount++
         $hasErrors = $true
     }
     
     # Check for description
     if ($content -notmatch "description:") {
-        Write-Host "❌ $($file.Name): Missing description in frontmatter" -ForegroundColor Red
+        Write-Host "[FAIL] $($file.Name): Missing description in frontmatter" -ForegroundColor Red
         $ErrorCount++
         $hasErrors = $true
     }
     
     # Check for process tags (optional but recommended)
     if ($content -notmatch "<process>") {
-        Write-Host "⚠️  $($file.Name): Missing <process> tag" -ForegroundColor Yellow
+        Write-Host "[WARN]  $($file.Name): Missing <process> tag" -ForegroundColor Yellow
         $WarningCount++
     }
     
     if (-not $hasErrors) {
-        Write-Host "✅ $($file.Name)" -ForegroundColor Green
+        Write-Host "[PASS] $($file.Name)" -ForegroundColor Green
     }
 }
 
@@ -51,9 +51,9 @@ Write-Host "Warnings: $WarningCount" -ForegroundColor $(if ($WarningCount -gt 0)
 Write-Host ""
 
 if ($ErrorCount -eq 0) {
-    Write-Host "✅ All workflows valid!" -ForegroundColor Green
+    Write-Host "[PASS] All workflows valid!" -ForegroundColor Green
     exit 0
 } else {
-    Write-Host "❌ Validation failed" -ForegroundColor Red
+    Write-Host "[FAIL] Validation failed" -ForegroundColor Red
     exit 1
 }

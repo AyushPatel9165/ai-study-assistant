@@ -50,14 +50,14 @@ Scan plans for:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 TECHNICAL
-🟡 {assumption 1} — Validate before execution
-🟢 {assumption 2} — Low risk
+[MED] {assumption 1} — Validate before execution
+[LOW] {assumption 2} — Low risk
 
 INTEGRATION
-🔴 {assumption 3} — High risk, verify first
+[HIGH] {assumption 3} — High risk, verify first
 
 SCOPE
-🟡 {assumption 4} — Confirm with user
+[MED] {assumption 4} — Confirm with user
 
 ───────────────────────────────────────────────────────
 

@@ -87,7 +87,7 @@ This is the most leveraged moment in any project. Deep questioning here means be
 **If existing code detected and ARCHITECTURE.md doesn't exist:**
 
 ```
-⚠️ EXISTING CODE DETECTED
+[WARN] EXISTING CODE DETECTED
 
 Found {N} source files in this directory.
 
@@ -205,7 +205,7 @@ Create `.gsd/SPEC.md`:
 If project involves unfamiliar technology or architectural decisions:
 
 ```
-📚 RESEARCH CHECK
+[DOCS] RESEARCH CHECK
 
 This project involves {area where research might help}.
 
@@ -262,21 +262,21 @@ Create `.gsd/ROADMAP.md`:
 ## Phases
 
 ### Phase 1: {Foundation}
-**Status**: ⬜ Not Started
+**Status**: [ ] Not Started
 **Objective**: {what this delivers}
 **Requirements**: REQ-01, REQ-02
 
 ### Phase 2: {Core Feature}
-**Status**: ⬜ Not Started
+**Status**: [ ] Not Started
 **Objective**: {what this delivers}
 **Requirements**: REQ-03
 
 ### Phase 3: {Integration}
-**Status**: ⬜ Not Started
+**Status**: [ ] Not Started
 **Objective**: {what this delivers}
 
 ### Phase 4: {Polish/Launch}
-**Status**: ⬜ Not Started
+**Status**: [ ] Not Started
 **Objective**: {final touches}
 ```
 
@@ -318,7 +318,7 @@ git commit -m "chore: initialize GSD project
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► PROJECT INITIALIZED ✓
+ GSD ► PROJECT INITIALIZED [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Project: {name}
@@ -340,7 +340,7 @@ Files created:
 
 ───────────────────────────────────────────────────────
 
-💡 The questioning phase is the highest-leverage moment.
+[NOTE] The questioning phase is the highest-leverage moment.
    Time invested here pays dividends throughout execution.
 
 ───────────────────────────────────────────────────────

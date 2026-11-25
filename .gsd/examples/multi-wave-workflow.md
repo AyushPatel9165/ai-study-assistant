@@ -140,8 +140,8 @@ Create authentication endpoints.
 ## Verification Results
 | Check | Command | Result |
 |-------|---------|--------|
-| Login works | `curl -X POST .../login` | ✅ 200 + cookie |
-| Logout works | `curl -X POST .../logout` | ✅ 200 + cleared |
+| Login works | `curl -X POST .../login` | [PASS] 200 + cookie |
+| Logout works | `curl -X POST .../logout` | [PASS] 200 + cleared |
 
 ## Commits in This Wave
 | Hash | Message |

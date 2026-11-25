@@ -110,7 +110,7 @@ Update `.gsd/DECISIONS.md`:
 ```
 ───────────────────────────────────────────────────────
 
-✓ Discussion documented in DECISIONS.md
+[OK] Discussion documented in DECISIONS.md
 
 ▶ NEXT
 

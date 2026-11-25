@@ -152,7 +152,7 @@ When you need details from compressed context:
 ### Summary Template
 
 ```markdown
-## 📦 [filename]
+## [MODULE] [filename]
 **Purpose:** [one line]
 **Key exports:** [list]
 **Dependencies:** [list]
@@ -163,7 +163,7 @@ When you need details from compressed context:
 ### Outline Template
 
 ```markdown
-## 📋 [filename] (N lines)
+## [SPEC] [filename] (N lines)
 - L[start]-[end]: [section name]
   - L[n]: [key item]
   - L[n]: [key item]
@@ -191,10 +191,10 @@ Works with:
 
 ## Anti-Patterns
 
-❌ **Keeping full files in mental context** — Compress after understanding
-❌ **Re-reading instead of referencing** — Use summaries
-❌ **Loading full file for one function** — Use outline + target
-❌ **Skipping compression "to save time"** — Costs more later
+[FAIL] **Keeping full files in mental context** — Compress after understanding
+[FAIL] **Re-reading instead of referencing** — Use summaries
+[FAIL] **Loading full file for one function** — Use outline + target
+[FAIL] **Skipping compression "to save time"** — Costs more later
 
 ---
 

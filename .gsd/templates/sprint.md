@@ -21,9 +21,9 @@
 
 | Task | Assignee | Status | Est. Hours |
 |------|----------|--------|------------|
-| {Task 1} | {who} | ⬜ Todo | {hours} |
-| {Task 2} | {who} | 🔄 In Progress | {hours} |
-| {Task 3} | {who} | ✅ Done | {hours} |
+| {Task 1} | {who} | [ ] Todo | {hours} |
+| {Task 2} | {who} | [IN PROGRESS] In Progress | {hours} |
+| {Task 3} | {who} | [PASS] Done | {hours} |
 
 ## Daily Log
 

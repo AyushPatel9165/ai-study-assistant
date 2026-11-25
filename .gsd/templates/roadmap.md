@@ -29,7 +29,7 @@ updated: [ISO timestamp]
 ## Phases
 
 ### Phase 1: {Foundation}
-**Status:** ⬜ Not Started | 🔄 In Progress | ✅ Complete
+**Status:** [ ] Not Started | [IN PROGRESS] In Progress | [PASS] Complete
 **Objective:** {What this phase delivers}
 **Requirements:** REQ-01, REQ-02
 
@@ -40,7 +40,7 @@ updated: [ISO timestamp]
 ---
 
 ### Phase 2: {Core Feature}
-**Status:** ⬜ Not Started
+**Status:** [ ] Not Started
 **Objective:** {What this phase delivers}
 **Depends on:** Phase 1
 
@@ -51,14 +51,14 @@ updated: [ISO timestamp]
 ---
 
 ### Phase 3: {Integration}
-**Status:** ⬜ Not Started
+**Status:** [ ] Not Started
 **Objective:** {What this phase delivers}
 **Depends on:** Phase 2
 
 ---
 
 ### Phase 4: {Polish/Launch}
-**Status:** ⬜ Not Started
+**Status:** [ ] Not Started
 **Objective:** {Final touches and deployment}
 **Depends on:** Phase 3
 
@@ -68,10 +68,10 @@ updated: [ISO timestamp]
 
 | Phase | Status | Plans | Complete |
 |-------|--------|-------|----------|
-| 1 | ⬜ | 0/2 | — |
-| 2 | ⬜ | 0/2 | — |
-| 3 | ⬜ | 0/1 | — |
-| 4 | ⬜ | 0/1 | — |
+| 1 | [ ] | 0/2 | — |
+| 2 | [ ] | 0/2 | — |
+| 3 | [ ] | 0/1 | — |
+| 4 | [ ] | 0/1 | — |
 
 ---
 
@@ -89,11 +89,11 @@ updated: [ISO timestamp]
 
 ## Status Icons
 
-- ⬜ Not Started
-- 🔄 In Progress
-- ✅ Complete
-- ⏸️ Paused
-- ❌ Blocked
+- [ ] Not Started
+- [IN PROGRESS] In Progress
+- [PASS] Complete
+- ⏸ Paused
+- [FAIL] Blocked
 
 ## Guidelines
 

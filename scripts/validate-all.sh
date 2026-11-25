@@ -48,9 +48,9 @@ echo "╚═══════════════════════�
 echo ""
 
 if [ $total_errors -eq 0 ]; then
-    echo "✅ All validators passed!"
+    echo "[PASS] All validators passed!"
     exit 0
 else
-    echo "❌ $total_errors validator(s) failed"
+    echo "[FAIL] $total_errors validator(s) failed"
     exit 1
 fi

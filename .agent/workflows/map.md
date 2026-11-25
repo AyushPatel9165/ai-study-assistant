@@ -382,7 +382,7 @@ git commit -m "docs: map existing codebase"
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► CODEBASE MAPPED ✓
+ GSD ► CODEBASE MAPPED [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Components: {N}

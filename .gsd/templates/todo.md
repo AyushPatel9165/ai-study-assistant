@@ -8,16 +8,16 @@
 
 ```markdown
 - [ ] Description `priority` — YYYY-MM-DD
-- [x] Completed item `priority` — YYYY-MM-DD ✓ YYYY-MM-DD
+- [x] Completed item `priority` — YYYY-MM-DD [OK] YYYY-MM-DD
 ```
 
 ## Priority Levels
 
 | Level | Use For |
 |-------|---------|
-| `high` 🔴 | Blocking issues, urgent fixes |
-| `medium` 🟡 | Normal priority (default) |
-| `low` 🟢 | Nice-to-have, future ideas |
+| `high` [HIGH] | Blocking issues, urgent fixes |
+| `medium` [MED] | Normal priority (default) |
+| `low` [LOW] | Nice-to-have, future ideas |
 
 ---
 

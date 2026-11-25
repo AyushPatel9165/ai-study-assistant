@@ -47,7 +47,7 @@ Append:
 ---
 
 ### Phase {N}: {name}
-**Status**: ⬜ Not Started
+**Status**: [ ] Not Started
 **Objective**: {objective}
 **Depends on**: Phase {N-1}
 
@@ -79,7 +79,7 @@ git commit -m "docs: add phase {N} - {name}"
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► PHASE ADDED ✓
+ GSD ► PHASE ADDED [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Phase {N}: {name}

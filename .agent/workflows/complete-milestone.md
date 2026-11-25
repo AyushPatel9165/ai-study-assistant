@@ -26,7 +26,7 @@ grep -E "Status.*Not Started|Status.*In Progress" ".gsd/ROADMAP.md"
 
 **If incomplete phases found:**
 ```
-⚠️ Cannot complete milestone — {N} phases incomplete
+[WARN] Cannot complete milestone — {N} phases incomplete
 
 Run /progress to see status.
 ```
@@ -52,8 +52,8 @@ Create `.gsd/milestones/{name}-SUMMARY.md`:
 ## Completed: {date}
 
 ## Deliverables
-- ✅ {must-have 1}
-- ✅ {must-have 2}
+- [PASS] {must-have 1}
+- [PASS] {must-have 2}
 
 ## Phases Completed
 1. Phase 1: {name} — {date}
@@ -171,7 +171,7 @@ git tag -a "{name}" -m "Milestone {name} complete"
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► MILESTONE COMPLETE 🎉
+ GSD ► MILESTONE COMPLETE [DONE]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 {name}

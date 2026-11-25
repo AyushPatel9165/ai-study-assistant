@@ -12,10 +12,10 @@
 {What you set out to accomplish this session.}
 
 ### Accomplished
-- ✅ {Task 1 completed}
-- ✅ {Task 2 completed}
+- [PASS] {Task 1 completed}
+- [PASS] {Task 2 completed}
   - {Sub-detail if needed}
-- ✅ {Task 3 completed}
+- [PASS] {Task 3 completed}
 
 ### Verification
 - [x] {Verification check 1}
@@ -39,7 +39,7 @@
 {Previous session objective.}
 
 ### Accomplished
-- ✅ {Completed items}
+- [PASS] {Completed items}
 
 ---
 

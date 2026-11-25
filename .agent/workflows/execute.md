@@ -228,7 +228,7 @@ enough to route, and reading them re-imports the context delegation just saved.
 Announce degraded mode once:
 
 ```
-⚠️  Subagent delegation unavailable (requires Antigravity 2.0+)
+[WARN]  Subagent delegation unavailable (requires Antigravity 2.0+)
     Running inline — context will fill faster.
     Recommended: one plan per session, /pause between plans.
 ```
@@ -299,7 +299,7 @@ inherit the executors' assumptions about their own work.
 **Update ROADMAP.md:**
 ```markdown
 ### Phase {N}: {Name}
-**Status**: ✅ Complete
+**Status**: [PASS] Complete
 ```
 
 **Update STATE.md:**
@@ -343,11 +343,11 @@ Output based on status:
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► PHASE {N} COMPLETE ✓
+ GSD ► PHASE {N} COMPLETE [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 {X} plans executed
-Goal verified ✓
+Goal verified [OK]
 
 ───────────────────────────────────────────────────────
 
@@ -364,7 +364,7 @@ Phase {N+1}: {Name}
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► MILESTONE COMPLETE 🎉
+ GSD ► MILESTONE COMPLETE [DONE]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 All phases completed and verified.
@@ -376,7 +376,7 @@ All phases completed and verified.
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► PHASE {N} GAPS FOUND ⚠
+ GSD ► PHASE {N} GAPS FOUND [WARN]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 {X}/{Y} must-haves verified

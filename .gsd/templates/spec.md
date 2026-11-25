@@ -2,7 +2,7 @@
 
 > **Status**: `DRAFT` | `FINALIZED`
 >
-> ⚠️ **Planning Lock**: No code may be written until this spec is marked `FINALIZED`.
+> [WARN] **Planning Lock**: No code may be written until this spec is marked `FINALIZED`.
 
 ## Vision
 {One paragraph describing what this project is and why it exists.}

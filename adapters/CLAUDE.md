@@ -13,11 +13,11 @@ When available, activate extended thinking for:
 
 | Task Type | Recommended |
 |-----------|-------------|
-| Architecture planning | ✅ High effort |
-| Complex debugging | ✅ High effort |
-| Security analysis | ✅ High effort |
-| Simple edits | ❌ Not needed |
-| Quick iterations | ❌ Overhead too high |
+| Architecture planning | [PASS] High effort |
+| Complex debugging | [PASS] High effort |
+| Security analysis | [PASS] High effort |
+| Simple edits | [FAIL] Not needed |
+| Quick iterations | [FAIL] Overhead too high |
 
 ### Effort Levels
 
@@ -68,9 +68,9 @@ Not required, but if organizing Claude-specific files:
 
 ## Anti-Patterns
 
-❌ **Using max effort for everything** — Slow and expensive
-❌ **Skipping verification** — Thinking mode doesn't guarantee correctness
-❌ **Depending on artifacts** — Not all Claude interfaces support them
+[FAIL] **Using max effort for everything** — Slow and expensive
+[FAIL] **Skipping verification** — Thinking mode doesn't guarantee correctness
+[FAIL] **Depending on artifacts** — Not all Claude interfaces support them
 
 ---
 

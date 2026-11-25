@@ -72,11 +72,11 @@ Ask user to confirm or modify.
 ## Phases
 
 ### Phase 1: {name}
-**Status**: ⬜ Not Started
+**Status**: [ ] Not Started
 **Objective**: {description}
 
 ### Phase 2: {name}
-**Status**: ⬜ Not Started
+**Status**: [ ] Not Started
 **Objective**: {description}
 
 ...
@@ -137,7 +137,7 @@ git commit -m "docs: create milestone {name}"
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► MILESTONE CREATED ✓
+ GSD ► MILESTONE CREATED [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Milestone: {name}

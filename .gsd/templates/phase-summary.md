@@ -10,9 +10,9 @@
 
 | Deliverable | Status | Notes |
 |-------------|--------|-------|
-| {Deliverable 1} | ✅ | {Any relevant notes} |
-| {Deliverable 2} | ✅ | {Any relevant notes} |
-| {Deliverable 3} | ✅ | {Any relevant notes} |
+| {Deliverable 1} | [PASS] | {Any relevant notes} |
+| {Deliverable 2} | [PASS] | {Any relevant notes} |
+| {Deliverable 3} | [PASS] | {Any relevant notes} |
 
 ## Tasks Completed
 
@@ -28,8 +28,8 @@
 
 | Check | Result | Evidence |
 |-------|--------|----------|
-| {Verification 1} | ✅ Pass | {Command output / screenshot path} |
-| {Verification 2} | ✅ Pass | {Command output / screenshot path} |
+| {Verification 1} | [PASS] Pass | {Command output / screenshot path} |
+| {Verification 2} | [PASS] Pass | {Command output / screenshot path} |
 
 ## Commits
 

@@ -23,9 +23,9 @@ Read from:
 
 | Category | Priority | Action |
 |----------|----------|--------|
-| Must-have failures | 🔴 High | Create fix phase |
-| Technical debt | 🟡 Medium | Add to roadmap |
-| Nice-to-have misses | 🟢 Low | Add to backlog |
+| Must-have failures | [HIGH] High | Create fix phase |
+| Technical debt | [MED] Medium | Add to roadmap |
+| Nice-to-have misses | [LOW] Low | Add to backlog |
 
 ---
 
@@ -35,7 +35,7 @@ Add new phase to ROADMAP.md:
 
 ```markdown
 ### Phase {N}: Gap Closure
-**Status**: ⬜ Not Started
+**Status**: [ ] Not Started
 **Objective**: Address gaps from milestone audit
 
 **Gaps to Close:**
@@ -98,7 +98,7 @@ git commit -m "docs: create gap closure plans"
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► GAP CLOSURE PLANS CREATED ✓
+ GSD ► GAP CLOSURE PLANS CREATED [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Gaps identified: {N}

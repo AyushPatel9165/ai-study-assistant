@@ -135,14 +135,14 @@ verdict: PASS | FAIL | PARTIAL
 
 ## Must-Haves
 
-### ✅ {Must-have 1}
+### [PASS] {Must-have 1}
 **Status:** PASS
 **Evidence:** 
 ```
 {command output or description}
 ```
 
-### ❌ {Must-have 2}
+### [FAIL] {Must-have 2}
 **Status:** FAIL
 **Reason:** {why it failed}
 **Expected:** {what should happen}
@@ -165,13 +165,13 @@ Update `.gsd/STATE.md`:
 ```markdown
 ## Current Position
 - **Phase**: {N} (verified)
-- **Status**: ✅ Complete and verified
+- **Status**: [PASS] Complete and verified
 ```
 
 Output:
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► PHASE {N} VERIFIED ✓
+ GSD ► PHASE {N} VERIFIED [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 {X}/{X} must-haves verified
@@ -220,7 +220,7 @@ gap_closure: true
 Output:
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► PHASE {N} GAPS FOUND ⚠
+ GSD ► PHASE {N} GAPS FOUND [WARN]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 {X}/{Y} must-haves verified

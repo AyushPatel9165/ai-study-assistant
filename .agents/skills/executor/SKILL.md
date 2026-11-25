@@ -460,8 +460,8 @@ duration_minutes: {N}
 ## Tasks Completed
 | Task | Description | Commit | Status |
 |------|-------------|--------|--------|
-| 1 | {name} | {hash} | ✅ |
-| 2 | {name} | {hash} | ✅ |
+| 1 | {name} | {hash} | [PASS] |
+| 2 | {name} | {hash} | [PASS] |
 
 ## Deviations Applied
 {If none: "None — executed as planned."}
@@ -474,28 +474,28 @@ duration_minutes: {N}
 - {file2} - {what changed}
 
 ## Verification
-- {verification 1}: ✅ Passed
-- {verification 2}: ✅ Passed
+- {verification 1}: [PASS] Passed
+- {verification 2}: [PASS] Passed
 ```
 
 ---
 
 ## Anti-Patterns
 
-### ❌ Continuing past checkpoint
+### [FAIL] Continuing past checkpoint
 Checkpoints mean STOP. Never continue after checkpoint.
 
-### ❌ Redoing committed work
+### [FAIL] Redoing committed work
 If continuation agent, verify commits exist, don't redo.
 
-### ❌ Loading everything
+### [FAIL] Loading everything
 Don't load all SUMMARYs, all plans. Need-to-know only.
 
-### ❌ Ignoring deviations
+### [FAIL] Ignoring deviations
 Always track and report deviations in Summary.
 
-### ✅ Atomic commits
+### [PASS] Atomic commits
 One task = one commit. Always.
 
-### ✅ Verification before done
+### [PASS] Verification before done
 Run verify step. Confirm done criteria. Then commit.

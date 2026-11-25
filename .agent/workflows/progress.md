@@ -22,10 +22,10 @@ Read:
 
 Count phases:
 - Total phases
-- Completed phases (✅)
-- In progress (🔄)
-- Blocked (⏸️)
-- Not started (⬜)
+- Completed phases ([PASS])
+- In progress ([IN PROGRESS])
+- Blocked (⏸)
+- Not started ([ ])
 
 ---
 
@@ -43,11 +43,11 @@ Milestone: {milestone from ROADMAP.md}
 
 PHASES
 
-✅ Phase 1: {Name}
-✅ Phase 2: {Name}
-🔄 Phase 3: {Name} ← CURRENT
-⬜ Phase 4: {Name}
-⬜ Phase 5: {Name}
+[PASS] Phase 1: {Name}
+[PASS] Phase 2: {Name}
+[IN PROGRESS] Phase 3: {Name} ← CURRENT
+[ ] Phase 4: {Name}
+[ ] Phase 5: {Name}
 
 Progress: {completed}/{total} ({percentage}%)
 
@@ -83,7 +83,7 @@ Based on status, recommend:
 | Phase in progress | `/execute {N}` to continue |
 | Phase done, not verified | `/verify {N}` |
 | Verification failed | `/execute {N} --gaps-only` |
-| All phases complete | Celebrate! 🎉 |
+| All phases complete | Celebrate! [DONE] |
 | No phases started | `/plan 1` to begin |
 | SPEC not finalized | Complete SPEC.md first |
 

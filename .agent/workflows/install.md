@@ -141,7 +141,7 @@ B) No — Skip
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► INSTALLED ✓
+ GSD ► INSTALLED [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 GSD for Antigravity has been installed.

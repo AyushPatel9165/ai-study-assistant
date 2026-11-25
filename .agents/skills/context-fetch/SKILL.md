@@ -111,7 +111,7 @@ After executing this skill, report:
 
 ## Anti-Patterns
 
-### ❌ Loading Everything First
+### [FAIL] Loading Everything First
 
 ```
 # BAD: Reading 5 full files to "understand context"
@@ -120,7 +120,7 @@ Read: src/auth/register.ts (400 lines)
 Read: src/auth/types.ts (200 lines)
 ```
 
-### ✅ Search Then Target
+### [PASS] Search Then Target
 
 ```
 # GOOD: Search first, read only what's needed
@@ -129,14 +129,14 @@ Found: login.ts:45, register.ts:78
 Read: login.ts lines 40-60
 ```
 
-### ❌ Broad Searches
+### [FAIL] Broad Searches
 
 ```
 # BAD: Searching for common terms
 Search: "function" → 10,000 results
 ```
 
-### ✅ Specific Searches
+### [PASS] Specific Searches
 
 ```
 # GOOD: Searching for specific identifiers

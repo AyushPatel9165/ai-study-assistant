@@ -33,10 +33,10 @@
 
 | Rule | Enforcement |
 |------|-------------|
-| 🔒 Planning Lock | No code until SPEC finalized |
-| 💾 State Persistence | Update STATE.md after tasks |
-| 🧹 Context Hygiene | 3 failures → fresh session |
-| ✅ Empirical Validation | Proof required for "done" |
+| [LOCK] Planning Lock | No code until SPEC finalized |
+| [SAVE] State Persistence | Update STATE.md after tasks |
+| [CLEAN] Context Hygiene | 3 failures → fresh session |
+| [PASS] Empirical Validation | Proof required for "done" |
 
 ## Key Files
 
@@ -64,9 +64,9 @@
 
 | Priority | Icon |
 |----------|------|
-| High | 🔴 |
-| Medium | 🟡 |
-| Low | 🟢 |
+| High | [HIGH] |
+| Medium | [MED] |
+| Low | [LOW] |
 
 ---
 

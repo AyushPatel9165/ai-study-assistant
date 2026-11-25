@@ -52,14 +52,14 @@ Filter by priority if flag provided.
 
 PENDING ({N} items)
 ───────────────────
-🔴 {high priority item}
-🟡 {medium priority item}
-🟢 {low priority item}
+[HIGH] {high priority item}
+[MED] {medium priority item}
+[LOW] {low priority item}
 
 {If --all flag:}
 COMPLETED ({M} items)
 ─────────────────────
-✅ {completed item}
+[PASS] {completed item}
 
 ───────────────────────────────────────────────────────
 
@@ -73,8 +73,8 @@ COMPLETED ({M} items)
 <priority_indicators>
 | Priority | Indicator |
 |----------|-----------|
-| high | 🔴 |
-| medium | 🟡 |
-| low | 🟢 |
-| done | ✅ |
+| high | [HIGH] |
+| medium | [MED] |
+| low | [LOW] |
+| done | [PASS] |
 </priority_indicators>

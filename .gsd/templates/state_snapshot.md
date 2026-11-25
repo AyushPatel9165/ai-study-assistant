@@ -49,9 +49,9 @@ status: {complete | partial | blocked}
 
 | Check | Command | Result |
 |-------|---------|--------|
-| {Test 1} | `{command}` | ✅ Passed |
-| {Test 2} | `{command}` | ✅ Passed |
-| {Test 3} | `{command}` | ❌ Failed: {reason} |
+| {Test 1} | `{command}` | [PASS] Passed |
+| {Test 2} | `{command}` | [PASS] Passed |
+| {Test 3} | `{command}` | [FAIL] Failed: {reason} |
 
 ## Commits in This Wave
 
@@ -64,8 +64,8 @@ status: {complete | partial | blocked}
 
 {None if clear}
 
-- ⚠️ {Risk or debt item 1}
-- ⚠️ {Risk or debt item 2}
+- [WARN] {Risk or debt item 1}
+- [WARN] {Risk or debt item 2}
 
 ## TODO for Next Wave
 

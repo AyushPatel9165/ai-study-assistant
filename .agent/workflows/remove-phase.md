@@ -46,9 +46,9 @@ status=$(grep -A1 "Phase $N:" ".gsd/ROADMAP.md" | grep "Status:" | cut -d: -f2)
 
 | Status | Action |
 |--------|--------|
-| ⬜ Not Started | Safe to remove |
-| 🔄 In Progress | Warn and confirm |
-| ✅ Complete | Error — archive instead |
+| [ ] Not Started | Safe to remove |
+| [IN PROGRESS] In Progress | Warn and confirm |
+| [PASS] Complete | Error — archive instead |
 
 ---
 
@@ -68,7 +68,7 @@ grep "Depends on.*Phase $N" ".gsd/ROADMAP.md"
 
 **If dependencies exist:**
 ```
-⚠️ Phase {M} depends on Phase {N}
+[WARN] Phase {M} depends on Phase {N}
 
 Cannot remove. Consider:
 1. Update dependent phases first
@@ -80,7 +80,7 @@ Cannot remove. Consider:
 ## 4. Confirm Removal
 
 ```
-⚠️ CONFIRM REMOVAL
+[WARN] CONFIRM REMOVAL
 
 Phase {N}: {name}
 Status: {status}
@@ -123,7 +123,7 @@ git commit -m "docs: remove phase {N} - {name}"
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► PHASE REMOVED ✓
+ GSD ► PHASE REMOVED [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Removed: Phase {N}: {name}

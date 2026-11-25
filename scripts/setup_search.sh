@@ -14,10 +14,10 @@ echo ""
 # Check for ripgrep
 check_ripgrep() {
     if command -v rg &> /dev/null; then
-        echo "✅ ripgrep (rg) is installed: $(rg --version | head -n1)"
+        echo "[PASS] ripgrep (rg) is installed: $(rg --version | head -n1)"
         return 0
     else
-        echo "❌ ripgrep (rg) is not installed"
+        echo "[FAIL] ripgrep (rg) is not installed"
         return 1
     fi
 }
@@ -25,13 +25,13 @@ check_ripgrep() {
 # Check for fd
 check_fd() {
     if command -v fd &> /dev/null; then
-        echo "✅ fd is installed: $(fd --version)"
+        echo "[PASS] fd is installed: $(fd --version)"
         return 0
     elif command -v fdfind &> /dev/null; then
-        echo "✅ fd is installed (as fdfind): $(fdfind --version)"
+        echo "[PASS] fd is installed (as fdfind): $(fdfind --version)"
         return 0
     else
-        echo "❌ fd is not installed"
+        echo "[FAIL] fd is not installed"
         return 1
     fi
 }
@@ -40,7 +40,7 @@ check_fd() {
 suggest_install() {
     echo ""
     echo "───────────────────────────────────────────────────────"
-    echo "📦 Installation Options"
+    echo "[MODULE] Installation Options"
     echo "───────────────────────────────────────────────────────"
     echo ""
     
@@ -82,13 +82,13 @@ echo ""
 
 if [[ $RG_OK -eq 1 && $FD_OK -eq 1 ]]; then
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo " ✅ All search tools are ready!"
+    echo " [PASS] All search tools are ready!"
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     echo ""
     echo "You can use ./scripts/search_repo.sh for optimized searching."
     exit 0
 else
-    echo "⚠️  Some tools are missing (optional)"
+    echo "[WARN]  Some tools are missing (optional)"
     echo ""
     echo "GSD will work fine with built-in grep, but ripgrep and fd"
     echo "provide faster searching in large codebases."

@@ -29,7 +29,7 @@ Display the latest version(s) from CHANGELOG.md:
 VERSION 1.2.0 — 2026-01-17
 ══════════════════════════
 
-🌍 CROSS-PLATFORM SUPPORT
+[GLOBAL] CROSS-PLATFORM SUPPORT
 
 • All 16 workflow files now have Bash equivalents
 • README with dual-syntax Getting Started
@@ -40,7 +40,7 @@ VERSION 1.2.0 — 2026-01-17
 VERSION 1.1.0 — 2026-01-17
 ══════════════════════════
 
-📚 TEMPLATE PARITY & EXAMPLES
+[DOCS] TEMPLATE PARITY & EXAMPLES
 
 • 14 new templates (DEBUG.md, UAT.md, etc.)
 • Examples directory with walkthroughs
@@ -52,7 +52,7 @@ VERSION 1.1.0 — 2026-01-17
 VERSION 1.0.0 — 2026-01-17
 ══════════════════════════
 
-🎉 INITIAL RELEASE
+[DONE] INITIAL RELEASE
 
 Full port of GSD methodology to Google Antigravity.
 • 24 workflows, 8 skills, 14 templates
@@ -61,7 +61,7 @@ Full port of GSD methodology to Google Antigravity.
 
 ───────────────────────────────────────────────────────
 
-📚 Full changelog: CHANGELOG.md
+[DOCS] Full changelog: CHANGELOG.md
 
 ───────────────────────────────────────────────────────
 ```

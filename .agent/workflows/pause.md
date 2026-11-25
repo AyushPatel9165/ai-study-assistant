@@ -120,7 +120,7 @@ To resume later:
 
 ───────────────────────────────────────────────────────
 
-💡 Fresh context = fresh perspective
+[NOTE] Fresh context = fresh perspective
    The struggles end here. Next session starts clean.
 
 ───────────────────────────────────────────────────────

@@ -217,7 +217,7 @@ Run all 6 dimension checks, collect issues.
 
 ### VERIFICATION PASSED
 ```
-## Plan Check Passed ✓
+## Plan Check Passed [OK]
 
 **Phase:** {N}
 **Plans checked:** {count}
@@ -231,7 +231,7 @@ Warnings (optional):
 
 ### ISSUES FOUND
 ```
-## Plan Check Failed ✗
+## Plan Check Failed [FAIL]
 
 **Phase:** {N}
 **Plans checked:** {count}

@@ -103,8 +103,8 @@ must_haves:
 For each truth, determine if codebase enables it.
 
 **Verification status:**
-- ✓ VERIFIED: All supporting artifacts pass all checks
-- ✗ FAILED: Artifacts missing, stub, or unwired
+- [OK] VERIFIED: All supporting artifacts pass all checks
+- [FAIL] FAILED: Artifacts missing, stub, or unwired
 - ? UNCERTAIN: Can't verify programmatically (needs human)
 
 For each truth:
@@ -185,8 +185,8 @@ For each requirement:
 2. Determine status based on supporting infrastructure
 
 **Requirement status:**
-- ✓ SATISFIED: All supporting truths verified
-- ✗ BLOCKED: Supporting truths failed
+- [OK] SATISFIED: All supporting truths verified
+- [FAIL] BLOCKED: Supporting truths failed
 - ? NEEDS HUMAN: Can't verify programmatically
 
 ---
@@ -210,9 +210,9 @@ Select-String -Path "src/**/*.ts" -Pattern "console\.log" -Context 2
 ```
 
 **Categorize findings:**
-- 🛑 Blocker: Prevents goal achievement
-- ⚠️ Warning: Indicates incomplete work
-- ℹ️ Info: Notable but not problematic
+- [STOP] Blocker: Prevents goal achievement
+- [WARN] Warning: Indicates incomplete work
+- ℹ Info: Notable but not problematic
 
 ---
 
@@ -374,22 +374,22 @@ gaps: [...]  # If gaps_found
 ### Truths
 | Truth | Status | Evidence |
 |-------|--------|----------|
-| {truth 1} | ✓ VERIFIED | {how verified} |
-| {truth 2} | ✗ FAILED | {what's missing} |
+| {truth 1} | [OK] VERIFIED | {how verified} |
+| {truth 2} | [FAIL] FAILED | {what's missing} |
 
 ### Artifacts
 | Path | Exists | Substantive | Wired |
 |------|--------|-------------|-------|
-| src/components/Chat.tsx | ✓ | ✓ | ✗ |
+| src/components/Chat.tsx | [OK] | [OK] | [FAIL] |
 
 ### Key Links
 | From | To | Via | Status |
 |------|-----|-----|--------|
-| Chat.tsx | api/chat | fetch | ✗ NOT_WIRED |
+| Chat.tsx | api/chat | fetch | [FAIL] NOT_WIRED |
 
 ## Anti-Patterns Found
-- 🛑 {blocker}
-- ⚠️ {warning}
+- [STOP] {blocker}
+- [WARN] {warning}
 
 ## Human Verification Needed
 ### 1. Visual Review

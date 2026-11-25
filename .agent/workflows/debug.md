@@ -181,7 +181,7 @@ Update DEBUG.md:
 If 3 attempts fail on SAME approach:
 
 ```
-⚠️ 3 FAILURES ON SAME APPROACH
+[WARN] 3 FAILURES ON SAME APPROACH
 
 Action: STOP and reassess
 
@@ -212,7 +212,7 @@ Update STATE.md with resolution.
 **If Resolved:**
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► BUG FIXED ✓
+ GSD ► BUG FIXED [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Root cause: {what was wrong}

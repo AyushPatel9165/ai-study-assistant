@@ -81,14 +81,14 @@ QUICK START
 
 CORE RULES
 ──────────
-🔒 Planning Lock     No code until SPEC.md is FINALIZED
-💾 State Persistence Update STATE.md after every task
-🧹 Context Hygiene   3 failures → state dump → fresh session
-✅ Empirical Valid.  Proof required, no "it should work"
+[LOCK] Planning Lock     No code until SPEC.md is FINALIZED
+[SAVE] State Persistence Update STATE.md after every task
+[CLEAN] Context Hygiene   3 failures → state dump → fresh session
+[PASS] Empirical Valid.  Proof required, no "it should work"
 
 ───────────────────────────────────────────────────────
 
-📚 Docs: GSD-STYLE.md, .gsd/examples/
+[DOCS] Docs: GSD-STYLE.md, .gsd/examples/
 
 ───────────────────────────────────────────────────────
 ```

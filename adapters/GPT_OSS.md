@@ -109,9 +109,9 @@ When working with limited context:
 
 ## Anti-Patterns
 
-❌ **Assuming GPT-4 context** — Verify actual model limits
-❌ **Complex nested prompts** — Keep structure flat and clear
-❌ **Ignoring model limits** — Quality crashes hard past context limit
+[FAIL] **Assuming GPT-4 context** — Verify actual model limits
+[FAIL] **Complex nested prompts** — Keep structure flat and clear
+[FAIL] **Ignoring model limits** — Quality crashes hard past context limit
 
 ---
 

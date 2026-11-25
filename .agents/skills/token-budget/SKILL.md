@@ -43,10 +43,10 @@ Based on PROJECT_RULES.md context quality thresholds:
 
 | Usage | Quality | Budget Status |
 |-------|---------|---------------|
-| 0-30% | PEAK | ✅ Proceed freely |
-| 30-50% | GOOD | ⚠️ Be selective |
-| 50-70% | DEGRADING | 🔶 Compress & summarize |
-| 70%+ | POOR | 🛑 State dump required |
+| 0-30% | PEAK | [PASS] Proceed freely |
+| 30-50% | GOOD | [WARN] Be selective |
+| 50-70% | DEGRADING | [WARN] Compress & summarize |
+| 70%+ | POOR | [STOP] State dump required |
 
 ---
 
@@ -125,7 +125,7 @@ After understanding a file:
 ### At 50% Budget
 
 ```
-⚠️ TOKEN BUDGET: 50%
+[WARN] TOKEN BUDGET: 50%
 Switching to efficiency mode:
 - Outlines only for new files
 - Summarizing instead of loading
@@ -135,7 +135,7 @@ Switching to efficiency mode:
 ### At 70% Budget
 
 ```
-🛑 TOKEN BUDGET: 70%
+[STOP] TOKEN BUDGET: 70%
 Quality degradation likely. Recommend:
 1. Create state snapshot
 2. Run /pause
@@ -156,10 +156,10 @@ This skill integrates with:
 
 ## Anti-Patterns
 
-❌ **Loading files "for context"** — Search first
-❌ **Re-reading same file** — Summarize once
-❌ **Full file when snippet suffices** — Target load
-❌ **Ignoring budget warnings** — Quality will degrade
+[FAIL] **Loading files "for context"** — Search first
+[FAIL] **Re-reading same file** — Summarize once
+[FAIL] **Full file when snippet suffices** — Target load
+[FAIL] **Ignoring budget warnings** — Quality will degrade
 
 ---
 

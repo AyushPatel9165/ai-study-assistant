@@ -66,8 +66,8 @@ For each phase:
 ## Must-Haves Status
 | Requirement | Verified | Evidence |
 |-------------|----------|----------|
-| {req 1} | ✅ | {link} |
-| {req 2} | ✅ | {link} |
+| {req 1} | [PASS] | {link} |
+| {req 2} | [PASS] | {link} |
 
 ## Concerns
 - {concern 1}

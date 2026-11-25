@@ -40,9 +40,9 @@ If time permits:
 
 | Phase | Name | Status | Objective |
 |-------|------|--------|-----------|
-| 1 | {name} | ⬜ Not Started | {objective} |
-| 2 | {name} | ⬜ Not Started | {objective} |
-| 3 | {name} | ⬜ Not Started | {objective} |
+| 1 | {name} | [ ] Not Started | {objective} |
+| 2 | {name} | [ ] Not Started | {objective} |
+| 3 | {name} | [ ] Not Started | {objective} |
 
 ## Success Criteria
 

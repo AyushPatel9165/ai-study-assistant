@@ -389,7 +389,7 @@ git commit -m "docs(phase-$PHASE): create execution plans"
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► PHASE {N} PLANNED ✓
+ GSD ► PHASE {N} PLANNED [OK]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 {X} plans created across {Y} waves

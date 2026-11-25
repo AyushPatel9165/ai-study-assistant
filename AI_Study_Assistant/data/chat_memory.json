@@ -1,5 +1,71 @@
 [
   {
+    "id": 90,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "What is React Native?",
+    "category": null,
+    "answer": "# What is React Native?\n\n**React Native** is a popular, open-source mobile application framework created by Meta (formerly Facebook). It allows developers to build native mobile apps for both **iOS** and **Android** using a single codebase\u2014primarily JavaScript and React.\n\n---\n\n### Key Concepts Behind React Native\n\nTo understand React Native, it helps to break down how traditional mobile development works versus how React Native solves the problem.\n\n* **Traditional Native Development:** \n  * For iOS, developers write Swift or Objective-C using Xcode.\n  * For Android, developers write Java or Kotlin using Android Studio.\n  * *The Drawdown:* You have to write separate codebases, learn different languages, and maintain two separate apps.\n* **The React Native Approach (\"Write Once, Run Anywhere\"):** \n  * You write your UI and logic in JavaScript/React.\n  * React Native translates your JavaScript components into **real, native mobile UI components** (like native buttons, text views, and sliders) rather than rendering them inside a mobile web browser (like Apache Cordova or Ionic do).\n\n---\n\n### How Does React Native Work? (Under the Hood)\n\nReact Native operates on a \"Bridge\" architecture:\n1. **The JavaScript Thread:** This is where your business logic, app state, and API calls run.\n2. **The Native Thread:** This is the native UI side of the device (Objective-C/Swift for iOS, Java/Kotlin for Android).\n3. **The Bridge:** An asynchronous, serialized communication channel that passes messages between the JavaScript thread and the Native thread so your JS code can command the native device components.\n\n*(Note: Modern versions of React Native are transitioning to a new architecture that removes this bridge in favor of direct C++ jsi bindings for better performance).*\n\n---\n\n### Advantages of React Native\n\n* **Cross-Platform Code Sharing:** You can share up to 80\u201390% of your code between iOS and Android, saving massive amounts of time and development cost.\n* **Hot Reloading:** Developers can see the changes they make in the code instantly on the emulator or device without losing the app's current state.\n* **Native Performance:** Because it renders using actual native platform UI elements, the app feels smooth and fast, unlike hybrid web-view apps.\n* **Large Ecosystem and Community:** Backed by Meta and a massive open-source community, meaning there are ready-made packages for almost any feature (maps, camera, authentication).\n\n---\n\n### A Simple Code Example\n\nHere is what a basic React Native component looks like. It uses familiar HTML-like tags (`View`, `Text`) that map directly to native mobile UI elements:\n\n```jsx\nimport React from 'react';\nimport { StyleSheet, Text, View, Button } from 'react-native';\n\nexport default function App() {\n  const handlePress = () => {\n    alert('Button clicked!');\n  };\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.title}>Welcome to React Native!</Text>\n      <Button title=\"Click Me\" onPress={handlePress} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor: '#fff',\n    alignItems: 'center',\n    justifyContent: 'center',\n  },\n  title: {\n    fontSize: 20,\n    fontWeight: 'bold',\n    marginBottom: 20,\n  },\n});\n```\n\n---\n\n### Summary: When should you use it?\n* **Use React Native when:** You want to build a functional, performant mobile app for both iOS and Android quickly, especially if your",
+    "confidence": 1.0,
+    "tool_used": "Web Fallback (Google Gemini API (Gemini Flash))",
+    "timestamp": "2026-11-25T06:05:18.965604"
+  },
+  {
+    "id": 89,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "What is the Global Interpreter Lock?",
+    "category": null,
+    "answer": "Based on your uploaded study notes:\n\n### Concept Overview\nThe Global Interpreter Lock (GIL) is a mutex in CPython that prevents multiple native threads from executing Python bytecodes simultaneously.\n\n### Key Technical Breakdown\n\u2022 The GIL was implemented to ensure thread-safety for reference counting and memory management.",
+    "confidence": 0.7121,
+    "tool_used": "RAG Q&A",
+    "timestamp": "2026-11-25T06:05:15.822207"
+  },
+  {
+    "id": 88,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "What is React Native?",
+    "category": null,
+    "answer": "# What is React Native?\n\n**React Native** ek popular open-source mobile application framework hai jise **Meta (Facebook)** ne develop kiya hai. Iski madad se developers JavaScript aur React ka use karke natively rendered mobile apps bana sakte hain\u2014wo bhi **iOS** aur **Android** dono platforms ke liye ek hi codebase se!\n\n---\n\n### Key Features of React Native\n\n* **Cross-Platform Development:** Aapko iOS aur Android ke liye alag-alag code likhne ki zaroorat nahi padti. Ek hi code (JavaScript/React) dono platforms par chal jata hai, jisse time aur effort dono bachte hain.\n* **Native Components:** React Native koi WebView ya mobile website nahi hai. Ye real, native UI components (jaise iOS ke liye UIKit aur Android ke liye Native Views) ka use karta hai, jisse app ka performance bilkul native app jaisa smooth hota hai.\n* **Hot Reloading:** Is feature ki wajah se jab aap code me koi change karte hain, toh app bina poori tarah restart hue instantly update ho jata hai. Ye developer experience ko bahut fast aur easy banata hai.\n* **Large Ecosystem & Community:** Kyunki ye React par based hai, isme aapko hazaron ready-made libraries aur packages milte hain jo aapke development ko asaan karte hain.\n\n---\n\n### How does React Native Work? (Architecture)\n\nReact Native ke kaam karne ka tareeqa thoda unique hai. Isme do main threads hote hain:\n1. **JavaScript Thread:** Jahan aapka likha hua JS code run hota hai.\n2. **Native Thread:** Jahan phone ke native UI elements (buttons, lists, etc.) render hote hain.\n\nYe dono threads **Bridge** (ya modern architecture me **JSI**) ke through aapas me communicate karte hain.\n\n---\n\n### A Simple React Native Code Example\n\nYahan ek chhota sa example hai ki React Native me ek simple UI component kaisa dikhta hai:\n\n```jsx\nimport React from 'react';\nimport { StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>Hello, React Native!</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor: '#fff',\n    alignItems: 'center',\n    justifyContent: 'center',\n  },\n  text: {\n    fontSize: 20,\n    fontWeight: 'bold',\n    color: '#333',\n  },\n});\n```\n\n---\n\n### React Native vs Native Development (Quick Comparison)\n\n| Feature | React Native | Native (Swift / Kotlin) |\n| :--- | :--- | :--- |\n| **Codebase** | Single codebase for iOS & Android | Separate code for iOS & Android |\n| **Development Speed** | Fast (Reusable components) | Slower (Double effort) |\n| **Performance** | High (Near native) | Maximum (100% Native) |\n| **Learning Curve** | Easy (If you know JavaScript/React) | Steeper (Need to learn Swift & Kotlin) |\n\n### Summary for Beginners\nAgar aapko **JavaScript** aur **React (Web)** aati hai, toh React Native aapke liye mobile app development ki duniya me enter karne ka sabse best aur sabse asaan tareeqa hai!",
+    "confidence": 1.0,
+    "tool_used": "Web Fallback (Google Gemini API (Gemini Flash))",
+    "timestamp": "2026-11-25T06:04:40.752855"
+  },
+  {
+    "id": 87,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "What is the Global Interpreter Lock?",
+    "category": null,
+    "answer": "Based on your uploaded study notes:\n\n### Concept Overview\nThe Global Interpreter Lock (GIL) is a mutex in CPython that prevents multiple native threads from executing Python bytecodes simultaneously.\n\n### Key Technical Breakdown\n\u2022 The GIL was implemented to ensure thread-safety for reference counting and memory management.",
+    "confidence": 0.7121,
+    "tool_used": "RAG Q&A",
+    "timestamp": "2026-11-25T06:04:37.486003"
+  },
+  {
+    "id": 86,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "What is the Global Interpreter Lock?",
+    "category": null,
+    "answer": "Based on your uploaded study notes:\n\n### Concept Overview\nThe Global Interpreter Lock (GIL) is a mutex in CPython that prevents multiple native threads from executing Python bytecodes simultaneously.\n\n### Key Technical Breakdown\n\u2022 The GIL was implemented to ensure thread-safety for reference counting and memory management.",
+    "confidence": 0.7121,
+    "tool_used": "RAG Q&A",
+    "timestamp": "2026-11-25T06:03:35.602623"
+  },
+  {
+    "id": 85,
+    "session_id": "default_session",
+    "role": "student",
+    "query": "What is the Global Interpreter Lock?",
+    "category": null,
+    "answer": "Based on your uploaded study notes:\n\n### Concept Overview\nThe Global Interpreter Lock (GIL) is a mutex in CPython that prevents multiple native threads from executing Python bytecodes simultaneously.\n\n### Key Technical Breakdown\n\u2022 The GIL was implemented to ensure thread-safety for reference counting and memory management.",
+    "confidence": 0.7121,
+    "tool_used": "RAG Q&A",
+    "timestamp": "2026-11-25T05:20:07.907187"
+  },
+  {
     "id": 84,
     "session_id": "default_session",
     "role": "student",
